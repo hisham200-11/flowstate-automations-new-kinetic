@@ -454,46 +454,68 @@
         </div>
 
         <div class="pipeline-grid">
-          <div class="pipeline-tabs-list">
-            <div class="pipeline-tab-item active" data-step="1" onclick="switchPipelineStep(1)">
+          <div class="pipeline-tabs-list" role="tablist" aria-label="Execution Pipeline Stages">
+            <button type="button" class="pipeline-tab-item active" id="pipeline-tab-1" role="tab" aria-selected="true" aria-controls="pipeline-panel" tabindex="0" data-step="1" onclick="switchPipelineStep(1)">
               <div class="pipeline-tab-meta">
                 <span class="pipeline-tab-num">01.</span>
                 <span class="pipeline-tab-title">Omni-Channel Inbound Ingest</span>
               </div>
-              <span>&rarr;</span>
-            </div>
-            <div class="pipeline-tab-item" data-step="2" onclick="switchPipelineStep(2)">
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+            <button type="button" class="pipeline-tab-item" id="pipeline-tab-2" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="2" onclick="switchPipelineStep(2)">
               <div class="pipeline-tab-meta">
                 <span class="pipeline-tab-num">02.</span>
                 <span class="pipeline-tab-title">Sub-2-Second AI Qualification</span>
               </div>
-              <span>&rarr;</span>
-            </div>
-            <div class="pipeline-tab-item" data-step="3" onclick="switchPipelineStep(3)">
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+            <button type="button" class="pipeline-tab-item" id="pipeline-tab-3" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="3" onclick="switchPipelineStep(3)">
               <div class="pipeline-tab-meta">
                 <span class="pipeline-tab-num">03.</span>
                 <span class="pipeline-tab-title">Calendar Lock & Deposit Invoice</span>
               </div>
-              <span>&rarr;</span>
-            </div>
-            <div class="pipeline-tab-item" data-step="4" onclick="switchPipelineStep(4)">
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+            <button type="button" class="pipeline-tab-item" id="pipeline-tab-4" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="4" onclick="switchPipelineStep(4)">
               <div class="pipeline-tab-meta">
                 <span class="pipeline-tab-num">04.</span>
                 <span class="pipeline-tab-title">Private CRM Archival & SMS Reminders</span>
               </div>
-              <span>&rarr;</span>
-            </div>
+              <span aria-hidden="true">&rarr;</span>
+            </button>
           </div>
 
-          <div class="pipeline-code-terminal">
-            <div class="pipeline-terminal-header">
-              <span id="pipelineStageBadge" class="pipeline-stage-badge">STAGE 01 // INBOUND INGEST</span>
-              <span>JSON_FEED</span>
+          <div class="pipeline-visual-wrapper" id="pipeline-panel" role="tabpanel" aria-labelledby="pipeline-tab-1">
+            <!-- 3D Pipeline Scene Viewport -->
+            <div class="pipeline-3d-container" id="pipeline3dContainer">
+              <div class="pipeline-3d-hud">
+                <div class="pipeline-hud-left">
+                  <span id="pipeline3dStageBadge" class="pipeline-stage-badge">STAGE 01 // INBOUND INGEST</span>
+                  <span id="pipeline3dTicker" class="pipeline-hud-ticker">0.00s</span>
+                </div>
+                <div class="pipeline-hud-right">
+                  <span class="pipeline-status-pulse"></span>
+                  <span id="pipeline3dPlayState" class="pipeline-hud-mode">AUTO-LOOP [HOVER TO PAUSE]</span>
+                </div>
+              </div>
+              <div class="pipeline-canvas-holder">
+                <canvas id="pipeline3dCanvas"></canvas>
+              </div>
+              <div class="pipeline-3d-caption">
+                <span id="pipeline3dCaptionText">STAGE 01 // INBOUND INGEST: Multi-channel webhooks normalize into single unified queue (&lt;50ms)</span>
+              </div>
             </div>
-            <div class="pipeline-terminal-body">
-              <h3 class="pipeline-step-title" id="pipelineStepTitle">Inquiries Arrive from Any Channel Simultaneously</h3>
-              <p class="pipeline-step-desc" id="pipelineStepDesc">Customer reaches out through Facebook Messenger, WhatsApp, Viber, or your website. FlowState normalizes the webhook payload instantly.</p>
-              <pre class="pipeline-code-block"><code id="pipelineCodeBlock">// Webhook Ingest (&lt; 50ms)
+
+            <!-- Fallback JSON Terminal (Gracefully shown if WebGL unavailable) -->
+            <div class="pipeline-code-terminal" id="pipelineFallbackTerminal" style="display: none;">
+              <div class="pipeline-terminal-header">
+                <span id="pipelineStageBadge" class="pipeline-stage-badge">STAGE 01 // INBOUND INGEST</span>
+                <span>JSON_FEED</span>
+              </div>
+              <div class="pipeline-terminal-body">
+                <h3 class="pipeline-step-title" id="pipelineStepTitle">Inquiries Arrive from Any Channel Simultaneously</h3>
+                <p class="pipeline-step-desc" id="pipelineStepDesc">Customer reaches out through Facebook Messenger, WhatsApp, Viber, or your website. FlowState normalizes the webhook payload instantly.</p>
+                <pre class="pipeline-code-block"><code id="pipelineCodeBlock">// Webhook Ingest (&lt; 50ms)
 {
   "source": "whatsapp_business",
   "sender_id": "+639175550192",
@@ -501,6 +523,7 @@
   "timestamp": "2026-09-15T14:14:02Z",
   "status": "INGESTED_ACTIVE"
 }</code></pre>
+              </div>
             </div>
           </div>
         </div>
@@ -709,7 +732,7 @@
         </div>
 
         <div class="contact-card">
-          <form id="leadCaptureForm" onsubmit="event.preventDefault(); alert('Blueprint request received! A solutions architect will reach out within 24 hours.');">
+          <form id="leadCaptureForm">
             <div class="form-group">
               <label class="form-label" for="contactName">[ Full Name ]</label>
               <input type="text" class="form-input" id="contactName" required placeholder="e.g. Mark Dela Cruz">
@@ -735,10 +758,11 @@
               <textarea class="form-textarea" id="contactNotes" rows="3" placeholder="e.g. Need automated consultation booking on WhatsApp synced to Google Calendar and GCash deposits."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+            <button type="submit" class="btn btn-primary" id="leadCaptureSubmitBtn" style="width: 100%; padding: 1rem;">
               <span>Submit for Free 24-Hour Blueprint</span>
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
+            <div id="leadCaptureFeedback" class="form-feedback" role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -798,6 +822,10 @@
 
   </div>
 
+  <!-- Three.js r128 3D Engine -->
+  <script src="js/three.min.js"></script>
+  <!-- 3D Pipeline Visualization Controller -->
+  <script src="js/pipeline3d.js"></script>
   <!-- Application Controller -->
   <script src="app.js"></script>
   <!-- Mechanical Live Chatbot Controller -->

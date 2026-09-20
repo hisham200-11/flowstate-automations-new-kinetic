@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPipelineStep(1);
   setupNavbarScroll();
   initHeroKineticEntrance();
+  initLeadCaptureForm();
 });
 
 // ==========================================================================
@@ -622,6 +623,8 @@ function switchPipelineStep(stepNum) {
     const itemStep = Number(tab.getAttribute('data-step'));
     if (itemStep === stepNum) {
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
       if (anime && !prefersReducedMotion) {
         anime.animate(tab, {
           scale: [0.98, 1.02, 1],
@@ -631,10 +634,16 @@ function switchPipelineStep(stepNum) {
       }
     } else {
       tab.classList.remove('active');
+      tab.setAttribute('aria-selected', 'false');
+      tab.setAttribute('tabindex', '-1');
     }
   });
 
   renderPipelineStep(stepNum);
+
+  if (window.FlowStatePipeline3D && typeof window.FlowStatePipeline3D.goToStage === 'function') {
+    window.FlowStatePipeline3D.goToStage(stepNum);
+  }
 }
 
 function renderPipelineStep(stepNum) {
@@ -820,6 +829,12 @@ function toggleMobileMenu() {
   drawer.classList.toggle('open');
 }
 
+function closeMobileMenu() {
+  const drawer = document.getElementById('mobileDrawer');
+  if (!drawer) return;
+  drawer.classList.remove('open');
+}
+
 // ==========================================================================
 // 10. HIGH-INTENT FAQ ACCORDION CONTROLLER
 // ==========================================================================
@@ -844,6 +859,80 @@ function toggleFaq(index) {
   });
 }
 
+// ==========================================================================
+// 11. DIRECT ARCHITECTURE BLUEPRINT FORM CONTROLLER (/api/contact)
+// ==========================================================================
+
+function initLeadCaptureForm() {
+  const form = document.getElementById('leadCaptureForm');
+  const submitBtn = document.getElementById('leadCaptureSubmitBtn');
+  const feedbackEl = document.getElementById('leadCaptureFeedback');
+  if (!form || !submitBtn) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('contactName')?.value.trim() || '';
+    const contact = document.getElementById('contactEmailPhone')?.value.trim() || '';
+    const scale = document.getElementById('contactBusinessScale')?.value || 'Not specified';
+    const notes = document.getElementById('contactNotes')?.value.trim() || '';
+
+    if (!name || !contact) {
+      showFeedback('Please provide your name and work email or WhatsApp number.', 'error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    const originalBtnHtml = submitBtn.innerHTML;
+    submitBtn.innerHTML = `
+      <span>Transmitting Architecture Request...</span>
+    `;
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          contact,
+          businessScale: scale,
+          notes,
+          pageUrl: window.location.href
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        form.reset();
+        showFeedback(data.message || 'Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
+      } else {
+        showFeedback(data.error || 'Failed to dispatch request. Please check your information or email us at flowstateautom8t@gmail.com.', 'error');
+      }
+    } catch (err) {
+      console.error('Lead blueprint submit error:', err);
+      form.reset();
+      showFeedback('Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml;
+    }
+  });
+
+  function showFeedback(msg, type) {
+    if (!feedbackEl) return;
+    feedbackEl.className = `form-feedback ${type}`;
+    feedbackEl.textContent = msg;
+    feedbackEl.style.display = 'block';
+
+    if (type === 'success') {
+      setTimeout(() => {
+        feedbackEl.style.display = 'none';
+      }, 8000);
+    }
+  }
+}
+
 // Global scope bindings for inline HTML handlers
 window.switchScenario = switchScenario;
 window.switchPipelineStep = switchPipelineStep;
@@ -851,3 +940,5 @@ window.toggleScopeModule = toggleScopeModule;
 window.toggleMobileMenu = toggleMobileMenu;
 window.closeMobileMenu = closeMobileMenu;
 window.toggleFaq = toggleFaq;
+window.initLeadCaptureForm = initLeadCaptureForm;
+

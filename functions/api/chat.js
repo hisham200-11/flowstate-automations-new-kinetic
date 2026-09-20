@@ -186,7 +186,30 @@ export async function onRequestPost(context) {
     }
 
     const replyText = parsedResult.reply_text || "Thank you for contacting FlowState Automations. How can we help your team today?";
-    const isLeadCaptured = Boolean(parsedResult.is_lead_captured);
+    
+    // Strict lead validation
+    let isLeadCaptured = false;
+    let leadData = null;
+
+    const nameVal = String(parsedResult.visitor_name || '').trim();
+    const contactVal = String(parsedResult.visitor_contact || '').trim();
+
+    const isInvalidName = !nameVal || ['null', 'unknown', 'none', 'n/a', 'anonymous', 'visitor'].includes(nameVal.toLowerCase());
+    const isInvalidContact = !contactVal || contactVal.length < 5 || ['null', 'unknown', 'none', 'n/a'].includes(contactVal.toLowerCase());
+
+    if (parsedResult.is_lead_captured && !isInvalidName && !isInvalidContact) {
+      isLeadCaptured = true;
+      leadData = {
+        name: nameVal,
+        contact: contactVal,
+        business: parsedResult.business_name || 'Not specified',
+        interest: parsedResult.interest || 'Kinetic SaaS / Architecture Scoping',
+        summary: parsedResult.summary || 'Lead captured via live chatbot session.',
+        sessionId,
+        pageUrl,
+        messages,
+      };
+    }
 
     // Asynchronously log bot reply and lead capture
     if (env && env.DB && waitUntil) {
@@ -194,35 +217,21 @@ export async function onRequestPost(context) {
         logMessageToD1(env.DB, sessionId, 'assistant', replyText, pageUrl, latencyMs)
       );
 
-      if (isLeadCaptured) {
-        waitUntil(
-          saveLeadToD1(env.DB, {
-            sessionId,
-            name: parsedResult.visitor_name,
-            contact: parsedResult.visitor_contact,
-            business: parsedResult.business_name,
-            interest: parsedResult.interest,
-            summary: parsedResult.summary,
-            pageUrl,
-          })
-        );
+      if (isLeadCaptured && leadData) {
+        waitUntil(saveLeadToD1(env.DB, leadData));
       }
     }
 
     // Trigger Resend email notification if lead captured
-    if (isLeadCaptured && env && env.RESEND_API_KEY && waitUntil) {
-      waitUntil(
-        sendLeadEmail(env.RESEND_API_KEY, env.NOTIFICATION_EMAIL || DEFAULT_NOTIFICATION_EMAIL, {
-          name: parsedResult.visitor_name,
-          contact: parsedResult.visitor_contact,
-          business: parsedResult.business_name,
-          interest: parsedResult.interest,
-          summary: parsedResult.summary,
-          sessionId,
-          pageUrl,
-          messages,
-        })
-      );
+    if (isLeadCaptured && leadData) {
+      const resendKey = (env && env.RESEND_API_KEY) || (typeof RESEND_API_KEY !== 'undefined' ? RESEND_API_KEY : '');
+      const targetEmail = (env && env.NOTIFICATION_EMAIL) || DEFAULT_NOTIFICATION_EMAIL;
+
+      if (resendKey && waitUntil) {
+        waitUntil(sendLeadEmail(resendKey, targetEmail, leadData, replyText));
+      } else if (resendKey) {
+        await sendLeadEmail(resendKey, targetEmail, leadData, replyText);
+      }
     }
 
     return new Response(
@@ -230,9 +239,9 @@ export async function onRequestPost(context) {
         reply: replyText,
         leadCaptured: isLeadCaptured,
         leadData: isLeadCaptured ? {
-          name: parsedResult.visitor_name,
-          contact: parsedResult.visitor_contact,
-          business: parsedResult.business_name,
+          name: leadData.name,
+          contact: leadData.contact,
+          business: leadData.business,
         } : null,
         latencyMs,
       }),
@@ -306,13 +315,82 @@ async function saveLeadToD1(db, lead) {
   }
 }
 
-async function sendLeadEmail(resendKey, notificationEmail, lead) {
+async function sendLeadEmail(resendKey, notificationEmail, lead, latestReply = '') {
   try {
-    const transcriptHtml = lead.messages
-      .map(m => `<strong>${m.role === 'user' ? 'Visitor' : 'FlowState Bot'}:</strong> ${m.content}`)
+    const formattedChat = (lead.messages || [])
+      .map(m => `<b>${m.role === 'user' ? '👤 Visitor' : '🤖 FlowState AI'}:</b> ${escapeHtml(m.content)}`)
       .join('<br><br>');
 
-    await fetch('https://api.resend.com/emails', {
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a; line-height: 1.6; background-color: #f8fafc; margin: 0; padding: 24px; }
+          .card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 28px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+          .header { border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 20px; }
+          .badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+          h2 { margin: 12px 0 4px 0; color: #0f172a; font-size: 22px; }
+          .lead-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #f8fafc; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+          .lead-table td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #e2e8f0; }
+          .lead-table td.label { font-weight: 600; color: #64748b; width: 140px; }
+          .lead-table td.val { font-weight: 600; color: #0f172a; }
+          .lead-table td.contact-val { color: #2563eb; font-size: 16px; }
+          .chat-box { background: #0f172a; color: #f1f5f9; padding: 18px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-top: 16px; max-height: 320px; overflow-y: auto; }
+          .footer { margin-top: 24px; font-size: 12px; color: #94a3b8; text-align: center; }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="header">
+            <span class="badge">🔥 New Website Lead</span>
+            <h2>FlowState Live Chat Alert</h2>
+            <p style="margin: 0; color: #64748b; font-size: 14px;">A new prospect just requested information through your website chatbot!</p>
+          </div>
+
+          <table class="lead-table">
+            <tr>
+              <td class="label">👤 Name</td>
+              <td class="val">${escapeHtml(lead.name || 'Not provided')}</td>
+            </tr>
+            <tr>
+              <td class="label">📞 Contact</td>
+              <td class="val contact-val"><strong>${escapeHtml(lead.contact || 'Not provided')}</strong></td>
+            </tr>
+            <tr>
+              <td class="label">🏢 Business</td>
+              <td class="val">${escapeHtml(lead.business || 'Not specified')}</td>
+            </tr>
+            <tr>
+              <td class="label">🎯 Interest</td>
+              <td class="val">${escapeHtml(lead.interest || 'Kinetic White SaaS Blueprint')}</td>
+            </tr>
+            <tr>
+              <td class="label">📝 Summary</td>
+              <td class="val">${escapeHtml(lead.summary || 'Lead captured during chat session.')}</td>
+            </tr>
+            <tr>
+              <td class="label">🔗 Page URL</td>
+              <td class="val" style="font-size: 12px; color: #64748b;">${escapeHtml(lead.pageUrl || 'N/A')}</td>
+            </tr>
+          </table>
+
+          <h3 style="font-size: 15px; margin: 20px 0 8px 0; color: #334155;">💬 Conversation Transcript:</h3>
+          <div class="chat-box">
+            ${formattedChat}
+            ${latestReply ? `<br><br><b>🤖 FlowState AI:</b> ${escapeHtml(latestReply)}` : ''}
+          </div>
+
+          <div class="footer">
+            Session ID: ${escapeHtml(lead.sessionId || 'N/A')} &bull; FlowState Automations Bot &bull; Delivered via Resend
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${resendKey}`,
@@ -321,22 +399,27 @@ async function sendLeadEmail(resendKey, notificationEmail, lead) {
       body: JSON.stringify({
         from: 'FlowState Leads <onboarding@resend.dev>',
         to: [notificationEmail],
-        subject: `New Lead Captured: ${lead.name || 'Website Visitor'} (${lead.interest || 'Inquiry'})`,
-        html: `
-          <h2>New Lead Captured via Live Chat</h2>
-          <p><strong>Name:</strong> ${lead.name || 'N/A'}</p>
-          <p><strong>Contact:</strong> ${lead.contact || 'N/A'}</p>
-          <p><strong>Business:</strong> ${lead.business || 'N/A'}</p>
-          <p><strong>Interest:</strong> ${lead.interest || 'General'}</p>
-          <p><strong>Summary:</strong> ${lead.summary || 'N/A'}</p>
-          <p><strong>Page URL:</strong> ${lead.pageUrl || 'N/A'}</p>
-          <hr />
-          <h3>Conversation Transcript:</h3>
-          <p>${transcriptHtml}</p>
-        `,
+        subject: `🔥 New Lead Captured: ${lead.name || 'Visitor'} (${lead.contact || 'Website'})`,
+        html: htmlContent,
       }),
     });
+
+    if (!resendResponse.ok) {
+      const errBody = await resendResponse.text();
+      console.error('Resend dispatch failed:', resendResponse.status, errBody);
+    }
   } catch (err) {
-    console.warn('Resend email error:', err);
+    console.error('Failed to send Resend email:', err);
   }
 }
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+

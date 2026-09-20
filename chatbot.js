@@ -338,7 +338,16 @@
     showTypingIndicator();
 
     try {
-      const historyPayload = chatState.messages.slice(-8).map(m => ({
+      let sessionId = 'anon-' + Date.now();
+      try {
+        sessionId = sessionStorage.getItem('fsa_chat_session_id');
+        if (!sessionId) {
+          sessionId = 'fsa-' + Math.random().toString(36).substring(2, 9) + '-' + Date.now();
+          sessionStorage.setItem('fsa_chat_session_id', sessionId);
+        }
+      } catch (e) {}
+
+      const messagesPayload = chatState.messages.map(m => ({
         role: m.sender === 'user' ? 'user' : 'assistant',
         content: m.text
       }));
@@ -347,8 +356,9 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: text,
-          history: historyPayload
+          messages: messagesPayload,
+          sessionId: sessionId,
+          pageUrl: window.location.href
         })
       });
 
@@ -359,7 +369,7 @@
 
       chatState.messages.push({
         sender: 'bot',
-        text: data.reply || data.response || "I've noted your requirement. A solutions engineer will review and prepare a custom blueprint.",
+        text: data.reply || "I've noted your requirement. A solutions engineer will review and prepare a custom blueprint.",
         time: getCurrentTime()
       });
       persistMessages();
