@@ -1601,13 +1601,61 @@ button, input, select, textarea {
 
 /* Tablet & Mobile Nav Trigger (< 860px) */
 @media (max-width: 860px) {
+  .nav-container {
+    height: 60px;
+    padding: 0 1rem;
+  }
   .nav-menu {
     display: none;
+  }
+  .nav-cta-desktop {
+    display: none !important;
+  }
+  .nav-actions {
+    gap: 0.5rem;
+  }
+  .nav-btn-chat {
+    padding: 0.38rem 0.75rem;
+    font-size: 0.76rem;
   }
   .mobile-menu-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+  .mobile-drawer {
+    top: 60px;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+  .mobile-nav-link {
+    font-size: 0.84rem;
+    padding: 0.6rem 0;
+  }
+  .mobile-drawer .btn {
+    padding: 0.68rem 1rem;
+    font-size: 0.84rem;
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-sub {
+    display: none;
+  }
+  .brand-name {
+    font-size: 0.98rem;
+  }
+  .brand-logo-mark {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+  .nav-btn-chat {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.72rem;
   }
 }
 

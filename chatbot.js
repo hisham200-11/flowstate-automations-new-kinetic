@@ -205,6 +205,36 @@
       });
     });
 
+    // Mobile virtual keyboard & visualViewport sync
+    function syncMobileViewport() {
+      const win = document.getElementById('fsaChatWindow');
+      if (!win) return;
+      if (window.innerWidth <= 600 && chatState.isOpen) {
+        if (window.visualViewport) {
+          win.style.height = `${window.visualViewport.height}px`;
+          win.style.top = `${window.visualViewport.offsetTop}px`;
+        }
+      } else {
+        win.style.height = '';
+        win.style.top = '';
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', syncMobileViewport);
+      window.visualViewport.addEventListener('scroll', syncMobileViewport);
+    }
+    window.addEventListener('resize', syncMobileViewport);
+
+    input?.addEventListener('focus', () => {
+      setTimeout(() => {
+        syncMobileViewport();
+        input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        const body = document.getElementById('fsaChatBody');
+        if (body) body.scrollTop = body.scrollHeight;
+      }, 100);
+    });
+
     // Global CTA Hook
     window.openFlowStateChat = function (optionalQuery) {
       openChat();
@@ -283,15 +313,35 @@
     chatState.isOpen = true;
     win.style.display = 'flex';
 
+    const isMobile = window.innerWidth <= 600;
+    if (isMobile && window.visualViewport) {
+      win.style.height = `${window.visualViewport.height}px`;
+      win.style.top = `${window.visualViewport.offsetTop}px`;
+    }
+
     if (anime) {
-      anime.animate(win, {
-        opacity: [0, 1],
-        translateY: [24, 0],
-        scale: [0.96, 1],
-        duration: 320,
-        ease: 'outBack(1.15)',
-        onComplete: () => input?.focus()
-      });
+      if (isMobile) {
+        anime.animate(win, {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 260,
+          ease: 'outQuad',
+          onComplete: () => {
+            input?.focus();
+            const body = document.getElementById('fsaChatBody');
+            if (body) body.scrollTop = body.scrollHeight;
+          }
+        });
+      } else {
+        anime.animate(win, {
+          opacity: [0, 1],
+          translateY: [24, 0],
+          scale: [0.96, 1],
+          duration: 320,
+          ease: 'outBack(1.15)',
+          onComplete: () => input?.focus()
+        });
+      }
     } else {
       win.style.opacity = '1';
       input?.focus();
@@ -304,19 +354,25 @@
     if (!win) return;
 
     chatState.isOpen = false;
+    const isMobile = window.innerWidth <= 600;
+
     if (anime) {
       anime.animate(win, {
         opacity: [1, 0],
-        translateY: [0, 16],
-        scale: [1, 0.96],
-        duration: 220,
+        translateY: isMobile ? [0, 20] : [0, 16],
+        scale: isMobile ? [1, 1] : [1, 0.96],
+        duration: 200,
         ease: 'outQuad',
         onComplete: () => {
           win.style.display = 'none';
+          win.style.height = '';
+          win.style.top = '';
         }
       });
     } else {
       win.style.display = 'none';
+      win.style.height = '';
+      win.style.top = '';
     }
   }
 
