@@ -265,7 +265,8 @@
 
 /* Suggestion Chips */
 .fsa-chips-wrapper {
-  padding: 8px 16px;
+  position: relative;
+  padding: 8px 34px 8px 12px;
   background: #FFFFFF;
   border-top: 1px solid #E4E4E7;
   display: flex;
@@ -287,6 +288,29 @@
 }
 
 .fsa-chip:hover {
+  background: #09090B;
+  color: #FFFFFF;
+  border-color: #09090B;
+}
+
+.fsa-chips-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid #E4E4E7;
+  color: #71717A;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.15s ease;
+  z-index: 2;
+}
+
+.fsa-chips-close:hover {
   background: #09090B;
   color: #FFFFFF;
   border-color: #09090B;

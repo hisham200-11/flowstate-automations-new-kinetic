@@ -114,6 +114,7 @@
 
         <!-- Suggestion Chips -->
         <div class="fsa-chips-wrapper" id="fsaChipsWrapper">
+          <button type="button" class="fsa-chips-close" id="fsaChipsClose" title="Hide suggestions">&times;</button>
           ${STARTER_CHIPS.map(chip => `<button class="fsa-chip" data-query="${chip}">${chip}</button>`).join('')}
         </div>
 
@@ -159,6 +160,10 @@
     launcher?.addEventListener('click', toggleChat);
     closeBtn?.addEventListener('click', closeChat);
     resetBtn?.addEventListener('click', resetChat);
+    document.getElementById('fsaChipsClose')?.addEventListener('click', () => {
+      const chips = document.getElementById('fsaChipsWrapper');
+      if (chips) chips.style.display = 'none';
+    });
 
     teaser?.addEventListener('click', (e) => {
       if (e.target.id !== 'fsaTeaserClose') {
