@@ -346,7 +346,7 @@ async function saveLeadToD1(db, lead) {
 async function sendLeadEmail(resendKey, notificationEmail, lead, latestReply = '') {
   try {
     const formattedChat = (lead.messages || [])
-      .map(m => `<b>${m.role === 'user' ? '👤 Visitor' : '🤖 FlowState AI'}:</b> ${escapeHtml(m.content)}`)
+      .map(m => `<b>${m.role === 'user' ? '[ VISITOR ]' : '[ FLOWSTATE AI ]'}:</b> ${escapeHtml(m.content)}`)
       .join('<br><br>');
 
     // Strip newlines to prevent email subject header injection
@@ -359,63 +359,63 @@ async function sendLeadEmail(resendKey, notificationEmail, lead, latestReply = '
       <head>
         <meta charset="utf-8">
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a; line-height: 1.6; background-color: #f8fafc; margin: 0; padding: 24px; }
-          .card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 28px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-          .header { border-bottom: 2px solid #2563eb; padding-bottom: 16px; margin-bottom: 20px; }
-          .badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-          h2 { margin: 12px 0 4px 0; color: #0f172a; font-size: 22px; }
-          .lead-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #f8fafc; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
-          .lead-table td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #e2e8f0; }
-          .lead-table td.label { font-weight: 600; color: #64748b; width: 140px; }
-          .lead-table td.val { font-weight: 600; color: #0f172a; }
-          .lead-table td.contact-val { color: #2563eb; font-size: 16px; }
-          .chat-box { background: #0f172a; color: #f1f5f9; padding: 18px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-top: 16px; max-height: 320px; overflow-y: auto; }
-          .footer { margin-top: 24px; font-size: 12px; color: #94a3b8; text-align: center; }
+          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #09090b; line-height: 1.6; background-color: #fafafa; margin: 0; padding: 24px; }
+          .card { background: #ffffff; border-radius: 0px; border: 1px solid #09090b; padding: 28px; max-width: 600px; margin: 0 auto; box-shadow: 4px 4px 0 #09090b; }
+          .header { border-bottom: 2px solid #09090b; padding-bottom: 16px; margin-bottom: 20px; }
+          .badge { display: inline-block; background: #09090b; color: #ffffff; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 0px; text-transform: uppercase; letter-spacing: 1px; font-family: ui-monospace, monospace; }
+          h2 { margin: 12px 0 4px 0; color: #09090b; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+          .lead-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #ffffff; border-radius: 0px; overflow: hidden; border: 1px solid #e4e4e7; }
+          .lead-table td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #e4e4e7; }
+          .lead-table td.label { font-weight: 700; color: #71717a; width: 140px; font-family: ui-monospace, monospace; font-size: 12px; }
+          .lead-table td.val { font-weight: 600; color: #09090b; }
+          .lead-table td.contact-val { color: #e11d48; font-size: 15px; font-weight: 800; font-family: ui-monospace, monospace; }
+          .chat-box { background: #09090b; color: #f4f4f5; padding: 18px; border-radius: 0px; font-size: 13px; line-height: 1.6; margin-top: 16px; max-height: 320px; overflow-y: auto; font-family: ui-monospace, monospace; border: 1px solid #27272a; }
+          .footer { margin-top: 24px; font-size: 11px; color: #71717a; text-align: center; font-family: ui-monospace, monospace; }
         </style>
       </head>
       <body>
         <div class="card">
           <div class="header">
-            <span class="badge">🔥 New Website Lead</span>
+            <span class="badge">[ NEW WEBSITE LEAD ]</span>
             <h2>FlowState Live Chat Alert</h2>
-            <p style="margin: 0; color: #64748b; font-size: 14px;">A new prospect just requested information through your website chatbot!</p>
+            <p style="margin: 0; color: #71717a; font-size: 13px;">A new prospect just requested an architecture consultation through your chatbot.</p>
           </div>
 
           <table class="lead-table">
             <tr>
-              <td class="label">👤 Name</td>
+              <td class="label">[ NAME ]</td>
               <td class="val">${escapeHtml(lead.name || 'Not provided')}</td>
             </tr>
             <tr>
-              <td class="label">📞 Contact</td>
+              <td class="label">[ CONTACT ]</td>
               <td class="val contact-val"><strong>${escapeHtml(lead.contact || 'Not provided')}</strong></td>
             </tr>
             <tr>
-              <td class="label">🏢 Business</td>
+              <td class="label">[ BUSINESS ]</td>
               <td class="val">${escapeHtml(lead.business || 'Not specified')}</td>
             </tr>
             <tr>
-              <td class="label">🎯 Interest</td>
+              <td class="label">[ INTEREST ]</td>
               <td class="val">${escapeHtml(lead.interest || 'Kinetic White SaaS Blueprint')}</td>
             </tr>
             <tr>
-              <td class="label">📝 Summary</td>
+              <td class="label">[ SUMMARY ]</td>
               <td class="val">${escapeHtml(lead.summary || 'Lead captured during chat session.')}</td>
             </tr>
             <tr>
-              <td class="label">🔗 Page URL</td>
-              <td class="val" style="font-size: 12px; color: #64748b;">${escapeHtml(lead.pageUrl || 'N/A')}</td>
+              <td class="label">[ PAGE URL ]</td>
+              <td class="val" style="font-size: 12px; color: #71717a; font-family: ui-monospace, monospace;">${escapeHtml(lead.pageUrl || 'N/A')}</td>
             </tr>
           </table>
 
-          <h3 style="font-size: 15px; margin: 20px 0 8px 0; color: #334155;">💬 Conversation Transcript:</h3>
+          <h3 style="font-size: 13px; margin: 20px 0 8px 0; color: #09090b; font-family: ui-monospace, monospace;">[ CONVERSATION TRANSCRIPT ]</h3>
           <div class="chat-box">
             ${formattedChat}
-            ${latestReply ? `<br><br><b>🤖 FlowState AI:</b> ${escapeHtml(latestReply)}` : ''}
+            ${latestReply ? `<br><br><b>[ FLOWSTATE AI ]:</b> ${escapeHtml(latestReply)}` : ''}
           </div>
 
           <div class="footer">
-            Session ID: ${escapeHtml(lead.sessionId || 'N/A')} &bull; FlowState Automations Bot &bull; Delivered via Resend
+            SESSION: ${escapeHtml(lead.sessionId || 'N/A')} &bull; FLOWSTATE CHAT ENGINE &bull; RESEND DISPATCH
           </div>
         </div>
       </body>
@@ -431,7 +431,7 @@ async function sendLeadEmail(resendKey, notificationEmail, lead, latestReply = '
       body: JSON.stringify({
         from: 'FlowState Leads <onboarding@resend.dev>',
         to: [notificationEmail],
-        subject: `🔥 New Lead Captured: ${sanitizedName} (${sanitizedContact})`,
+        subject: `[LEAD] ${sanitizedName} (${sanitizedContact})`,
         html: htmlContent,
       }),
     });

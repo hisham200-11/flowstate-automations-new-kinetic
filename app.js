@@ -263,6 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initLeadCaptureForm();
   initScrollSpy();
   initPillarControls();
+  initDynamicHudTicker();
+  initArchitectureVisualizer();
+  initLifecycleEngine();
+  initMagneticButtons();
+  initKineticTiltCards();
+  initCounterTickers();
 });
 
 // ==========================================================================
@@ -772,7 +778,6 @@ function renderScopeCards() {
 }
 
 function toggleScopeModule(modId) {
-  const anime = getAnime();
   const idx = STATE.selectedScopeIds.indexOf(modId);
 
   if (idx > -1) {
@@ -1093,13 +1098,573 @@ function showCopyToast(label) {
     document.body.appendChild(toast);
   }
 
-  toast.innerHTML = `<span style="color: var(--brand-accent);">✓</span> <span>COPIED TO CLIPBOARD:</span> <span style="color: #FFFFFF; font-weight: 800;">${label}</span>`;
+  toast.innerHTML = `<svg class="matrix-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--brand-accent); flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg> <span>COPIED TO CLIPBOARD:</span> <span style="color: #FFFFFF; font-weight: 800;">${label}</span>`;
   toast.classList.add('show');
 
   if (copyToastTimeout) clearTimeout(copyToastTimeout);
   copyToastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 2600);
+}
+
+// ==========================================================================
+// 13. DYNAMIC HERO HUD TELEMETRY TICKER
+// ==========================================================================
+
+function initDynamicHudTicker() {
+  const coordsEl = document.getElementById('hudCoordsVal');
+  const timeEl = document.getElementById('hudTimeVal');
+  const threadsEl = document.getElementById('hudThreadsVal');
+  if (!coordsEl && !timeEl && !threadsEl) return;
+
+  let lastTick = 0;
+  function updateTelemetry(time) {
+    if (time - lastTick > 150) {
+      lastTick = time;
+      if (timeEl) {
+        const now = new Date();
+        const phtString = now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Manila',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        const ms = String(now.getMilliseconds()).padStart(3, '0');
+        timeEl.textContent = `UTC+8 ${phtString}.${ms}`;
+      }
+    }
+    requestAnimationFrame(updateTelemetry);
+  }
+
+  requestAnimationFrame(updateTelemetry);
+}
+
+// ==========================================================================
+// 14. INTERACTIVE LIVE SVG ARCHITECTURE VISUALIZER
+// ==========================================================================
+
+const ARCH_SPECS = {
+  all: {
+    name: 'Unified Orchestration Bus (All 4 Pillars)',
+    protocol: 'REST / WebSockets / Cloudflare D1',
+    latency: '< 50ms Edge / < 1.8s LLM',
+    sovereignty: '100% Client Private Cloud',
+    uptime: '99.99% Production'
+  },
+  p1: {
+    name: 'Pillar 01: Custom Software Systems',
+    protocol: 'PostgreSQL / Cloudflare D1 Edge / RBAC',
+    latency: '< 45ms Query Latency',
+    sovereignty: '100% Dedicated Client Infrastructure',
+    uptime: '99.99% SLA'
+  },
+  p2: {
+    name: 'Pillar 02: Business Process Automation',
+    protocol: 'Event Webhooks / WhatsApp Cloud API / CalLock',
+    latency: '< 120ms Ingestion Dispatch',
+    sovereignty: 'Zero Shared Memory / Direct Keys',
+    uptime: '99.99% Guaranteed Delivery'
+  },
+  p3: {
+    name: 'Pillar 03: Applied Artificial Intelligence',
+    protocol: 'Groq LPU Acceleration (Llama 3.3 / Gemini 2.5)',
+    latency: '< 1.8s Sub-2s Triage',
+    sovereignty: 'Zero-Retention Calibrated Guardrails',
+    uptime: 'Deterministic Routing'
+  },
+  p4: {
+    name: 'Pillar 04: Integrated Hardware & RFID',
+    protocol: 'WebSockets / Frequency Scanners / Biometrics',
+    latency: '< 80ms Instant Punch Sync',
+    sovereignty: 'On-Premise Hardware + Cloud Mirror',
+    uptime: 'Zero Buddy-Punching Audit'
+  }
+};
+
+let archSimulationActive = false;
+
+function initArchitectureVisualizer() {
+  const anime = getAnime();
+  if (!anime || prefersReducedMotion) return;
+
+  // Continuous traveling packet animation along paths
+  const packets = [
+    { el: '#archPacket1', start: { x: 220, y: 110 }, end: { x: 480, y: 210 }, dur: 2200 },
+    { el: '#archPacket2', start: { x: 740, y: 110 }, end: { x: 480, y: 210 }, dur: 2400 },
+    { el: '#archPacket3', start: { x: 220, y: 310 }, end: { x: 480, y: 210 }, dur: 2000 },
+    { el: '#archPacket4', start: { x: 740, y: 310 }, end: { x: 480, y: 210 }, dur: 2600 }
+  ];
+
+  packets.forEach((p, idx) => {
+    const orb = document.querySelector(p.el);
+    if (orb) {
+      anime.animate(orb, {
+        cx: [p.start.x, p.end.x],
+        cy: [p.start.y, p.end.y],
+        opacity: [0.2, 1, 0.2],
+        duration: p.dur,
+        delay: idx * 300,
+        loop: true,
+        ease: 'inOutSine'
+      });
+    }
+  });
+}
+
+function selectArchNode(nodeKey) {
+  const anime = getAnime();
+  STATE.currentArchNode = nodeKey;
+
+  // 1. Update Selector Buttons
+  document.querySelectorAll('.arch-node-selector-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.node === nodeKey);
+  });
+
+  // 2. Update SVG Node Highlights
+  const nodes = ['p1', 'p2', 'p3', 'p4'];
+  nodes.forEach((k) => {
+    const elId = `archNode${k.toUpperCase()}`;
+    const nodeEl = document.getElementById(elId);
+    if (nodeEl) {
+      if (nodeKey === 'all' || nodeKey === k) {
+        nodeEl.classList.add('active');
+        if (anime && !prefersReducedMotion && nodeKey === k) {
+          anime.animate(nodeEl, {
+            scale: [1, 1.05, 1],
+            duration: 300,
+            ease: 'outBack(1.4)'
+          });
+        }
+      } else {
+        nodeEl.classList.remove('active');
+      }
+    }
+  });
+
+  // 3. Update Connecting Path Highlights
+  const pathMap = { p1: '#archPath1', p2: '#archPath2', p3: '#archPath3', p4: '#archPath4' };
+  Object.keys(pathMap).forEach((k) => {
+    const pathEl = document.querySelector(pathMap[k]);
+    if (pathEl) {
+      if (nodeKey === 'all' || nodeKey === k) {
+        pathEl.classList.add('active');
+      } else {
+        pathEl.classList.remove('active');
+      }
+    }
+  });
+
+  // 4. Update Telemetry Inspector Strip
+  const specs = ARCH_SPECS[nodeKey] || ARCH_SPECS.all;
+  const nameEl = document.getElementById('archTelName');
+  const protoEl = document.getElementById('archTelProtocol');
+  const latEl = document.getElementById('archTelLatency');
+  const sovEl = document.getElementById('archTelSovereignty');
+  const upEl = document.getElementById('archTelUptime');
+
+  if (nameEl) nameEl.textContent = specs.name;
+  if (protoEl) protoEl.textContent = specs.protocol;
+  if (latEl) latEl.textContent = specs.latency;
+  if (sovEl) sovEl.textContent = specs.sovereignty;
+  if (upEl) upEl.textContent = specs.uptime;
+
+  const strip = document.getElementById('archTelemetryStrip');
+  if (strip && anime && !prefersReducedMotion) {
+    anime.animate(strip, {
+      opacity: [0.6, 1],
+      duration: 250,
+      ease: 'outQuad'
+    });
+  }
+
+  // 5. If specific node selected, synchronize and highlight the matching Pillar card
+  if (nodeKey !== 'all') {
+    filterPillars(nodeKey);
+    const card = document.getElementById(`pillarCard${nodeKey.toUpperCase()}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (anime && !prefersReducedMotion) {
+        anime.animate(card, {
+          scale: [0.98, 1.01, 1],
+          duration: 350,
+          ease: 'outBack(1.3)'
+        });
+      }
+    }
+  } else {
+    filterPillars('all');
+  }
+}
+
+function runArchitectureSimulation() {
+  const anime = getAnime();
+  const simBtn = document.getElementById('archSimulateBtn');
+  if (archSimulationActive) return;
+  archSimulationActive = true;
+
+  if (simBtn) {
+    simBtn.disabled = true;
+    simBtn.innerHTML = `<span>Simulating Workflow...</span>`;
+  }
+
+  if (!anime || prefersReducedMotion) {
+    setTimeout(() => {
+      archSimulationActive = false;
+      if (simBtn) {
+        simBtn.disabled = false;
+        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
+      }
+    }, 2000);
+    return;
+  }
+
+  const tl = anime.createTimeline ? anime.createTimeline({
+    onComplete: () => {
+      archSimulationActive = false;
+      selectArchNode('all');
+      if (simBtn) {
+        simBtn.disabled = false;
+        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
+      }
+    }
+  }) : null;
+
+  if (tl) {
+    tl.add('#archNodeP2', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' })
+      .add('#archCenterHub', { scale: [1, 1.06, 1], duration: 350, ease: 'outQuad' }, '-=150')
+      .add('#archNodeP3', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
+      .add('#archNodeP1', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
+      .add('#archNodeP4', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
+      .add('#archCenterHub', { scale: [1, 1.03, 1], duration: 300, ease: 'outQuad' }, '-=150');
+  } else {
+    // Fallback animation
+    ['p2', 'p3', 'p1', 'p4'].forEach((k, i) => {
+      setTimeout(() => {
+        selectArchNode(k);
+      }, i * 600);
+    });
+    setTimeout(() => {
+      archSimulationActive = false;
+      selectArchNode('all');
+      if (simBtn) {
+        simBtn.disabled = false;
+        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
+      }
+    }, 2800);
+  }
+}
+
+// ==========================================================================
+// 15. INTERACTIVE 8-STAGE LIFECYCLE PROGRESSION ENGINE
+// ==========================================================================
+
+const LIFECYCLE_STAGES = [
+  {
+    num: 1,
+    code: '01',
+    title: 'Stage 01: Operational Discovery',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 1–3',
+    artifact: 'Friction Audit Document',
+    status: 'Stakeholder Sign-Off',
+    desc: 'Conducting in-depth stakeholder interviews to map existing workflows, software fragmentation, communication touchpoints, and operational pain points across all departmental operations.'
+  },
+  {
+    num: 2,
+    code: '02',
+    title: 'Stage 02: Process & Data Mapping',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 3–6',
+    artifact: 'Data Flow & Webhook Matrix',
+    status: 'Event Schema Spec Approved',
+    desc: 'Documenting the exact path of customer inquiries, internal approvals, database records, and inter-department communications across WhatsApp, Messenger, Viber, and Web.'
+  },
+  {
+    num: 3,
+    code: '03',
+    title: 'Stage 03: Bottleneck Identification',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 6–8',
+    artifact: 'Waste Reduction Breakdown',
+    status: 'Quantified ROI Model',
+    desc: 'Pinpointing exact operational friction points where labor hours, response velocity, or data integrity are lost to manual copy-paste tasks and spreadsheet silos.'
+  },
+  {
+    num: 4,
+    code: '04',
+    title: 'Stage 04: Requirements Definition',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 8–10',
+    artifact: 'Technical Scope & KPI Spec',
+    status: 'Deterministic Scope Lock',
+    desc: 'Defining strict functional scope, data security controls, API integration contracts, and quantifiable success metrics prior to engineering.'
+  },
+  {
+    num: 5,
+    code: '05',
+    title: 'Stage 05: Solution Architecture',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 10–14',
+    artifact: 'System Blueprint & Schema',
+    status: 'Database Schema & Auth Spec',
+    desc: 'Designing custom software architecture, database schema, webhook routing matrices, and physical hardware links on dedicated cloud infrastructure.'
+  },
+  {
+    num: 6,
+    code: '06',
+    title: 'Stage 06: Interactive Prototype',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 14–17',
+    artifact: 'Working Interactive Prototype',
+    status: 'Hands-On Client Verification',
+    desc: 'Building a working interactive prototype around your actual workflow before full deployment, allowing hands-on stakeholder verification with zero risk.'
+  },
+  {
+    num: 7,
+    code: '07',
+    title: 'Stage 07: Turnkey Implementation',
+    phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
+    duration: 'Days 17–21',
+    artifact: 'Live Cloud Deploy & Onboarding',
+    status: 'Production Release & Team Training',
+    desc: 'Production engineering, database migration, webhook stress testing, security hardening, and live team onboarding with 100% client data ownership.'
+  },
+  {
+    num: 8,
+    code: '08',
+    title: 'Stage 08: Ongoing SLA & Support',
+    phase: '[ PHASE 2: MANAGED OPERATIONS ]',
+    duration: 'Continuous Partnership',
+    artifact: '99.99% Uptime & SLA Retainer',
+    status: 'Dedicated Technical Hotline',
+    desc: 'Continuous uptime monitoring, security patching, SLA-backed technical assistance, and proactive feature evolution as operations scale.'
+  }
+];
+
+let currentLifecycleStage = 1;
+let lifecycleAutoRunTimer = null;
+let isLifecycleAutoRunning = true;
+let isLifecycleHovered = false;
+
+function initLifecycleEngine() {
+  const chassis = document.getElementById('lifecycleInspectorChassis');
+  if (chassis) {
+    chassis.addEventListener('mouseenter', () => {
+      isLifecycleHovered = true;
+    });
+    chassis.addEventListener('mouseleave', () => {
+      isLifecycleHovered = false;
+    });
+  }
+
+  // Auto-run cycle
+  startLifecycleTimer();
+}
+
+function startLifecycleTimer() {
+  if (lifecycleAutoRunTimer) clearInterval(lifecycleAutoRunTimer);
+  lifecycleAutoRunTimer = setInterval(() => {
+    if (isLifecycleAutoRunning && !isLifecycleHovered) {
+      const nextStage = (currentLifecycleStage % 8) + 1;
+      selectLifecycleStage(nextStage, true);
+    }
+  }, 4500);
+}
+
+function selectLifecycleStage(stageNum, auto = false) {
+  const anime = getAnime();
+  currentLifecycleStage = stageNum;
+  const stageData = LIFECYCLE_STAGES[stageNum - 1] || LIFECYCLE_STAGES[0];
+
+  // 1. Update Chips
+  document.querySelectorAll('.lifecycle-step-chip').forEach((chip) => {
+    const chipStage = Number(chip.dataset.stage);
+    if (chipStage === stageNum) {
+      chip.classList.add('active');
+      if (anime && !prefersReducedMotion && !auto) {
+        anime.animate(chip, {
+          scale: [0.97, 1.04, 1],
+          duration: 250,
+          ease: 'outBack(1.4)'
+        });
+      }
+    } else {
+      chip.classList.remove('active');
+    }
+  });
+
+  // 2. Update Progress Gauge Bar
+  const fillBar = document.getElementById('lifecycleProgressFill');
+  if (fillBar) {
+    const pct = (stageNum / 8) * 100;
+    fillBar.style.width = `${pct}%`;
+  }
+
+  // 3. Update Inspector HUD
+  const tagEl = document.getElementById('inspectorPhaseTag');
+  const titleEl = document.getElementById('inspectorStageTitle');
+  const descEl = document.getElementById('inspectorStageDesc');
+  const artEl = document.getElementById('inspectorArtifactName');
+  const durEl = document.getElementById('inspectorMetaDuration');
+  const statusEl = document.getElementById('inspectorMetaStatus');
+  const pctEl = document.getElementById('inspectorMetaPercent');
+
+  if (tagEl) tagEl.textContent = stageData.phase;
+  if (titleEl) titleEl.textContent = stageData.title;
+  if (descEl) descEl.textContent = stageData.desc;
+  if (artEl) artEl.textContent = `Deliverable: ${stageData.artifact}`;
+  if (durEl) durEl.textContent = stageData.duration;
+  if (statusEl) statusEl.textContent = stageData.status;
+  if (pctEl) pctEl.textContent = `Stage ${stageNum} of 8 (${((stageNum / 8) * 100).toFixed(1)}%)`;
+
+  const chassis = document.getElementById('lifecycleInspectorChassis');
+  if (chassis && anime && !prefersReducedMotion && !auto) {
+    anime.animate(chassis, {
+      opacity: [0.75, 1],
+      translateY: [4, 0],
+      duration: 280,
+      ease: 'outQuad'
+    });
+  }
+
+  // 4. Update 8-Card Grid Highlights
+  for (let i = 1; i <= 8; i++) {
+    const card = document.getElementById(`stageCard${i}`);
+    if (card) {
+      if (i === stageNum) {
+        card.classList.add('is-active');
+      } else {
+        card.classList.remove('is-active');
+      }
+    }
+  }
+}
+
+function nextLifecycleStage() {
+  const nextStage = (currentLifecycleStage % 8) + 1;
+  selectLifecycleStage(nextStage, false);
+}
+
+function prevLifecycleStage() {
+  const prevStage = currentLifecycleStage === 1 ? 8 : currentLifecycleStage - 1;
+  selectLifecycleStage(prevStage, false);
+}
+
+function toggleLifecycleAutoRun() {
+  isLifecycleAutoRunning = !isLifecycleAutoRunning;
+  const btn = document.getElementById('lifecycleAutoRunBtn');
+  if (btn) {
+    btn.textContent = isLifecycleAutoRunning ? 'Auto-Cycle: ON' : 'Auto-Cycle: PAUSED';
+    btn.classList.toggle('active', isLifecycleAutoRunning);
+  }
+}
+
+// ==========================================================================
+// 16. MAGNETIC BUTTON PHYSICS
+// ==========================================================================
+
+function initMagneticButtons() {
+  const anime = getAnime();
+  if (prefersReducedMotion || !anime) return;
+
+  const magneticBtns = document.querySelectorAll('.btn-magnetic');
+  magneticBtns.forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      anime.animate(btn, {
+        translateX: x * 0.2,
+        translateY: y * 0.2,
+        duration: 150,
+        ease: 'outQuad'
+      });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      anime.animate(btn, {
+        translateX: 0,
+        translateY: 0,
+        duration: 350,
+        ease: 'outBack(1.4)'
+      });
+    });
+  });
+}
+
+// ==========================================================================
+// 17. KINETIC CARD TILT & ELEVATION
+// ==========================================================================
+
+function initKineticTiltCards() {
+  const anime = getAnime();
+  if (prefersReducedMotion || !anime) return;
+
+  const cards = document.querySelectorAll('.kinetic-card');
+  cards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+      const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+
+      anime.animate(card, {
+        rotateX: -yPct * 3.5,
+        rotateY: xPct * 3.5,
+        duration: 200,
+        ease: 'outQuad'
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      anime.animate(card, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 400,
+        ease: 'outBack(1.2)'
+      });
+    });
+  });
+}
+
+// ==========================================================================
+// 18. STAT COUNTER TICKERS
+// ==========================================================================
+
+function initCounterTickers() {
+  const anime = getAnime();
+  const tickerEls = document.querySelectorAll('.counter-ticker');
+  if (tickerEls.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target.dataset.counted) {
+        entry.target.dataset.counted = 'true';
+        const targetVal = parseFloat(entry.target.dataset.counterTarget || '0');
+        const prefix = entry.target.dataset.counterPrefix || '';
+        const suffix = entry.target.dataset.counterSuffix || '';
+        const decimals = parseInt(entry.target.dataset.counterDecimals || '0', 10);
+
+        if (!anime || prefersReducedMotion) {
+          entry.target.textContent = `${prefix}${targetVal.toFixed(decimals)}${suffix}`;
+          return;
+        }
+
+        const counterObj = { val: 0 };
+        anime.animate(counterObj, {
+          val: targetVal,
+          duration: 900,
+          ease: 'outCubic',
+          onUpdate: () => {
+            entry.target.textContent = `${prefix}${counterObj.val.toFixed(decimals)}${suffix}`;
+          }
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  tickerEls.forEach((el) => observer.observe(el));
 }
 
 // Global scope bindings for inline HTML handlers
@@ -1115,5 +1680,12 @@ window.initPillarControls = initPillarControls;
 window.filterPillars = filterPillars;
 window.filterPillarsBySearch = filterPillarsBySearch;
 window.copyToClipboard = copyToClipboard;
+window.selectArchNode = selectArchNode;
+window.runArchitectureSimulation = runArchitectureSimulation;
+window.selectLifecycleStage = selectLifecycleStage;
+window.nextLifecycleStage = nextLifecycleStage;
+window.prevLifecycleStage = prevLifecycleStage;
+window.toggleLifecycleAutoRun = toggleLifecycleAutoRun;
+
 
 

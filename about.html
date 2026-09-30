@@ -286,6 +286,7 @@
           <a href="index.html#solutions" class="nav-link">Solutions</a>
           <a href="index.html#simulator" class="nav-link">Live Demo</a>
           <a href="index.html#pipeline" class="nav-link">Pipeline</a>
+          <a href="#architecture" class="nav-link">Architecture</a>
           <a href="#capabilities" class="nav-link">Capabilities</a>
           <a href="#lifecycle" class="nav-link">Lifecycle</a>
           <a href="#cases" class="nav-link">Projects</a>
@@ -297,12 +298,12 @@
             <span class="status-dot"></span>
             <span>Chat Live</span>
           </button>
-          <a href="#contact" class="btn btn-primary nav-cta-desktop" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
+          <a href="#contact" class="btn btn-primary nav-cta-desktop btn-magnetic" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
             <span>Get Blueprint</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
           <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         </div>
       </div>
@@ -313,11 +314,12 @@
           <a href="index.html#solutions" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 01 ] Solutions Matrix</span><span>&rarr;</span></a>
           <a href="index.html#simulator" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 02 ] Live Demo Simulator</span><span>&rarr;</span></a>
           <a href="index.html#pipeline" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 03 ] Execution Pipeline</span><span>&rarr;</span></a>
-          <a href="#capabilities" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 04 ] 4 Core Capabilities</span><span>&rarr;</span></a>
-          <a href="#lifecycle" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 05 ] 8-Stage Lifecycle</span><span>&rarr;</span></a>
-          <a href="#cases" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 06 ] Representative Projects</span><span>&rarr;</span></a>
-          <a href="#comparison" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 07 ] Decision Matrix</span><span>&rarr;</span></a>
-          <a href="about.html" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: var(--brand-accent); font-weight: 800;"><span>[ 08 ] About Us</span><span>&bull;</span></a>
+          <a href="#architecture" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 04 ] Live Architecture Diagram</span><span>&rarr;</span></a>
+          <a href="#capabilities" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 05 ] 4 Core Capabilities</span><span>&rarr;</span></a>
+          <a href="#lifecycle" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 06 ] 8-Stage Lifecycle</span><span>&rarr;</span></a>
+          <a href="#cases" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 07 ] Representative Projects</span><span>&rarr;</span></a>
+          <a href="#comparison" class="mobile-nav-link" onclick="closeMobileMenu()"><span>[ 08 ] Decision Matrix</span><span>&rarr;</span></a>
+          <a href="about.html" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: var(--brand-accent); font-weight: 800;"><span>[ 09 ] About Us</span><span>&bull;</span></a>
           <a href="#contact" class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="closeMobileMenu()">
             <span>Get Free Blueprint &rarr;</span>
           </a>
@@ -332,6 +334,7 @@
         <a href="#overview" class="jump-nav-link active">Overview</a>
         <a href="#values" class="jump-nav-link">Mission &amp; Values</a>
         <a href="#market" class="jump-nav-link">Who We Serve</a>
+        <a href="#architecture" class="jump-nav-link">Architecture Map</a>
         <a href="#capabilities" class="jump-nav-link">4 Pillars</a>
         <a href="#lifecycle" class="jump-nav-link">8-Stage Lifecycle</a>
         <a href="#cases" class="jump-nav-link">Projects</a>
@@ -360,7 +363,17 @@
 
           <div class="hero-tag-row">
             <span class="status-pill"><span class="status-dot status-dot-pulse"></span> SYSTEM: 24/7 ACTIVE</span>
-            <span class="hero-code-tag">HUB: NCR, PHILIPPINES // REMOTE GLOBAL</span>
+            <div class="hero-hud-ticker" id="heroLiveHudTicker">
+              <span class="hud-dot"></span>
+              <span class="hud-label">COORDS:</span>
+              <span class="hud-val" id="hudCoordsVal">14.5547° N, 121.0244° E</span>
+              <span style="color: var(--border-subtle);">|</span>
+              <span class="hud-label">TIME:</span>
+              <span class="hud-val" id="hudTimeVal">UTC+8 00:00:00</span>
+              <span style="color: var(--border-subtle);">|</span>
+              <span class="hud-label">THREADS:</span>
+              <span class="hud-val" id="hudThreadsVal">16 ACTIVE</span>
+            </div>
             <span class="hero-code-tag">ENGINEERING MANDATE: OUTCOME-DRIVEN</span>
           </div>
 
@@ -368,15 +381,15 @@
             <div class="hero-text-col">
               <h1 class="hero-title">Engineering Practical Business Infrastructure<span class="red-dot">.</span></h1>
               <p class="hero-subtitle">
-                FlowState Automations is a dedicated technology solutions company. We help growing small and medium-sized organizations eliminate manual bottlenecks, centralize fragmented business information, and establish high-reliability software, automation, and applied AI workflows.
+                FlowState Automations is a dedicated technology engineering firm. We help growing small and medium-sized organizations eliminate manual bottlenecks, centralize fragmented business information, and establish high-reliability software, automation, and applied AI workflows.
               </p>
               
               <div class="hero-cta-group">
-                <a href="#contact" class="btn btn-primary">
+                <a href="#contact" class="btn btn-primary btn-magnetic">
                   <span>Request Custom Blueprint</span>
-                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
-                <button class="btn btn-secondary" onclick="window.openFlowStateChat ? window.openFlowStateChat() : null">
+                <button class="btn btn-secondary btn-magnetic" onclick="window.openFlowStateChat ? window.openFlowStateChat() : null">
                   <span class="status-dot"></span>
                   <span>Chat With Technical Desk</span>
                 </button>
@@ -384,22 +397,22 @@
 
               <div class="hero-metrics-strip">
                 <div class="hero-metric-item">
-                  <span class="hero-metric-val">&lt; 1.8s</span>
+                  <span class="hero-metric-val counter-ticker" data-counter-prefix="&lt; " data-counter-suffix="s" data-counter-decimals="1" data-counter-target="1.8">&lt; 1.8s</span>
                   <span class="hero-metric-label">AI Triage Latency</span>
                 </div>
                 <div class="hero-metric-item">
-                  <span class="hero-metric-val">100%</span>
+                  <span class="hero-metric-val counter-ticker" data-counter-suffix="%" data-counter-target="100">100%</span>
                   <span class="hero-metric-label">Client Data Ownership</span>
                 </div>
                 <div class="hero-metric-item">
-                  <span class="hero-metric-val">₱0</span>
+                  <span class="hero-metric-val counter-ticker" data-counter-prefix="₱" data-counter-target="0">₱0</span>
                   <span class="hero-metric-label">Per-Seat SaaS Tax</span>
                 </div>
               </div>
             </div>
 
             <!-- Terminal Chassis Visual -->
-            <div class="hero-visual-frame">
+            <div class="hero-visual-frame kinetic-card">
               <div class="hero-visual-header">
                 <span>[ TERMINAL // ARCHITECTURE_MANDATE.SYS ]</span>
                 <div class="hero-terminal-dots">
@@ -414,7 +427,7 @@
                     <div class="hero-flow-node-title">Custom Software Architecture</div>
                     <div class="hero-flow-node-meta">Dedicated PostgreSQL / Private APIs</div>
                   </div>
-                  <span class="hero-flow-node-badge">PILLAR 01</span>
+                  <span class="hero-flow-node-badge">[ PILLAR 01 ]</span>
                 </div>
                 <div class="hero-flow-connector"></div>
                 <div class="hero-flow-node">
@@ -422,7 +435,7 @@
                     <div class="hero-flow-node-title">Business Process Automation</div>
                     <div class="hero-flow-node-meta">Omni-Channel Webhooks + Calendar Locks</div>
                   </div>
-                  <span class="hero-flow-node-badge">PILLAR 02</span>
+                  <span class="hero-flow-node-badge">[ PILLAR 02 ]</span>
                 </div>
                 <div class="hero-flow-connector"></div>
                 <div class="hero-flow-node">
@@ -430,7 +443,7 @@
                     <div class="hero-flow-node-title">Applied AI &amp; Conversational Triage</div>
                     <div class="hero-flow-node-meta">Sub-2s Natural Language Qualification</div>
                   </div>
-                  <span class="hero-flow-node-badge">PILLAR 03</span>
+                  <span class="hero-flow-node-badge">[ PILLAR 03 ]</span>
                 </div>
                 <div class="hero-flow-connector"></div>
                 <div class="hero-flow-node">
@@ -438,14 +451,14 @@
                     <div class="hero-flow-node-title">Hardware &amp; Workforce Integration</div>
                     <div class="hero-flow-node-meta">RFID &amp; Biometrics Cloud Bridging</div>
                   </div>
-                  <span class="hero-flow-node-badge">PILLAR 04</span>
+                  <span class="hero-flow-node-badge">[ PILLAR 04 ]</span>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Problem-First Core Principle Banner -->
-          <div class="principle-chassis">
+          <div class="principle-chassis kinetic-card">
             <div class="principle-header">
               <span class="principle-badge">[ CORE OPERATING PRINCIPLE ]</span>
               <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted);">DISCIPLINED ENGINEERING PHILOSOPHY</span>
@@ -490,7 +503,7 @@
 
           <div class="values-grid">
             <!-- Mission Card -->
-            <article class="value-card">
+            <article class="value-card kinetic-card">
               <div class="value-card-tag">[ MISSION STATEMENT ]</div>
               <h3 class="value-card-title">Simplify, Automate &amp; Scale</h3>
               <p class="value-card-desc">
@@ -499,7 +512,7 @@
             </article>
 
             <!-- Vision Card -->
-            <article class="value-card">
+            <article class="value-card kinetic-card">
               <div class="value-card-tag">[ VISION STATEMENT ]</div>
               <h3 class="value-card-title">Trusted Technology Partner</h3>
               <p class="value-card-desc">
@@ -508,7 +521,7 @@
             </article>
 
             <!-- Core Values Card -->
-            <article class="value-card" style="border-color: var(--border-strong);">
+            <article class="value-card kinetic-card" style="border-color: var(--border-strong);">
               <div class="value-card-tag">[ CORE VALUES ]</div>
               <h3 class="value-card-title">Reliability, Excellence &amp; Integrity</h3>
               <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
@@ -543,7 +556,7 @@
 
           <div class="profile-grid">
             <!-- Profile 01 -->
-            <div class="profile-card">
+            <div class="profile-card kinetic-card">
               <div>
                 <div class="profile-card-tag">[ 01 // EXPANSION ]</div>
                 <h3 class="profile-card-title">Expanding Enterprises</h3>
@@ -558,7 +571,7 @@
             </div>
 
             <!-- Profile 02 -->
-            <div class="profile-card">
+            <div class="profile-card kinetic-card">
               <div>
                 <div class="profile-card-tag">[ 02 // EFFICIENCY ]</div>
                 <h3 class="profile-card-title">Bottlenecked Operations</h3>
@@ -573,7 +586,7 @@
             </div>
 
             <!-- Profile 03 -->
-            <div class="profile-card">
+            <div class="profile-card kinetic-card">
               <div>
                 <div class="profile-card-tag">[ 03 // ARCHITECTURE ]</div>
                 <h3 class="profile-card-title">Custom Architecture Needs</h3>
@@ -588,7 +601,7 @@
             </div>
 
             <!-- Profile 04 -->
-            <div class="profile-card">
+            <div class="profile-card kinetic-card">
               <div>
                 <div class="profile-card-tag">[ 04 // HYBRID TECH ]</div>
                 <h3 class="profile-card-title">Hybrid Facilities</h3>
@@ -605,11 +618,152 @@
         </div>
       </section>
 
+      <!-- 4B. INTERACTIVE LIVE SVG ARCHITECTURE DIAGRAM -->
+      <section class="arch-visualizer-section" id="architecture">
+        <div class="section-container">
+          <div class="section-header text-center">
+            <span class="section-tag">03 // ARCHITECTURAL TOPOLOGY</span>
+            <h2 class="section-title">Live Systems Architecture Map<span class="red-dot">.</span></h2>
+            <p class="section-subtitle">
+              Interactive orchestration map showing how FlowState unifies custom software, event pipelines, applied AI triage, and physical hardware bridges into one seamless, zero-tax ecosystem.
+            </p>
+          </div>
+
+          <div class="arch-card-frame">
+            <div class="arch-card-header">
+              <div class="arch-header-title">
+                <span class="status-dot"></span>
+                <span>TOPOLOGY: FLOWSTATE UNIFIED BUS // LIVE DATA FLOW</span>
+              </div>
+              <div class="arch-header-actions">
+                <button class="arch-node-selector-btn active" data-node="all" onclick="selectArchNode('all')">[ All System Nodes ]</button>
+                <button class="arch-node-selector-btn" data-node="p1" onclick="selectArchNode('p1')">[ 01 Software Core ]</button>
+                <button class="arch-node-selector-btn" data-node="p2" onclick="selectArchNode('p2')">[ 02 Automation ]</button>
+                <button class="arch-node-selector-btn" data-node="p3" onclick="selectArchNode('p3')">[ 03 Applied AI ]</button>
+                <button class="arch-node-selector-btn" data-node="p4" onclick="selectArchNode('p4')">[ 04 Hardware IoT ]</button>
+                <button class="arch-sim-btn btn-magnetic" id="archSimulateBtn" onclick="runArchitectureSimulation()">
+                  <span>▷ Simulate Ingest</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="arch-canvas-wrap">
+              <!-- Responsive Live Vector Network Visualizer -->
+              <svg class="arch-svg-diagram" viewBox="0 0 960 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="FlowState Architecture Diagram">
+                <defs>
+                  <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#E11D48" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#09090B" stop-opacity="0.4"/>
+                  </linearGradient>
+                  <filter id="glowPulse" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                  </filter>
+                </defs>
+
+                <!-- Grid Guide Lines -->
+                <line x1="40" y1="210" x2="920" y2="210" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="2 2" />
+                <line x1="480" y1="40" x2="480" y2="380" stroke="#F1F5F9" stroke-width="1" stroke-dasharray="2 2" />
+
+                <!-- Connecting Data Paths from Nodes to Central Hub -->
+                <!-- Path 1: Pillar 01 (Top-Left) -> Center (480, 210) -->
+                <path id="archPath1" class="arch-path-line" d="M220 110 L480 210" />
+                <!-- Path 2: Pillar 02 (Top-Right) -> Center (480, 210) -->
+                <path id="archPath2" class="arch-path-line" d="M740 110 L480 210" />
+                <!-- Path 3: Pillar 03 (Bottom-Left) -> Center (480, 210) -->
+                <path id="archPath3" class="arch-path-line" d="M220 310 L480 210" />
+                <!-- Path 4: Pillar 04 (Bottom-Right) -> Center (480, 210) -->
+                <path id="archPath4" class="arch-path-line" d="M740 310 L480 210" />
+
+                <!-- Cross Connection Loop: Inbound Webhooks (P2) -> AI Triage (P3) -> Custom DB (P1) -> Hardware (P4) -->
+                <path id="archPathFlow" class="arch-path-line" d="M640 110 L320 310 L320 110 L640 310" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="6 6" />
+
+                <!-- Animated Data Packets (Orbs) -->
+                <circle id="archPacket1" class="arch-data-packet" cx="220" cy="110" r="4.5" />
+                <circle id="archPacket2" class="arch-data-packet" cx="740" cy="110" r="4.5" />
+                <circle id="archPacket3" class="arch-data-packet" cx="220" cy="310" r="4.5" />
+                <circle id="archPacket4" class="arch-data-packet" cx="740" cy="310" r="4.5" />
+
+                <!-- Central Engine Hub (480, 210) -->
+                <g id="archCenterHub" transform="translate(480, 210)">
+                  <rect x="-80" y="-36" width="160" height="72" fill="#09090B" stroke="#E11D48" stroke-width="1.5" />
+                  <rect x="-84" y="-40" width="168" height="80" fill="none" stroke="#E4E4E7" stroke-width="1" stroke-dasharray="4 4" />
+                  <text x="0" y="-12" text-anchor="middle" fill="#E11D48" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">[ FLOWSTATE CORE ]</text>
+                  <text x="0" y="6" text-anchor="middle" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800">UNIFIED ENGINE</text>
+                  <text x="0" y="22" text-anchor="middle" fill="#A1A1AA" font-family="'JetBrains Mono', monospace" font-size="8">ZERO-TAX EVENT BUS</text>
+                </g>
+
+                <!-- NODE 1: Pillar 01 Custom Software (Top Left: 220, 110) -->
+                <g id="archNodeP1" class="arch-interactive-node" onclick="selectArchNode('p1')" transform="translate(220, 110)">
+                  <rect class="arch-node-rect" x="-110" y="-40" width="220" height="80" fill="#FFFFFF" stroke="#09090B" stroke-width="1.2" />
+                  <rect x="-105" y="-35" width="210" height="70" fill="none" stroke="#F1F5F9" stroke-width="1" />
+                  <text x="-95" y="-18" fill="#E11D48" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">[ PILLAR 01 // CORE ]</text>
+                  <text x="-95" y="4" fill="#09090B" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="800">Custom Software Systems</text>
+                  <text x="-95" y="22" fill="#71717A" font-family="'JetBrains Mono', monospace" font-size="8.5">D1 &bull; PostgreSQL &bull; Private Portals</text>
+                </g>
+
+                <!-- NODE 2: Pillar 02 Process Automation (Top Right: 740, 110) -->
+                <g id="archNodeP2" class="arch-interactive-node" onclick="selectArchNode('p2')" transform="translate(740, 110)">
+                  <rect class="arch-node-rect" x="-110" y="-40" width="220" height="80" fill="#FFFFFF" stroke="#09090B" stroke-width="1.2" />
+                  <rect x="-105" y="-35" width="210" height="70" fill="none" stroke="#F1F5F9" stroke-width="1" />
+                  <text x="-95" y="-18" fill="#E11D48" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">[ PILLAR 02 // PIPELINES ]</text>
+                  <text x="-95" y="4" fill="#09090B" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="800">Business Process Automation</text>
+                  <text x="-95" y="22" fill="#71717A" font-family="'JetBrains Mono', monospace" font-size="8.5">WhatsApp &bull; Meta &bull; Calendar Lock</text>
+                </g>
+
+                <!-- NODE 3: Pillar 03 Applied AI (Bottom Left: 220, 310) -->
+                <g id="archNodeP3" class="arch-interactive-node" onclick="selectArchNode('p3')" transform="translate(220, 310)">
+                  <rect class="arch-node-rect" x="-110" y="-40" width="220" height="80" fill="#FFFFFF" stroke="#09090B" stroke-width="1.2" />
+                  <rect x="-105" y="-35" width="210" height="70" fill="none" stroke="#F1F5F9" stroke-width="1" />
+                  <text x="-95" y="-18" fill="#E11D48" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">[ PILLAR 03 // INTELLIGENCE ]</text>
+                  <text x="-95" y="4" fill="#09090B" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="800">Applied Artificial Intelligence</text>
+                  <text x="-95" y="22" fill="#71717A" font-family="'JetBrains Mono', monospace" font-size="8.5">Sub-2s Triage &bull; Taglish NLP &bull; RAG</text>
+                </g>
+
+                <!-- NODE 4: Pillar 04 Hardware IoT (Bottom Right: 740, 310) -->
+                <g id="archNodeP4" class="arch-interactive-node" onclick="selectArchNode('p4')" transform="translate(740, 310)">
+                  <rect class="arch-node-rect" x="-110" y="-40" width="220" height="80" fill="#FFFFFF" stroke="#09090B" stroke-width="1.2" />
+                  <rect x="-105" y="-35" width="210" height="70" fill="none" stroke="#F1F5F9" stroke-width="1" />
+                  <text x="-95" y="-18" fill="#E11D48" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="800">[ PILLAR 04 // HARDWARE ]</text>
+                  <text x="-95" y="4" fill="#09090B" font-family="'Plus Jakarta Sans', sans-serif" font-size="12.5" font-weight="800">Integrated Hardware &amp; RFID</text>
+                  <text x="-95" y="22" fill="#71717A" font-family="'JetBrains Mono', monospace" font-size="8.5">Biometrics &bull; Scanners &bull; WebSockets</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Architecture Live Telemetry Inspector Strip -->
+            <div class="arch-telemetry-strip" id="archTelemetryStrip">
+              <div class="arch-telemetry-item">
+                <span class="arch-telemetry-label">[ ACTIVE NODE SPECS ]</span>
+                <span class="arch-telemetry-val" id="archTelName">Unified Orchestration Bus (All 4 Pillars)</span>
+              </div>
+              <div class="arch-telemetry-item">
+                <span class="arch-telemetry-label">CORE PROTOCOL</span>
+                <span class="arch-telemetry-val" id="archTelProtocol">REST / WebSockets / Cloudflare D1</span>
+              </div>
+              <div class="arch-telemetry-item">
+                <span class="arch-telemetry-label">AVERAGE LATENCY</span>
+                <span class="arch-telemetry-val accent" id="archTelLatency">&lt; 50ms Edge / &lt; 1.8s LLM</span>
+              </div>
+              <div class="arch-telemetry-item">
+                <span class="arch-telemetry-label">DATA SOVEREIGNTY</span>
+                <span class="arch-telemetry-val" id="archTelSovereignty">100% Client Private Cloud</span>
+              </div>
+              <div class="arch-telemetry-item">
+                <span class="arch-telemetry-label">UPTIME SLA</span>
+                <span class="arch-telemetry-val" id="archTelUptime">99.99% Production</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       <!-- 5. FOUR CORE CAPABILITY PILLARS WITH INTERACTIVE FILTER & SEARCH -->
       <section class="methodology-section" id="capabilities">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">03 // CAPABILITY MATRIX</span>
+            <span class="section-tag">04 // CAPABILITY MATRIX</span>
             <h2 class="section-title">Four Core Technology Pillars<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               FlowState delivers modular and full-lifecycle technology systems engineered to resolve root operational challenges without generic templates or bloated software clutter.
@@ -626,7 +780,7 @@
               <button class="pillar-filter-btn" data-pillar="p4" onclick="filterPillars('p4')">[ 04 // Hardware &amp; RFID ]</button>
             </div>
             <div class="pillar-search-box">
-              <span style="font-size: 0.8rem; color: var(--ink-muted);">🔍</span>
+              <svg class="pillar-search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="pillarSearchInput" class="pillar-search-input" placeholder="Search stack (e.g. RFID, CRM, WhatsApp, D1)..." aria-label="Search capabilities and tech stack">
             </div>
           </div>
@@ -634,33 +788,33 @@
           <div class="pillars-container" id="pillarsContainer">
 
             <!-- Pillar 1: Custom Software Solutions -->
-            <article class="pillar-card-detailed" data-pillar-category="p1">
+            <article class="pillar-card-detailed kinetic-card" data-pillar-category="p1" id="pillarCardP1">
               <div class="pillar-header-row">
                 <div>
                   <span class="pillar-num-tag">[ PILLAR 01 // BESPOKE PLATFORMS ]</span>
                   <h3 class="pillar-main-title">Custom Software Solutions</h3>
                 </div>
                 <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-muted);">
-                  DEDICATED INFRASTRUCTURE • ZERO SEAT TAX
+                  DEDICATED INFRASTRUCTURE &bull; ZERO SEAT TAX
                 </div>
               </div>
               <p class="pillar-summary-lead">
                 Bespoke software systems built around the exact organizational hierarchy, approval flows, and data architecture of your business. Clients maintain 100% data ownership on dedicated cloud infrastructure with zero recurring per-user licensing fees.
               </p>
               <div class="pillar-modules-grid">
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Enterprise Portals</div>
                   <p class="pillar-module-desc">Company-wide business management platforms uniting multi-department workflows under one unified interface.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Custom CRM Systems</div>
                   <p class="pillar-module-desc">Tailored Customer Relationship Management pipelines matching your specific lead stages, fields, and metrics.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Operations Hubs</div>
                   <p class="pillar-module-desc">Centralized departmental information hubs, approval routing engines, and executive oversight dashboards.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Scheduling Engines</div>
                   <p class="pillar-module-desc">Specialized booking engines, asset dispatch matrices, and structured employee records management.</p>
                 </div>
@@ -676,33 +830,33 @@
             </article>
 
             <!-- Pillar 2: Business Process Automation -->
-            <article class="pillar-card-detailed" data-pillar-category="p2">
+            <article class="pillar-card-detailed kinetic-card" data-pillar-category="p2" id="pillarCardP2">
               <div class="pillar-header-row">
                 <div>
                   <span class="pillar-num-tag">[ PILLAR 02 // WORKFLOW PIPELINES ]</span>
                   <h3 class="pillar-main-title">Business Process Automation</h3>
                 </div>
                 <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-muted);">
-                  EVENT-DRIVEN • ZERO MANUAL RE-ENTRY
+                  EVENT-DRIVEN &bull; ZERO MANUAL RE-ENTRY
                 </div>
               </div>
               <p class="pillar-summary-lead">
                 Engineering intelligent automated pipelines that connect fragmented business touchpoints, eliminating manual data re-entry and guaranteeing zero delay in critical customer or operational events.
               </p>
               <div class="pillar-modules-grid">
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Omni-Channel Webhooks</div>
                   <p class="pillar-module-desc">Inbound inquiry ingestion and real-time triage across WhatsApp Business, Meta Messenger, Viber, and Web.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Booking Automation</div>
                   <p class="pillar-module-desc">Real-time bi-directional calendar lock for Google Calendar &amp; Outlook with zero double-booking and payment deposit alerts.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Approval Workflows</div>
                   <p class="pillar-module-desc">Automated multi-level management approvals, internal Slack/Telegram notifications, and scheduled dispatches.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Live Data Sync</div>
                   <p class="pillar-module-desc">Direct automated synchronization between incoming webhooks, Google Sheets, PostgreSQL, and private databases.</p>
                 </div>
@@ -718,33 +872,33 @@
             </article>
 
             <!-- Pillar 3: Applied Artificial Intelligence Solutions -->
-            <article class="pillar-card-detailed" data-pillar-category="p3">
+            <article class="pillar-card-detailed kinetic-card" data-pillar-category="p3" id="pillarCardP3">
               <div class="pillar-header-row">
                 <div>
                   <span class="pillar-num-tag">[ PILLAR 03 // APPLIED MACHINE INTELLIGENCE ]</span>
                   <h3 class="pillar-main-title">Applied Artificial Intelligence Solutions</h3>
                 </div>
                 <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-muted);">
-                  FUNCTIONAL UTILITY • SUB-2S LATENCY
+                  FUNCTIONAL UTILITY &bull; SUB-2S LATENCY
                 </div>
               </div>
               <p class="pillar-summary-lead">
                 We implement practical, high-utility AI as a functional operational tool. FlowState rejects decorative AI gimmicks, deploying machine intelligence exclusively where it provides measurable speed, accuracy, and labor savings.
               </p>
               <div class="pillar-modules-grid">
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Conversational AI Triage</div>
                   <p class="pillar-module-desc">Sub-2-second natural language inquiry triage and Taglish/English lead qualification calibrated to your exact business guidelines.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Internal Knowledge Assistants</div>
                   <p class="pillar-module-desc">Context-aware employee knowledge bases and instant SOP retrieval systems powered by retrieval-augmented generation (RAG).</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Intelligent Document Extraction</div>
                   <p class="pillar-module-desc">Automated data parsing from invoices, receipts, and client submissions with structured database insertion.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Intent Classification</div>
                   <p class="pillar-module-desc">Automated filtering of spam, intent scoring of high-value prospects, and routing of urgent cases to human managers.</p>
                 </div>
@@ -760,33 +914,33 @@
             </article>
 
             <!-- Pillar 4: Integrated Technology Solutions (Hardware + Software) -->
-            <article class="pillar-card-detailed" data-pillar-category="p4">
+            <article class="pillar-card-detailed kinetic-card" data-pillar-category="p4" id="pillarCardP4">
               <div class="pillar-header-row">
                 <div>
                   <span class="pillar-num-tag">[ PILLAR 04 // PHYSICAL + CLOUD INTEGRATION ]</span>
                   <h3 class="pillar-main-title">Integrated Technology Solutions</h3>
                 </div>
                 <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-muted);">
-                  HARDWARE SCAFFOLDING • IOT DATA BRIDGES
+                  HARDWARE SCAFFOLDING &bull; IOT DATA BRIDGES
                 </div>
               </div>
               <p class="pillar-summary-lead">
                 Bridging physical workplace infrastructure with digital cloud software for unified tracking, automated timekeeping, security controls, and facility management.
               </p>
               <div class="pillar-modules-grid">
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">RFID Attendance Systems</div>
                   <p class="pillar-module-desc">Automated workplace check-in scanning hardware with live cloud dashboard synchronization and audit logging.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Biometric Attendance</div>
                   <p class="pillar-module-desc">Secure biometric identity verification hardware connected directly to centralized employee attendance records.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Device &amp; Sensor Bridges</div>
                   <p class="pillar-module-desc">Bridging physical hardware sensors and scanning devices directly into custom web management software.</p>
                 </div>
-                <div class="pillar-module-card">
+                <div class="pillar-module-card kinetic-card">
                   <div class="pillar-module-title">Automated Payroll Prep</div>
                   <p class="pillar-module-desc">Instant aggregation of physical punch logs into structured time-sheets and automated overtime calculations.</p>
                 </div>
@@ -809,21 +963,108 @@
       <section class="methodology-section" id="lifecycle" style="background: var(--canvas-paper);">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">04 // DELIVERY FRAMEWORK</span>
+            <span class="section-tag">05 // DELIVERY FRAMEWORK</span>
             <h2 class="section-title">The 8-Stage Engineering Lifecycle<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               We never force pre-packaged templates onto unique business workflows. Every FlowState deployment follows a disciplined, verified 8-stage lifecycle:
             </p>
           </div>
 
+          <!-- Interactive Mechanical Lifecycle Stepper & Telemetry Progression Hub -->
+          <div class="lifecycle-stepper-container">
+            <div class="lifecycle-stepper-rail" id="lifecycleStepperRail">
+              <button class="lifecycle-step-chip active" data-stage="1" onclick="selectLifecycleStage(1)">
+                <span class="lifecycle-step-num">01.</span>
+                <span class="lifecycle-step-name">Discovery</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="2" onclick="selectLifecycleStage(2)">
+                <span class="lifecycle-step-num">02.</span>
+                <span class="lifecycle-step-name">Mapping</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="3" onclick="selectLifecycleStage(3)">
+                <span class="lifecycle-step-num">03.</span>
+                <span class="lifecycle-step-name">Bottlenecks</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="4" onclick="selectLifecycleStage(4)">
+                <span class="lifecycle-step-num">04.</span>
+                <span class="lifecycle-step-name">Specs</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="5" onclick="selectLifecycleStage(5)">
+                <span class="lifecycle-step-num">05.</span>
+                <span class="lifecycle-step-name">Blueprint</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="6" onclick="selectLifecycleStage(6)">
+                <span class="lifecycle-step-num">06.</span>
+                <span class="lifecycle-step-name">Prototype</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="7" onclick="selectLifecycleStage(7)">
+                <span class="lifecycle-step-num">07.</span>
+                <span class="lifecycle-step-name">Turnkey</span>
+              </button>
+              <button class="lifecycle-step-chip" data-stage="8" onclick="selectLifecycleStage(8)">
+                <span class="lifecycle-step-num">08.</span>
+                <span class="lifecycle-step-name">Managed SLA</span>
+              </button>
+            </div>
+
+            <!-- Active Stage Inspector HUD Box -->
+            <div class="lifecycle-inspector-chassis" id="lifecycleInspectorChassis">
+              <div class="lifecycle-progress-gauge">
+                <div class="lifecycle-progress-bar-fill" id="lifecycleProgressFill"></div>
+              </div>
+
+              <div class="lifecycle-inspector-header">
+                <div class="lifecycle-inspector-title-group">
+                  <span class="lifecycle-inspector-tag" id="inspectorPhaseTag">[ PHASE 1: DISCOVERY &amp; ARCHITECTURE ]</span>
+                  <h3 class="lifecycle-inspector-title" id="inspectorStageTitle">Stage 01: Operational Discovery</h3>
+                </div>
+                <div class="lifecycle-controls">
+                  <button class="lifecycle-ctrl-btn" onclick="prevLifecycleStage()" aria-label="Previous Stage">&larr; Prev</button>
+                  <button class="lifecycle-ctrl-btn" onclick="nextLifecycleStage()" aria-label="Next Stage">Next &rarr;</button>
+                  <button class="lifecycle-ctrl-btn active" id="lifecycleAutoRunBtn" onclick="toggleLifecycleAutoRun()">Auto-Cycle: ON</button>
+                </div>
+              </div>
+
+              <div class="lifecycle-inspector-grid">
+                <div>
+                  <p class="lifecycle-inspector-desc" id="inspectorStageDesc">
+                    Conducting in-depth stakeholder interviews to map existing workflows, tools, communication channels, and operational pain points across all departmental operations.
+                  </p>
+                  <div class="stage-artifact-tag" id="inspectorArtifactTag">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span id="inspectorArtifactName">Deliverable: Friction Audit Document</span>
+                  </div>
+                </div>
+
+                <div class="lifecycle-inspector-meta-box">
+                  <div class="lifecycle-meta-row">
+                    <span class="lifecycle-meta-label">TARGET TIMELINE:</span>
+                    <span class="lifecycle-meta-val" id="inspectorMetaDuration">Days 1–3</span>
+                  </div>
+                  <div class="lifecycle-meta-row">
+                    <span class="lifecycle-meta-label">VERIFICATION:</span>
+                    <span class="lifecycle-meta-val" id="inspectorMetaStatus" style="color: var(--brand-success);">Stakeholder Sign-Off</span>
+                  </div>
+                  <div class="lifecycle-meta-row">
+                    <span class="lifecycle-meta-label">STAGE PROGRESS:</span>
+                    <span class="lifecycle-meta-val" id="inspectorMetaPercent">Stage 1 of 8 (12.5%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="methodology-grid">
             <!-- Stage 01 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card is-active" id="stageCard1" onclick="selectLifecycleStage(1)">
               <div>
                 <div class="methodology-card-num">01.</div>
                 <h3 class="methodology-card-title">Operational Discovery</h3>
                 <p class="methodology-card-desc">Conducting in-depth stakeholder interviews to map existing workflows, tools, communication channels, and operational pain points.</p>
-                <div class="stage-artifact-tag">Artifact: Friction Audit Document</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Friction Audit Document</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -832,12 +1073,15 @@
             </div>
 
             <!-- Stage 02 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard2" onclick="selectLifecycleStage(2)">
               <div>
                 <div class="methodology-card-num">02.</div>
                 <h3 class="methodology-card-title">Process &amp; Data Mapping</h3>
                 <p class="methodology-card-desc">Documenting the exact path of customer inquiries, internal approvals, database records, and inter-department communications.</p>
-                <div class="stage-artifact-tag">Artifact: Data Flow &amp; Webhook Matrix</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Data Flow &amp; Webhook Matrix</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -846,12 +1090,15 @@
             </div>
 
             <!-- Stage 03 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard3" onclick="selectLifecycleStage(3)">
               <div>
                 <div class="methodology-card-num">03.</div>
                 <h3 class="methodology-card-title">Bottleneck Identification</h3>
                 <p class="methodology-card-desc">Pinpointing exact operational friction points where labor hours, response velocity, or data integrity are lost to manual tasks.</p>
-                <div class="stage-artifact-tag">Artifact: Waste Reduction Breakdown</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Waste Reduction Breakdown</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -860,12 +1107,15 @@
             </div>
 
             <!-- Stage 04 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard4" onclick="selectLifecycleStage(4)">
               <div>
                 <div class="methodology-card-num">04.</div>
                 <h3 class="methodology-card-title">Requirements Definition</h3>
                 <p class="methodology-card-desc">Defining strict functional scope, data security controls, API integration contracts, and quantifiable success criteria.</p>
-                <div class="stage-artifact-tag">Artifact: Technical Scope &amp; KPI Spec</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Technical Scope &amp; KPI Spec</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -874,12 +1124,15 @@
             </div>
 
             <!-- Stage 05 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard5" onclick="selectLifecycleStage(5)">
               <div>
                 <div class="methodology-card-num">05.</div>
                 <h3 class="methodology-card-title">Solution Architecture</h3>
                 <p class="methodology-card-desc">Designing custom software architecture, database schema, webhook routing matrices, and physical hardware links.</p>
-                <div class="stage-artifact-tag">Artifact: System Blueprint &amp; Schema</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: System Blueprint &amp; Schema</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -888,12 +1141,15 @@
             </div>
 
             <!-- Stage 06 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard6" onclick="selectLifecycleStage(6)">
               <div>
                 <div class="methodology-card-num">06.</div>
                 <h3 class="methodology-card-title">Interactive Prototype</h3>
                 <p class="methodology-card-desc">Building a working prototype around your actual workflow before full deployment, allowing hands-on stakeholder verification.</p>
-                <div class="stage-artifact-tag">Artifact: Working Interactive Prototype</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Working Interactive Prototype</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -902,12 +1158,15 @@
             </div>
 
             <!-- Stage 07 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard7" onclick="selectLifecycleStage(7)">
               <div>
                 <div class="methodology-card-num">07.</div>
                 <h3 class="methodology-card-title">Turnkey Implementation</h3>
                 <p class="methodology-card-desc">Production engineering, database migration, webhook stress testing, security hardening, and live team onboarding.</p>
-                <div class="stage-artifact-tag">Artifact: Live Cloud Deploy &amp; Onboarding</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: Live Cloud Deploy &amp; Onboarding</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 1</span>
@@ -916,12 +1175,15 @@
             </div>
 
             <!-- Stage 08 -->
-            <div class="methodology-card">
+            <div class="methodology-card kinetic-card" id="stageCard8" onclick="selectLifecycleStage(8)">
               <div>
                 <div class="methodology-card-num">08.</div>
                 <h3 class="methodology-card-title">Ongoing SLA &amp; Support</h3>
                 <p class="methodology-card-desc">Continuous uptime monitoring, security patching, SLA-backed technical assistance, and proactive feature evolution as operations grow.</p>
-                <div class="stage-artifact-tag">Artifact: 99.99% Uptime &amp; SLA Retainer</div>
+                <div class="stage-artifact-tag">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Artifact: 99.99% Uptime &amp; SLA Retainer</span>
+                </div>
               </div>
               <div class="methodology-card-phase">
                 <span>PHASE 2</span>
@@ -936,7 +1198,7 @@
       <section class="case-section" id="cases">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">05 // PROVEN TRACK RECORD</span>
+            <span class="section-tag">06 // PROVEN TRACK RECORD</span>
             <h2 class="section-title">Representative Projects &amp; Engagements<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               FlowState's engineering record demonstrates practical execution across bespoke enterprise software, food manufacturing workflows, and workforce hardware integration:
@@ -946,7 +1208,7 @@
           <div class="case-grid">
 
             <!-- Case 01 -->
-            <article class="case-card">
+            <article class="case-card kinetic-card">
               <div class="case-header">
                 <span class="case-tag-badge">[ ACTIVE BUILD // ENTERPRISE ]</span>
                 <h3 class="case-title">Enterprise Business Management Platform</h3>
@@ -965,11 +1227,11 @@
               <div>
                 <div class="case-metric-strip">
                   <div class="case-metric-box">
-                    <div class="case-metric-val">100%</div>
+                    <div class="case-metric-val counter-ticker" data-counter-suffix="%" data-counter-target="100">100%</div>
                     <div class="case-metric-lbl">Data Centralization</div>
                   </div>
                   <div class="case-metric-box">
-                    <div class="case-metric-val">₱0</div>
+                    <div class="case-metric-val counter-ticker" data-counter-prefix="₱" data-counter-target="0">₱0</div>
                     <div class="case-metric-lbl">Monthly Seat Tax</div>
                   </div>
                 </div>
@@ -983,7 +1245,7 @@
             </article>
 
             <!-- Case 02 -->
-            <article class="case-card">
+            <article class="case-card kinetic-card">
               <div class="case-header">
                 <span class="case-tag-badge">[ LIVE PRODUCTION // AUTOMATION ]</span>
                 <h3 class="case-title">Automated Booking &amp; Triage System</h3>
@@ -1002,7 +1264,7 @@
               <div>
                 <div class="case-metric-strip">
                   <div class="case-metric-box">
-                    <div class="case-metric-val">&lt; 1.5s</div>
+                    <div class="case-metric-val counter-ticker" data-counter-prefix="&lt; " data-counter-suffix="s" data-counter-decimals="1" data-counter-target="1.5">&lt; 1.5s</div>
                     <div class="case-metric-lbl">Response Velocity</div>
                   </div>
                   <div class="case-metric-box">
@@ -1020,7 +1282,7 @@
             </article>
 
             <!-- Case 03 -->
-            <article class="case-card">
+            <article class="case-card kinetic-card">
               <div class="case-header">
                 <span class="case-tag-badge">[ HARDWARE SCAFFOLDING // IOT ]</span>
                 <h3 class="case-title">Workforce &amp; Attendance Management</h3>
@@ -1064,7 +1326,7 @@
       <section class="comparison-section" id="comparison">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">06 // DECISION MATRIX</span>
+            <span class="section-tag">07 // DECISION MATRIX</span>
             <h2 class="section-title">Why Choose FlowState Custom Architecture<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               How bespoke engineering and dedicated infrastructure compare against off-the-shelf SaaS subscriptions and legacy software agency models.
@@ -1088,15 +1350,24 @@
                     <div class="comparison-subtext">Storage &amp; Privacy</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ 100% Private Client Cloud</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>100% Private Client Cloud</span>
+                    </span>
                     <div class="comparison-subtext">PostgreSQL / D1 on your infrastructure</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Vendor Locked-In</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Vendor Locked-In</span>
+                    </span>
                     <div class="comparison-subtext">Data stored on shared proprietary clouds</div>
                   </td>
                   <td>
-                    <span class="cross-tag">⚠ Variable / Blackbox</span>
+                    <span class="warn-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#D97706" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      <span>Variable / Blackbox</span>
+                    </span>
                     <div class="comparison-subtext">Often dependent on agency hosting</div>
                   </td>
                 </tr>
@@ -1106,15 +1377,24 @@
                     <div class="comparison-subtext">Monthly Recurring Model</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ ₱0 Per-Seat Tax</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>₱0 Per-Seat Tax</span>
+                    </span>
                     <div class="comparison-subtext">Unlimited team users at zero marginal fee</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Escalating Per-User Tax</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Escalating Per-User Tax</span>
+                    </span>
                     <div class="comparison-subtext">$20 – $120+ / user / month as you scale</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Heavy Upfront + Hourly</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Heavy Upfront + Hourly</span>
+                    </span>
                     <div class="comparison-subtext">High continuous hourly maintenance fees</div>
                   </td>
                 </tr>
@@ -1124,15 +1404,24 @@
                     <div class="comparison-subtext">Operational Customization</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ 100% Bespoke Hierarchy</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>100% Bespoke Hierarchy</span>
+                    </span>
                     <div class="comparison-subtext">Engineered to your exact approval paths</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Rigid Template Constraints</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Rigid Template Constraints</span>
+                    </span>
                     <div class="comparison-subtext">Forces your business into generic schemas</div>
                   </td>
                   <td>
-                    <span class="check-tag">✓ Custom Coded</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Custom Coded</span>
+                    </span>
                     <div class="comparison-subtext">Often bloated with unnecessary libraries</div>
                   </td>
                 </tr>
@@ -1142,15 +1431,24 @@
                     <div class="comparison-subtext">Time-to-Production</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ 14 to 21 Business Days</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>14 to 21 Business Days</span>
+                    </span>
                     <div class="comparison-subtext">Disciplined 8-stage turnkey delivery</div>
                   </td>
                   <td>
-                    <span class="check-tag">✓ Immediate Setup</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Immediate Setup</span>
+                    </span>
                     <div class="comparison-subtext">Requires months of manual patching &amp; zap fees</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ 3 to 6+ Months Delay</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>3 to 6+ Months Delay</span>
+                    </span>
                     <div class="comparison-subtext">Bloated scoping and endless backlog tickets</div>
                   </td>
                 </tr>
@@ -1160,15 +1458,24 @@
                     <div class="comparison-subtext">Taglish + Physical IoT</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ Native Taglish + RFID</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Native Taglish + RFID</span>
+                    </span>
                     <div class="comparison-subtext">Sub-2s latency &amp; hardware cloud bridges</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Generic English Only</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Generic English Only</span>
+                    </span>
                     <div class="comparison-subtext">No physical RFID or sensor bridging</div>
                   </td>
                   <td>
-                    <span class="cross-tag">⚠ Rare / Speculative</span>
+                    <span class="warn-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#D97706" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      <span>Rare / Speculative</span>
+                    </span>
                     <div class="comparison-subtext">Usually subcontracted to third parties</div>
                   </td>
                 </tr>
@@ -1178,15 +1485,24 @@
                     <div class="comparison-subtext">Post-Launch Partnership</div>
                   </th>
                   <td class="fs-highlight-col">
-                    <span class="check-tag">✓ Managed Operations SLA</span>
+                    <span class="check-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#059669" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Managed Operations SLA</span>
+                    </span>
                     <div class="comparison-subtext">Direct technical hotline &amp; proactive upgrades</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Anonymous Community Help</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Anonymous Community Help</span>
+                    </span>
                     <div class="comparison-subtext">Generic ticket queues &amp; bot deflections</div>
                   </td>
                   <td>
-                    <span class="cross-tag">✗ Handed Off / Abandoned</span>
+                    <span class="cross-tag">
+                      <svg class="matrix-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#71717A" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      <span>Handed Off / Abandoned</span>
+                    </span>
                     <div class="comparison-subtext">High cost to re-engage past devs</div>
                   </td>
                 </tr>
@@ -1200,7 +1516,7 @@
       <section class="bento-section" id="engagement">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">07 // COMMERCIAL FRAMEWORK</span>
+            <span class="section-tag">08 // COMMERCIAL FRAMEWORK</span>
             <h2 class="section-title">Commercial &amp; Engagement Model<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               FlowState structures engagements across two distinct, transparent phases designed to eliminate client risk and guarantee reliable operational delivery.
@@ -1211,7 +1527,7 @@
           <div class="phase-two-grid">
             
             <!-- Phase 1 Card -->
-            <div class="phase-chassis">
+            <div class="phase-chassis kinetic-card">
               <div>
                 <div class="phase-header">
                   <div class="phase-tag">[ PHASE 01 // DELIVERY ]</div>
@@ -1242,7 +1558,7 @@
             </div>
 
             <!-- Phase 2 Card -->
-            <div class="phase-chassis">
+            <div class="phase-chassis kinetic-card">
               <div>
                 <div class="phase-header">
                   <div class="phase-tag">[ PHASE 02 // OPERATIONS ]</div>
@@ -1268,7 +1584,7 @@
                 </ul>
               </div>
               <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted); margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border-subtle);">
-                COMMITMENT: RELIABILITY • CONTINUOUS EVOLUTION
+                COMMITMENT: RELIABILITY &bull; CONTINUOUS EVOLUTION
               </div>
             </div>
 
@@ -1281,35 +1597,35 @@
           </div>
 
           <div class="diff-grid">
-            <div class="diff-card">
+            <div class="diff-card kinetic-card">
               <div>
                 <div class="diff-card-num">[ 01 ]</div>
                 <h4 class="diff-card-title">Outcome-Driven</h4>
                 <p class="diff-card-desc">Measured strictly by reduced turnaround times, zero leaked leads, and automated data synchronization.</p>
               </div>
             </div>
-            <div class="diff-card">
+            <div class="diff-card kinetic-card">
               <div>
                 <div class="diff-card-num">[ 02 ]</div>
                 <h4 class="diff-card-title">Tailored Systems</h4>
                 <p class="diff-card-desc">Every interface, database field, and webhook is tailored to your exact operational hierarchy.</p>
               </div>
             </div>
-            <div class="diff-card">
+            <div class="diff-card kinetic-card">
               <div>
                 <div class="diff-card-num">[ 03 ]</div>
                 <h4 class="diff-card-title">Pragmatic Tech</h4>
                 <p class="diff-card-desc">Applied AI and hardware are deployed strictly for tangible commercial utility and verifiable ROI.</p>
               </div>
             </div>
-            <div class="diff-card">
+            <div class="diff-card kinetic-card">
               <div>
                 <div class="diff-card-num">[ 04 ]</div>
                 <h4 class="diff-card-title">Zero Seat Tax</h4>
                 <p class="diff-card-desc">Dedicated custom systems with 100% data ownership and zero escalating monthly per-user fees.</p>
               </div>
             </div>
-            <div class="diff-card">
+            <div class="diff-card kinetic-card">
               <div>
                 <div class="diff-card-num">[ 05 ]</div>
                 <h4 class="diff-card-title">Long-Term Partner</h4>
@@ -1325,14 +1641,14 @@
       <section class="contact-section" id="contact">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">08 // DIRECT CONSULTATION</span>
+            <span class="section-tag">09 // DIRECT CONSULTATION</span>
             <h2 class="section-title">Request Your Custom Architecture Blueprint<span class="red-dot">.</span></h2>
             <p class="section-subtitle">
               Tell us about your operational bottlenecks. We'll deliver a tailored automation and custom software scoping blueprint within 24 hours.
             </p>
           </div>
 
-          <div class="contact-card">
+          <div class="contact-card kinetic-card">
             <form id="leadCaptureForm">
               <div class="form-group">
                 <label class="form-label" for="contactName">[ Full Name ]</label>
@@ -1359,9 +1675,9 @@
                 <textarea class="form-textarea" id="contactNotes" rows="3" placeholder="e.g. We need custom business software for multi-branch operations with automated WhatsApp booking and RFID check-in."></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary" id="leadCaptureSubmitBtn" style="width: 100%; padding: 1rem;">
+              <button type="submit" class="btn btn-primary btn-magnetic" id="leadCaptureSubmitBtn" style="width: 100%; padding: 1rem;">
                 <span>Submit for Free 24-Hour Blueprint</span>
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
               <div id="leadCaptureFeedback" class="form-feedback" role="status" aria-live="polite"></div>
             </form>
@@ -1373,7 +1689,7 @@
       <section class="corporate-section" id="corporate">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">09 // CORPORATE DIRECTORY</span>
+            <span class="section-tag">10 // CORPORATE DIRECTORY</span>
             <h2 class="section-title">Corporate Information &amp; Direct Inquiries<span class="red-dot">.</span></h2>
             <p class="section-subtitle">Official entity registry, operational hubs, and verified communication channels.</p>
           </div>
@@ -1381,7 +1697,7 @@
           <div class="corporate-hud-grid">
             
             <!-- Entity Card -->
-            <div class="corporate-hud-card">
+            <div class="corporate-hud-card kinetic-card">
               <div>
                 <div class="corporate-hud-label">[ Company Name ]</div>
                 <div class="corporate-hud-value">FlowState Automations</div>
@@ -1392,18 +1708,18 @@
             </div>
 
             <!-- Operations Hub Card -->
-            <div class="corporate-hud-card">
+            <div class="corporate-hud-card kinetic-card">
               <div>
                 <div class="corporate-hud-label">[ Operations Hub ]</div>
                 <div class="corporate-hud-value">National Capital Region (NCR)</div>
               </div>
               <div class="corporate-hud-sub">
-                <span>PHILIPPINES • REMOTE GLOBAL</span>
+                <span>PHILIPPINES &bull; REMOTE GLOBAL</span>
               </div>
             </div>
 
             <!-- Direct Consultation Line Card -->
-            <div class="corporate-hud-card">
+            <div class="corporate-hud-card kinetic-card">
               <div>
                 <div class="corporate-hud-label">[ Direct Line ]</div>
                 <div class="corporate-hud-value">
@@ -1411,14 +1727,23 @@
                 </div>
               </div>
               <div class="corporate-hud-actions">
-                <a href="tel:+639059557661" class="btn-hud-action" aria-label="Call direct line">📞 Call</a>
-                <a href="https://wa.me/639059557661?text=Hi%20FlowState%2C%20I%27m%20inquiring%20about%20a%20custom%20software%20and%20automation%20blueprint." target="_blank" rel="noopener noreferrer" class="btn-hud-action btn-wa-action" aria-label="Chat on WhatsApp">💬 WhatsApp</a>
-                <button type="button" class="btn-hud-action" onclick="copyToClipboard('09059557661', '0905 955 7661')" aria-label="Copy phone number">📋 Copy</button>
+                <a href="tel:+639059557661" class="btn-hud-action" aria-label="Call direct line">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Call</span>
+                </a>
+                <a href="https://wa.me/639059557661?text=Hi%20FlowState%2C%20I%27m%20inquiring%20about%20a%20custom%20software%20and%20automation%20blueprint." target="_blank" rel="noopener noreferrer" class="btn-hud-action btn-wa-action" aria-label="Chat on WhatsApp">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  <span>WhatsApp</span>
+                </a>
+                <button type="button" class="btn-hud-action" onclick="copyToClipboard('09059557661', '0905 955 7661')" aria-label="Copy phone number">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="0" ry="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copy</span>
+                </button>
               </div>
             </div>
 
             <!-- Corporate Communications Card -->
-            <div class="corporate-hud-card">
+            <div class="corporate-hud-card kinetic-card">
               <div>
                 <div class="corporate-hud-label">[ Communications ]</div>
                 <div class="corporate-hud-value" style="font-size: 0.95rem; word-break: break-all;">
@@ -1426,8 +1751,14 @@
                 </div>
               </div>
               <div class="corporate-hud-actions">
-                <a href="mailto:flowstateautom8t@gmail.com" class="btn-hud-action" aria-label="Send email">✉️ Email</a>
-                <button type="button" class="btn-hud-action" onclick="copyToClipboard('flowstateautom8t@gmail.com', 'flowstateautom8t@gmail.com')" aria-label="Copy email address">📋 Copy</button>
+                <a href="mailto:flowstateautom8t@gmail.com" class="btn-hud-action" aria-label="Send email">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <span>Email</span>
+                </a>
+                <button type="button" class="btn-hud-action" onclick="copyToClipboard('flowstateautom8t@gmail.com', 'flowstateautom8t@gmail.com')" aria-label="Copy email address">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="0" ry="0"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copy</span>
+                </button>
               </div>
             </div>
 
@@ -1439,14 +1770,14 @@
       <section class="faq-section" id="faq">
         <div class="section-container">
           <div class="section-header text-center">
-            <span class="section-tag">10 // FAQ GUIDE</span>
+            <span class="section-tag">11 // FAQ GUIDE</span>
             <h2 class="section-title">Frequently Asked Questions<span class="red-dot">.</span></h2>
             <p class="section-subtitle">Everything you need to know about our custom engineering, technology pillars, and engagement model.</p>
           </div>
 
           <div class="faq-grid">
             <!-- FAQ 01 -->
-            <div class="faq-item" id="faqItem0">
+            <div class="faq-item kinetic-card" id="faqItem0">
               <button class="faq-question" onclick="toggleFaq(0)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">01.</span>
@@ -1462,7 +1793,7 @@
             </div>
 
             <!-- FAQ 02 -->
-            <div class="faq-item" id="faqItem1">
+            <div class="faq-item kinetic-card" id="faqItem1">
               <button class="faq-question" onclick="toggleFaq(1)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">02.</span>
@@ -1478,7 +1809,7 @@
             </div>
 
             <!-- FAQ 03 -->
-            <div class="faq-item" id="faqItem2">
+            <div class="faq-item kinetic-card" id="faqItem2">
               <button class="faq-question" onclick="toggleFaq(2)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">03.</span>
@@ -1494,7 +1825,7 @@
             </div>
 
             <!-- FAQ 04 -->
-            <div class="faq-item" id="faqItem3">
+            <div class="faq-item kinetic-card" id="faqItem3">
               <button class="faq-question" onclick="toggleFaq(3)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">04.</span>
@@ -1510,7 +1841,7 @@
             </div>
 
             <!-- FAQ 05 -->
-            <div class="faq-item" id="faqItem4">
+            <div class="faq-item kinetic-card" id="faqItem4">
               <button class="faq-question" onclick="toggleFaq(4)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">05.</span>
@@ -1526,7 +1857,7 @@
             </div>
 
             <!-- FAQ 06 -->
-            <div class="faq-item" id="faqItem5">
+            <div class="faq-item kinetic-card" id="faqItem5">
               <button class="faq-question" onclick="toggleFaq(5)" aria-expanded="false">
                 <span class="faq-question-text">
                   <span class="faq-num">06.</span>
@@ -1578,6 +1909,7 @@
             <div class="footer-col-title">[ Company &amp; Pillars ]</div>
             <ul class="footer-links">
               <li><a href="about.html" class="footer-link" style="color: var(--brand-accent); font-weight: 700;">About FlowState</a></li>
+              <li><a href="about.html#architecture" class="footer-link">Architecture Topology</a></li>
               <li><a href="about.html#capabilities" class="footer-link">4 Core Capabilities</a></li>
               <li><a href="about.html#lifecycle" class="footer-link">8-Stage Lifecycle</a></li>
               <li><a href="about.html#cases" class="footer-link">Representative Projects</a></li>
@@ -1609,6 +1941,8 @@
 
   </div>
 
+  <!-- Anime.js v4 Animation Engine -->
+  <script src="js/anime.umd.js"></script>
   <!-- Application Controller -->
   <script src="app.js"></script>
   <!-- Mechanical Live Chatbot Controller -->

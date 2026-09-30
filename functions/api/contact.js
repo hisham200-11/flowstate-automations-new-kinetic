@@ -174,28 +174,28 @@ async function sendContactNotificationEmail(apiKey, toEmail, lead) {
 
           <table class="lead-table">
             <tr>
-              <td class="label">👤 Full Name</td>
+              <td class="label">[ NAME ]</td>
               <td class="val">${escapeHtml(lead.name)}</td>
             </tr>
             <tr>
-              <td class="label">📞 Contact</td>
+              <td class="label">[ CONTACT ]</td>
               <td class="val">${contactLink}</td>
             </tr>
             <tr>
-              <td class="label">🏢 Inquiry Scale</td>
+              <td class="label">[ SCALE ]</td>
               <td class="val">${escapeHtml(lead.businessScale)}</td>
             </tr>
             <tr>
-              <td class="label">⏱️ Time (PHT)</td>
+              <td class="label">[ TIMESTAMP ]</td>
               <td class="val">${escapeHtml(lead.timestamp)}</td>
             </tr>
             <tr>
-              <td class="label">🌐 Source Page</td>
+              <td class="label">[ SOURCE ]</td>
               <td class="val">${escapeHtml(lead.pageUrl)}</td>
             </tr>
           </table>
 
-          <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 8px 0; color: #475569;">📝 Project Notes & Bottlenecks:</h3>
+          <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 8px 0; color: #475569;">[ PROJECT NOTES &amp; BOTTLENECKS ]</h3>
           <div class="notes-box">
             ${escapeHtml(lead.notes).replace(/\n/g, '<br>')}
           </div>
@@ -217,7 +217,7 @@ async function sendContactNotificationEmail(apiKey, toEmail, lead) {
       body: JSON.stringify({
         from: 'FlowState Inquiries <onboarding@resend.dev>',
         to: [toEmail],
-        subject: `🔥 New Website Inquiry: ${sanitizedSubjectName} (${sanitizedSubjectScale || 'Direct Consultation'})`,
+        subject: `[INQUIRY] New Proposal Request: ${sanitizedSubjectName} (${sanitizedSubjectScale || 'Direct Consultation'})`,
         html: htmlContent,
       }),
     });
