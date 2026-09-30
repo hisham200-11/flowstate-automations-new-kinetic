@@ -261,6 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupNavbarScroll();
   initHeroKineticEntrance();
   initLeadCaptureForm();
+  initScrollSpy();
+  initPillarControls();
 });
 
 // ==========================================================================
@@ -361,11 +363,18 @@ function initHeroKineticEntrance() {
   if (prefersReducedMotion || !anime) return;
 
   const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle) {
+  if (heroTitle && !heroTitle.dataset.animated) {
+    heroTitle.dataset.animated = 'true';
     const raw = heroTitle.innerText.trim();
     heroTitle.setAttribute('aria-label', raw);
     const words = raw.split(/\s+/);
-    heroTitle.innerHTML = words.map(w => `<span class="split-word">${w} </span>`).join('');
+    heroTitle.innerHTML = words.map((w, idx) => {
+      if (idx === words.length - 1 && w.endsWith('.')) {
+        const base = w.slice(0, -1);
+        return `<span class="split-word">${base}<span class="red-dot">.</span></span>`;
+      }
+      return `<span class="split-word">${w} </span>`;
+    }).join('');
   }
 
   const wordEls = document.querySelectorAll('.hero-title .split-word');
@@ -933,6 +942,166 @@ function initLeadCaptureForm() {
   }
 }
 
+// ==========================================================================
+// 12. ABOUT PAGE INTERACTIVE SUITE (Scroll-Spy, Pillar Filter, Spec Search, Fast Copy)
+// ==========================================================================
+
+function initScrollSpy() {
+  const jumpLinks = document.querySelectorAll('.jump-nav-link');
+  if (jumpLinks.length === 0) return;
+
+  const sectionIds = Array.from(jumpLinks).map(link => link.getAttribute('href').replace('#', ''));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  if (sections.length === 0) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '-130px 0px -65% 0px',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const activeId = entry.target.getAttribute('id');
+        jumpLinks.forEach(link => {
+          if (link.getAttribute('href') === `#${activeId}`) {
+            link.classList.add('active');
+            const container = document.querySelector('.jump-nav-container');
+            if (container) {
+              const linkLeft = link.offsetLeft;
+              const linkWidth = link.offsetWidth;
+              const containerWidth = container.offsetWidth;
+              if (linkLeft < container.scrollLeft || linkLeft + linkWidth > container.scrollLeft + containerWidth) {
+                container.scrollTo({ left: linkLeft - 40, behavior: 'smooth' });
+              }
+            }
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(sec => observer.observe(sec));
+}
+
+function initPillarControls() {
+  const searchInput = document.getElementById('pillarSearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      filterPillarsBySearch(e.target.value);
+    });
+  }
+}
+
+function filterPillars(category) {
+  const buttons = document.querySelectorAll('.pillar-filter-btn');
+  buttons.forEach(btn => {
+    if (btn.dataset.pillar === category) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const cards = document.querySelectorAll('.pillar-card-detailed');
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.pillarCategory === category) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+function filterPillarsBySearch(query) {
+  const q = (query || '').trim().toLowerCase();
+  const cards = document.querySelectorAll('.pillar-card-detailed');
+  const moduleCards = document.querySelectorAll('.pillar-module-card');
+
+  if (!q) {
+    cards.forEach(card => card.classList.remove('hidden'));
+    moduleCards.forEach(m => m.classList.remove('highlight'));
+    return;
+  }
+
+  document.querySelectorAll('.pillar-filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.pillar === 'all');
+  });
+
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (text.includes(q)) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  moduleCards.forEach(moduleCard => {
+    const modText = moduleCard.textContent.toLowerCase();
+    if (modText.includes(q)) {
+      moduleCard.classList.add('highlight');
+    } else {
+      moduleCard.classList.remove('highlight');
+    }
+  });
+}
+
+function copyToClipboard(text, label = 'Copied') {
+  if (!text) return;
+  
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => {
+      showCopyToast(label);
+    }).catch(() => {
+      fallbackCopyText(text, label);
+    });
+  } else {
+    fallbackCopyText(text, label);
+  }
+}
+
+function fallbackCopyText(text, label) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.top = '-9999px';
+  textArea.style.left = '-9999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showCopyToast(label);
+  } catch (err) {
+    console.warn('Copy fallback failed', err);
+  }
+  document.body.removeChild(textArea);
+}
+
+let copyToastTimeout = null;
+function showCopyToast(label) {
+  let toast = document.getElementById('fsCopyToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'fsCopyToast';
+    toast.className = 'copy-toast';
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = `<span style="color: var(--brand-accent);">✓</span> <span>COPIED TO CLIPBOARD:</span> <span style="color: #FFFFFF; font-weight: 800;">${label}</span>`;
+  toast.classList.add('show');
+
+  if (copyToastTimeout) clearTimeout(copyToastTimeout);
+  copyToastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2600);
+}
+
 // Global scope bindings for inline HTML handlers
 window.switchScenario = switchScenario;
 window.switchPipelineStep = switchPipelineStep;
@@ -941,4 +1110,10 @@ window.toggleMobileMenu = toggleMobileMenu;
 window.closeMobileMenu = closeMobileMenu;
 window.toggleFaq = toggleFaq;
 window.initLeadCaptureForm = initLeadCaptureForm;
+window.initScrollSpy = initScrollSpy;
+window.initPillarControls = initPillarControls;
+window.filterPillars = filterPillars;
+window.filterPillarsBySearch = filterPillarsBySearch;
+window.copyToClipboard = copyToClipboard;
+
 
