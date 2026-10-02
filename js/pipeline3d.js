@@ -48,7 +48,7 @@
         caption: 'STAGE 02 // AI QUALIFICATION: Sub-2s LLM scanner discards tire-kickers; validates high-intent lead',
         terminalBadge: 'STAGE 02 // AI QUALIFICATION',
         stepTitle: 'Conversational Triage in Under 2 Seconds',
-        stepDesc: 'Our Groq-accelerated LLM pipeline detects intent, budget, and language (Taglish & English), asking targeted qualification questions.'
+        stepDesc: 'Our high-speed AI pipeline detects intent, budget, and language (Taglish & English), asking targeted qualification questions.'
       },
       {
         badge: 'STAGE 03 // CALENDAR LOCK',
@@ -64,7 +64,7 @@
         caption: 'STAGE 04 // CRM ARCHIVAL: Stamped into private database, instant founder SMS notification dispatched',
         terminalBadge: 'STAGE 04 // PRIVATE CRM SYNC',
         stepTitle: 'Private Database Record & Multi-Channel SMS Alerts',
-        stepDesc: 'Lead records sync to private PostgreSQL/D1 tables, and automated confirmation reminders trigger over SMS and WhatsApp.'
+        stepDesc: 'Lead records sync directly to your private database, and automated confirmation reminders trigger over SMS and WhatsApp.'
       }
     ],
 

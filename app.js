@@ -70,7 +70,7 @@ const SCOPE_MODULES = [
   },
   {
     id: 'crm-sync',
-    title: 'PostgreSQL / Sheets CRM Pipeline',
+    title: 'Private Database & CRM Pipeline',
     badge: 'DATA INTEGRITY',
     description: 'Bi-directional live contact syncing, deal progression updates, and automated audit logging.',
     minPrice: 18000,
@@ -134,7 +134,7 @@ const CHAT_SCENARIOS = {
   quotes: {
     botName: 'Prime Logistics & Enterprise • Desk',
     badge: 'WhatsApp & Web Portal Sync',
-    syncInfo: 'Scope Logged to PostgreSQL CRM + Lead Score: 96/100 + Team Alerted',
+    syncInfo: 'Scope Logged to Private CRM + Lead Score: 96/100 + Team Alerted',
     messages: [
       {
         sender: 'user',
@@ -235,7 +235,7 @@ const PIPELINE_STEPS = {
   4: {
     badge: 'STAGE 04 // PRIVATE CRM & SMS',
     title: 'Automatic Record Archiving & Staff Notifications',
-    desc: 'Contact details and transcripts are pushed to your private PostgreSQL CRM. Scheduled SMS reminders are queued for 24 hours and 2 hours prior to the session.',
+    desc: 'Contact details and transcripts are pushed to your private CRM database. Scheduled SMS reminders are queued for 24 hours and 2 hours prior to the session.',
     code: `// Database & Dispatch Pipeline
 {
   "crm_record_created": "client_mark_delacruz_2026",
@@ -1153,35 +1153,35 @@ function initDynamicHudTicker() {
 const ARCH_SPECS = {
   all: {
     name: 'Unified Orchestration Bus (All 4 Pillars)',
-    protocol: 'REST / WebSockets / Cloudflare D1',
+    protocol: 'Encrypted HTTPS / Real-Time Event Bus / Dedicated Database',
     latency: '< 50ms Edge / < 1.8s LLM',
     sovereignty: '100% Client Private Cloud',
     uptime: '99.99% Production'
   },
   p1: {
     name: 'Pillar 01: Custom Software Systems',
-    protocol: 'PostgreSQL / Cloudflare D1 Edge / RBAC',
+    protocol: 'Dedicated Private Database / Edge Portals / RBAC',
     latency: '< 45ms Query Latency',
     sovereignty: '100% Dedicated Client Infrastructure',
     uptime: '99.99% SLA'
   },
   p2: {
     name: 'Pillar 02: Business Process Automation',
-    protocol: 'Event Webhooks / WhatsApp Cloud API / CalLock',
+    protocol: 'Event Webhooks / Omni-Channel API / CalLock',
     latency: '< 120ms Ingestion Dispatch',
     sovereignty: 'Zero Shared Memory / Direct Keys',
     uptime: '99.99% Guaranteed Delivery'
   },
   p3: {
     name: 'Pillar 03: Applied Artificial Intelligence',
-    protocol: 'Groq LPU Acceleration (Llama 3.3 / Gemini 2.5)',
+    protocol: 'High-Speed Private Inference Engine (Calibrated NLP)',
     latency: '< 1.8s Sub-2s Triage',
     sovereignty: 'Zero-Retention Calibrated Guardrails',
     uptime: 'Deterministic Routing'
   },
   p4: {
     name: 'Pillar 04: Integrated Hardware & RFID',
-    protocol: 'WebSockets / Frequency Scanners / Biometrics',
+    protocol: 'Real-Time Event Stream / Biometric & RFID Sensors',
     latency: '< 80ms Instant Punch Sync',
     sovereignty: 'On-Premise Hardware + Cloud Mirror',
     uptime: 'Zero Buddy-Punching Audit'
