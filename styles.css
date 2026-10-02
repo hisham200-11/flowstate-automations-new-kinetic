@@ -112,9 +112,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--ink-primary);
-  line-height: 1.15;
-  font-weight: 800;
-  letter-spacing: -0.035em;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
