@@ -1221,7 +1221,7 @@ function selectArchNode(nodeKey) {
     btn.classList.toggle('active', btn.dataset.node === nodeKey);
   });
 
-  // 2. Update SVG Node Highlights
+  // 2. Update SVG Node Highlights (Animate inner rect stroke instead of SVG <g> scale to prevent coordinate drift)
   const nodes = ['p1', 'p2', 'p3', 'p4'];
   nodes.forEach((k) => {
     const elId = `archNode${k.toUpperCase()}`;
@@ -1229,11 +1229,13 @@ function selectArchNode(nodeKey) {
     if (nodeEl) {
       if (nodeKey === 'all' || nodeKey === k) {
         nodeEl.classList.add('active');
-        if (anime && !prefersReducedMotion && nodeKey === k) {
-          anime.animate(nodeEl, {
-            scale: [1, 1.05, 1],
-            duration: 300,
-            ease: 'outBack(1.4)'
+        const rectEl = nodeEl.querySelector('.arch-node-rect');
+        if (anime && !prefersReducedMotion && nodeKey === k && rectEl) {
+          anime.animate(rectEl, {
+            stroke: ['#E11D48', '#09090B', '#E11D48'],
+            strokeWidth: ['2.5px', '1.6px', '2px'],
+            duration: 320,
+            ease: 'outQuad'
           });
         }
       } else {
@@ -1283,12 +1285,12 @@ function selectArchNode(nodeKey) {
     filterPillars(nodeKey);
     const card = document.getElementById(`pillarCard${nodeKey.toUpperCase()}`);
     if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       if (anime && !prefersReducedMotion) {
         anime.animate(card, {
-          scale: [0.98, 1.01, 1],
-          duration: 350,
-          ease: 'outBack(1.3)'
+          scale: [0.99, 1.01, 1],
+          duration: 300,
+          ease: 'outQuad'
         });
       }
     }
@@ -1298,61 +1300,30 @@ function selectArchNode(nodeKey) {
 }
 
 function runArchitectureSimulation() {
-  const anime = getAnime();
   const simBtn = document.getElementById('archSimulateBtn');
   if (archSimulationActive) return;
   archSimulationActive = true;
 
   if (simBtn) {
     simBtn.disabled = true;
-    simBtn.innerHTML = `<span>Simulating Workflow...</span>`;
+    simBtn.innerHTML = `<span>Simulating Ingest...</span>`;
   }
 
-  if (!anime || prefersReducedMotion) {
+  const sequence = ['p2', 'p3', 'p1', 'p4'];
+  sequence.forEach((k, i) => {
     setTimeout(() => {
-      archSimulationActive = false;
-      if (simBtn) {
-        simBtn.disabled = false;
-        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
-      }
-    }, 2000);
-    return;
-  }
+      selectArchNode(k);
+    }, i * 700);
+  });
 
-  const tl = anime.createTimeline ? anime.createTimeline({
-    onComplete: () => {
-      archSimulationActive = false;
-      selectArchNode('all');
-      if (simBtn) {
-        simBtn.disabled = false;
-        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
-      }
+  setTimeout(() => {
+    selectArchNode('all');
+    archSimulationActive = false;
+    if (simBtn) {
+      simBtn.disabled = false;
+      simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
     }
-  }) : null;
-
-  if (tl) {
-    tl.add('#archNodeP2', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' })
-      .add('#archCenterHub', { scale: [1, 1.06, 1], duration: 350, ease: 'outQuad' }, '-=150')
-      .add('#archNodeP3', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
-      .add('#archNodeP1', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
-      .add('#archNodeP4', { scale: [1, 1.08, 1], duration: 400, ease: 'outBack(1.5)' }, '-=100')
-      .add('#archCenterHub', { scale: [1, 1.03, 1], duration: 300, ease: 'outQuad' }, '-=150');
-  } else {
-    // Fallback animation
-    ['p2', 'p3', 'p1', 'p4'].forEach((k, i) => {
-      setTimeout(() => {
-        selectArchNode(k);
-      }, i * 600);
-    });
-    setTimeout(() => {
-      archSimulationActive = false;
-      selectArchNode('all');
-      if (simBtn) {
-        simBtn.disabled = false;
-        simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
-      }
-    }, 2800);
-  }
+  }, sequence.length * 700 + 500);
 }
 
 // ==========================================================================
