@@ -1152,39 +1152,39 @@ function initDynamicHudTicker() {
 
 const ARCH_SPECS = {
   all: {
-    name: 'Unified Orchestration Bus (All 4 Pillars)',
-    protocol: 'Encrypted HTTPS / Real-Time Event Bus / Dedicated Database',
-    latency: '< 50ms Edge / < 1.8s LLM',
-    sovereignty: '100% Client Private Cloud',
-    uptime: '99.99% Production'
+    name: 'All Systems Connected & Synchronized',
+    protocol: 'Encrypted Cloud & Real-Time Sync',
+    latency: 'Under 1.8 Seconds',
+    sovereignty: '100% Owned by Your Business',
+    uptime: '99.99% Guaranteed Uptime'
   },
   p1: {
-    name: 'Pillar 01: Custom Software Systems',
-    protocol: 'Dedicated Private Database / Edge Portals / RBAC',
-    latency: '< 45ms Query Latency',
-    sovereignty: '100% Dedicated Client Infrastructure',
-    uptime: '99.99% SLA'
+    name: 'Custom Software & Portals (Pillar 01)',
+    protocol: 'Private Database & Role-Based Permissions',
+    latency: 'Instant Page Load (< 45ms)',
+    sovereignty: '100% Private Client Server',
+    uptime: '99.99% High Availability'
   },
   p2: {
-    name: 'Pillar 02: Business Process Automation',
-    protocol: 'Event Webhooks / Omni-Channel API / CalLock',
-    latency: '< 120ms Ingestion Dispatch',
-    sovereignty: 'Zero Shared Memory / Direct Keys',
-    uptime: '99.99% Guaranteed Delivery'
+    name: 'Inquiry Automation & Workflows (Pillar 02)',
+    protocol: 'WhatsApp, Facebook & Calendar Sync',
+    latency: 'Instant Lead Hand-Off',
+    sovereignty: 'Direct Business Account Keys',
+    uptime: 'Zero Dropped Messages'
   },
   p3: {
-    name: 'Pillar 03: Applied Artificial Intelligence',
-    protocol: 'High-Speed Private Inference Engine (Calibrated NLP)',
-    latency: '< 1.8s Sub-2s Triage',
-    sovereignty: 'Zero-Retention Calibrated Guardrails',
-    uptime: 'Deterministic Routing'
+    name: 'Smart AI Assistant & Triage (Pillar 03)',
+    protocol: 'Taglish & English Language Models',
+    latency: 'Under 1.8s Fast Reply',
+    sovereignty: 'Private & Secure (No Data Leaks)',
+    uptime: '24/7 Always Online'
   },
   p4: {
-    name: 'Pillar 04: Integrated Hardware & RFID',
-    protocol: 'Real-Time Event Stream / Biometric & RFID Sensors',
-    latency: '< 80ms Instant Punch Sync',
-    sovereignty: 'On-Premise Hardware + Cloud Mirror',
-    uptime: 'Zero Buddy-Punching Audit'
+    name: 'Workplace Hardware & RFID (Pillar 04)',
+    protocol: 'Physical RFID & Biometric Scanners',
+    latency: 'Instant Punch Sync',
+    sovereignty: 'Secure On-Site Hardware + Cloud',
+    uptime: 'Accurate Timekeeping & 1-Click Payroll'
   }
 };
 
@@ -1312,7 +1312,7 @@ function runArchitectureSimulation() {
 
   if (simBtn) {
     simBtn.disabled = true;
-    simBtn.innerHTML = `<span>Simulating Ingest...</span>`;
+    simBtn.innerHTML = `<span>Testing Live Flow...</span>`;
   }
 
   const sequence = ['p2', 'p3', 'p1', 'p4'];
@@ -1327,7 +1327,7 @@ function runArchitectureSimulation() {
     archSimulationActive = false;
     if (simBtn) {
       simBtn.disabled = false;
-      simBtn.innerHTML = `<span>▷ Simulate Ingest</span>`;
+      simBtn.innerHTML = `<span>▷ Test Live Data Flow</span>`;
     }
   }, sequence.length * 700 + 500);
 }
@@ -1340,72 +1340,72 @@ const LIFECYCLE_STAGES = [
   {
     num: 1,
     code: '01',
-    title: 'Stage 01: Operational Discovery',
+    title: 'Stage 01: Discovery & Pain Point Audit',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 1–3',
-    artifact: 'Friction Audit Document',
-    status: 'Stakeholder Sign-Off',
-    desc: 'Conducting in-depth stakeholder interviews to map existing workflows, software fragmentation, communication touchpoints, and operational pain points across all departmental operations.'
+    artifact: 'Workflow Friction Audit',
+    status: 'Client Alignment Sign-Off',
+    desc: 'We talk directly with your team to understand your daily operations, find what takes the most time, and identify where leads or tasks slip through the cracks.'
   },
   {
     num: 2,
     code: '02',
-    title: 'Stage 02: Process & Data Mapping',
+    title: 'Stage 02: Workflow & Communication Mapping',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 3–6',
-    artifact: 'Data Flow & Webhook Matrix',
-    status: 'Event Schema Spec Approved',
-    desc: 'Documenting the exact path of customer inquiries, internal approvals, database records, and inter-department communications across WhatsApp, Messenger, Viber, and Web.'
+    artifact: 'Step-by-Step Process Map',
+    status: 'Approved Process Schema',
+    desc: 'We map how customer inquiries, manager approvals, client data, and staff tasks move across WhatsApp, Facebook, email, spreadsheets, and departments.'
   },
   {
     num: 3,
     code: '03',
-    title: 'Stage 03: Bottleneck Identification',
+    title: 'Stage 03: Bottleneck & Waste Identification',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 6–8',
-    artifact: 'Waste Reduction Breakdown',
-    status: 'Quantified ROI Model',
-    desc: 'Pinpointing exact operational friction points where labor hours, response velocity, or data integrity are lost to manual copy-paste tasks and spreadsheet silos.'
+    artifact: 'Time & Cost Savings Breakdown',
+    status: 'Clear ROI Target',
+    desc: 'We pinpoint exact steps where your staff loses hours to manual copy-paste work, double bookings, or forgotten customer follow-ups.'
   },
   {
     num: 4,
     code: '04',
-    title: 'Stage 04: Requirements Definition',
+    title: 'Stage 04: System Requirements & Scope',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 8–10',
-    artifact: 'Technical Scope & KPI Spec',
-    status: 'Deterministic Scope Lock',
-    desc: 'Defining strict functional scope, data security controls, API integration contracts, and quantifiable success metrics prior to engineering.'
+    artifact: 'Complete Feature Blueprint',
+    status: 'Fixed Scope Agreement',
+    desc: 'We write a clear, plain-English specification of every feature, automated rule, security permission, and expected result before writing code.'
   },
   {
     num: 5,
     code: '05',
-    title: 'Stage 05: Solution Architecture',
+    title: 'Stage 05: Custom System Architecture',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 10–14',
-    artifact: 'System Blueprint & Schema',
-    status: 'Database Schema & Auth Spec',
-    desc: 'Designing custom software architecture, database schema, webhook routing matrices, and physical hardware links on dedicated cloud infrastructure.'
+    artifact: 'System Blueprint & Database Plan',
+    status: 'Security & Database Plan Approved',
+    desc: 'We design your private database, automated messaging pathways, and user access levels so your system is fast, secure, and easy to scale.'
   },
   {
     num: 6,
     code: '06',
-    title: 'Stage 06: Interactive Prototype',
+    title: 'Stage 06: Interactive Clickable Demo',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 14–17',
     artifact: 'Working Interactive Prototype',
     status: 'Hands-On Client Verification',
-    desc: 'Building a working interactive prototype around your actual workflow before full deployment, allowing hands-on stakeholder verification with zero risk.'
+    desc: 'We build a working, clickable preview with your real business workflow so you can test and verify how it works before full deployment.'
   },
   {
     num: 7,
     code: '07',
-    title: 'Stage 07: Turnkey Implementation',
+    title: 'Stage 07: Custom Build & Team Launch',
     phase: '[ PHASE 1: DISCOVERY & ARCHITECTURE ]',
     duration: 'Days 17–21',
-    artifact: 'Live Cloud Deploy & Onboarding',
-    status: 'Production Release & Team Training',
-    desc: 'Production engineering, database migration, webhook stress testing, security hardening, and live team onboarding with 100% client data ownership.'
+    artifact: 'Live System & Team Training',
+    status: 'Production Release & Hand-Off',
+    desc: 'We build and test the full software, connect your messaging channels and hardware, import your data, and train your staff for a smooth launch.'
   },
   {
     num: 8,
@@ -1414,39 +1414,43 @@ const LIFECYCLE_STAGES = [
     phase: '[ PHASE 2: MANAGED OPERATIONS ]',
     duration: 'Continuous Partnership',
     artifact: '99.99% Uptime & SLA Retainer',
-    status: 'Dedicated Technical Hotline',
-    desc: 'Continuous uptime monitoring, security patching, SLA-backed technical assistance, and proactive feature evolution as operations scale.'
+    status: 'Direct WhatsApp & Phone Hotline',
+    desc: 'We manage your cloud hosting, perform regular backups, keep your system fast and secure, and provide a direct hotline whenever you need updates.'
   }
 ];
 
 let currentLifecycleStage = 1;
 let lifecycleAutoRunTimer = null;
 let isLifecycleAutoRunning = true;
-let isLifecycleHovered = false;
+const LIFECYCLE_INTERVAL_MS = 4500;
 
 function initLifecycleEngine() {
   const chassis = document.getElementById('lifecycleInspectorChassis');
-  if (chassis) {
-    chassis.addEventListener('mouseenter', () => {
-      isLifecycleHovered = true;
-    });
-    chassis.addEventListener('mouseleave', () => {
-      isLifecycleHovered = false;
-    });
-  }
+  if (!chassis) return;
 
-  // Auto-run cycle
-  startLifecycleTimer();
+  // Initialize first stage view
+  selectLifecycleStage(1, true);
+
+  // Start auto-run if enabled
+  if (isLifecycleAutoRunning) {
+    startLifecycleTimer();
+  }
 }
 
 function startLifecycleTimer() {
-  if (lifecycleAutoRunTimer) clearInterval(lifecycleAutoRunTimer);
+  if (lifecycleAutoRunTimer) {
+    clearInterval(lifecycleAutoRunTimer);
+    lifecycleAutoRunTimer = null;
+  }
+
+  if (!isLifecycleAutoRunning) return;
+
   lifecycleAutoRunTimer = setInterval(() => {
-    if (isLifecycleAutoRunning && !isLifecycleHovered) {
+    if (isLifecycleAutoRunning) {
       const nextStage = (currentLifecycleStage % 8) + 1;
       selectLifecycleStage(nextStage, true);
     }
-  }, 4500);
+  }, LIFECYCLE_INTERVAL_MS);
 }
 
 function selectLifecycleStage(stageNum, auto = false) {
@@ -1454,15 +1458,15 @@ function selectLifecycleStage(stageNum, auto = false) {
   currentLifecycleStage = stageNum;
   const stageData = LIFECYCLE_STAGES[stageNum - 1] || LIFECYCLE_STAGES[0];
 
-  // 1. Update Chips
+  // 1. Update 8 Step Chips
   document.querySelectorAll('.lifecycle-step-chip').forEach((chip) => {
     const chipStage = Number(chip.dataset.stage);
     if (chipStage === stageNum) {
       chip.classList.add('active');
       if (anime && !prefersReducedMotion && !auto) {
         anime.animate(chip, {
-          scale: [0.97, 1.04, 1],
-          duration: 250,
+          scale: [0.96, 1.04, 1],
+          duration: 240,
           ease: 'outBack(1.4)'
         });
       }
@@ -1478,7 +1482,7 @@ function selectLifecycleStage(stageNum, auto = false) {
     fillBar.style.width = `${pct}%`;
   }
 
-  // 3. Update Inspector HUD
+  // 3. Update Inspector HUD Elements
   const tagEl = document.getElementById('inspectorPhaseTag');
   const titleEl = document.getElementById('inspectorStageTitle');
   const descEl = document.getElementById('inspectorStageDesc');
@@ -1486,6 +1490,7 @@ function selectLifecycleStage(stageNum, auto = false) {
   const durEl = document.getElementById('inspectorMetaDuration');
   const statusEl = document.getElementById('inspectorMetaStatus');
   const pctEl = document.getElementById('inspectorMetaPercent');
+  const counterNumEl = document.getElementById('stageCounterNum');
 
   if (tagEl) tagEl.textContent = stageData.phase;
   if (titleEl) titleEl.textContent = stageData.title;
@@ -1494,27 +1499,25 @@ function selectLifecycleStage(stageNum, auto = false) {
   if (durEl) durEl.textContent = stageData.duration;
   if (statusEl) statusEl.textContent = stageData.status;
   if (pctEl) pctEl.textContent = `Stage ${stageNum} of 8 (${((stageNum / 8) * 100).toFixed(1)}%)`;
+  if (counterNumEl) counterNumEl.textContent = `0${stageNum}`;
 
-  const chassis = document.getElementById('lifecycleInspectorChassis');
-  if (chassis && anime && !prefersReducedMotion && !auto) {
-    anime.animate(chassis, {
-      opacity: [0.75, 1],
-      translateY: [4, 0],
-      duration: 280,
-      ease: 'outQuad'
-    });
+  // 4. Kinetic Transition on Chassis Content
+  if (anime && !prefersReducedMotion) {
+    const animTargets = [titleEl, descEl, artEl, durEl, statusEl, pctEl].filter(Boolean);
+    if (animTargets.length > 0) {
+      anime.animate(animTargets, {
+        opacity: [0.5, 1],
+        translateY: [4, 0],
+        duration: 220,
+        ease: 'outQuad',
+        delay: anime.stagger(25)
+      });
+    }
   }
 
-  // 4. Update 8-Card Grid Highlights
-  for (let i = 1; i <= 8; i++) {
-    const card = document.getElementById(`stageCard${i}`);
-    if (card) {
-      if (i === stageNum) {
-        card.classList.add('is-active');
-      } else {
-        card.classList.remove('is-active');
-      }
-    }
+  // 5. If user navigated manually, reset the countdown timer so they get full duration
+  if (!auto && isLifecycleAutoRunning) {
+    startLifecycleTimer();
   }
 }
 
@@ -1531,9 +1534,20 @@ function prevLifecycleStage() {
 function toggleLifecycleAutoRun() {
   isLifecycleAutoRunning = !isLifecycleAutoRunning;
   const btn = document.getElementById('lifecycleAutoRunBtn');
+  const textEl = document.getElementById('lifecycleAutoRunText');
+  
   if (btn) {
-    btn.textContent = isLifecycleAutoRunning ? 'Auto-Cycle: ON' : 'Auto-Cycle: PAUSED';
     btn.classList.toggle('active', isLifecycleAutoRunning);
+  }
+  if (textEl) {
+    textEl.textContent = isLifecycleAutoRunning ? 'Auto-Cycle: ON' : 'Auto-Cycle: PAUSED';
+  }
+
+  if (isLifecycleAutoRunning) {
+    startLifecycleTimer();
+  } else if (lifecycleAutoRunTimer) {
+    clearInterval(lifecycleAutoRunTimer);
+    lifecycleAutoRunTimer = null;
   }
 }
 

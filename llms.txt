@@ -3,23 +3,23 @@
 > Practical Technology Solutions for Growing Businesses & Enterprises.
 
 ## Overview
-FlowState Automations is a technology solutions provider in the National Capital Region (NCR), Philippines. The company specializes in building custom software, workflow automation pipelines, applied artificial intelligence, and physical-to-cloud hardware integrations for growing SMEs and mid-sized enterprises.
+FlowState Automations is a technology solutions provider in Metro Manila, National Capital Region (NCR), Philippines. The company specializes in building custom software, workflow automation pipelines, smart AI assistants, and physical-to-cloud workplace hardware for expanding businesses in the Philippines and global remote markets.
 
 ## Core Capability Pillars
-1. **Custom Software Solutions**: Enterprise business management platforms, custom operational CRMs, multi-branch portals, inventory systems, and employee dashboards with 100% private data ownership and zero per-seat SaaS taxes.
-2. **Business Process Automation**: Omni-channel lead triage (Facebook Messenger, WhatsApp, Viber, Webhooks), bi-directional Google Calendar and Microsoft Outlook appointment booking locks, and multi-tier team approval workflows.
-3. **Applied Artificial Intelligence**: Sub-2-second conversational inquiry qualification in colloquial Taglish and English, internal company knowledge base retrieval, and automated invoice/document extraction.
-4. **Integrated Technology Solutions**: Physical workplace RFID attendance scanners and biometric sensors connected directly to real-time central cloud dashboards with 1-click payroll-ready export.
+1. **Custom Software & Portals**: Company management platforms, custom operational CRMs, multi-branch operations hubs, inventory systems, and employee portals with 100% private data ownership and ₱0 monthly per-user fees.
+2. **Inquiry & Process Automation**: Multi-channel lead triage (WhatsApp, Facebook Messenger, Viber, Website Forms), two-way Google Calendar and Microsoft Outlook appointment booking locks, and multi-tier team approval workflows.
+3. **Smart AI Assistants**: Fast customer inquiry qualification answering in under 1.8 seconds in colloquial Taglish and English, internal company knowledge copilots, and automated invoice/document parsing.
+4. **Workplace Hardware & RFID**: Physical workplace RFID tap card scanners and biometric attendance devices connected directly to real-time central cloud dashboards with 1-click payroll calculation.
 
 ## Key Differentiators & Moats
-- **Zero Per-Seat SaaS Tax**: Clients own their software outright on private servers with ₱0 monthly per-user license fees.
-- **100% Workflow Fit**: Calibrated directly around the client's actual operating procedures, approval hierarchies, and business rules.
-- **Sub-2-Second Speed-to-Lead**: Instant 24/7 automated qualification on WhatsApp, Messenger, and Web.
-- **Risk-Free Working Prototype**: Interactive functional demo engineered during scoping before contractual commitments.
-- **Hybrid Physical + Cloud Reach**: Fullstack capability uniting physical workplace IoT hardware with cloud databases.
+- **Zero Per-User SaaS Fees**: Clients own their software and database on private servers with ₱0 monthly per-user license fees.
+- **100% Workflow Fit**: Engineered directly around the client's actual operating procedures, team hierarchy, and business rules.
+- **Sub-1.8s Speed-to-Lead**: Instant 24/7 automated qualification on WhatsApp, Messenger, and Web.
+- **Risk-Free Working Prototype**: Interactive functional demo engineered during discovery before contractual commitments.
+- **Hybrid Physical + Cloud Reach**: End-to-end capability connecting physical workplace hardware directly to cloud databases.
 
-## Direct Executive Contact
-- **Direct Line / WhatsApp**: +63 905 955 7661
+## Direct Contact & Scoping
+- **Direct Line / WhatsApp**: +63 905 955 7661 (0905 955 7661)
 - **Official Email**: flowstateautom8t@gmail.com
-- **Headquarters**: National Capital Region (NCR), Philippines (Serving Global & Remote)
+- **Headquarters**: Metro Manila, National Capital Region (NCR), Philippines (Serving Nationwide & Global Remote)
 - **Official Website**: https://flowstate.ph/
