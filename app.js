@@ -877,61 +877,61 @@ function toggleFaq(index) {
 // 11. DIRECT ARCHITECTURE BLUEPRINT FORM CONTROLLER (/api/contact)
 // ==========================================================================
 
-function initLeadCaptureForm() {
+async function handleLeadFormSubmit(e) {
+  if (e) e.preventDefault();
   const form = document.getElementById('leadCaptureForm');
   const submitBtn = document.getElementById('leadCaptureSubmitBtn');
   const feedbackEl = document.getElementById('leadCaptureFeedback');
   if (!form || !submitBtn) return;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  const name = document.getElementById('contactName')?.value.trim() || '';
+  const email = document.getElementById('contactEmail')?.value.trim() || '';
+  const phone = document.getElementById('contactPhone')?.value.trim() || '';
+  const emailPhone = document.getElementById('contactEmailPhone')?.value.trim() || '';
+  const contact = emailPhone || (email && phone ? `${email} / ${phone}` : (email || phone));
+  const company = document.getElementById('contactCompany')?.value.trim() || '';
+  const scale = document.getElementById('contactBusinessScale')?.value || (company ? `Company: ${company}` : 'Not specified');
+  const notes = document.getElementById('contactNotes')?.value.trim() || document.getElementById('contactDetails')?.value.trim() || '';
+  const pillar = form.querySelector('input[name="service_pillar"]')?.value || 'General Inquiry';
 
-    const name = document.getElementById('contactName')?.value.trim() || '';
-    const contact = document.getElementById('contactEmailPhone')?.value.trim() || '';
-    const scale = document.getElementById('contactBusinessScale')?.value || 'Not specified';
-    const notes = document.getElementById('contactNotes')?.value.trim() || '';
+  if (!name || !contact) {
+    showFeedback('Please provide your name and work email or WhatsApp number.', 'error');
+    return;
+  }
 
-    if (!name || !contact) {
-      showFeedback('Please provide your name and work email or WhatsApp number.', 'error');
-      return;
-    }
+  submitBtn.disabled = true;
+  const originalBtnHtml = submitBtn.innerHTML;
+  submitBtn.innerHTML = `<span>Transmitting Architecture Request...</span>`;
 
-    submitBtn.disabled = true;
-    const originalBtnHtml = submitBtn.innerHTML;
-    submitBtn.innerHTML = `
-      <span>Transmitting Architecture Request...</span>
-    `;
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        contact,
+        businessScale: scale,
+        notes: pillar !== 'General Inquiry' ? `[${pillar}] ${notes}` : notes,
+        pageUrl: window.location.href
+      })
+    });
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          contact,
-          businessScale: scale,
-          notes,
-          pageUrl: window.location.href
-        })
-      });
+    const data = await res.json();
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        form.reset();
-        showFeedback(data.message || 'Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
-      } else {
-        showFeedback(data.error || 'Failed to dispatch request. Please check your information or email us at flowstateautom8t@gmail.com.', 'error');
-      }
-    } catch (err) {
-      console.error('Lead blueprint submit error:', err);
+    if (res.ok && data.success) {
       form.reset();
-      showFeedback('Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnHtml;
+      showFeedback(data.message || 'Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
+    } else {
+      showFeedback(data.error || 'Failed to dispatch request. Please check your information or email us at flowstateautom8t@gmail.com.', 'error');
     }
-  });
+  } catch (err) {
+    console.error('Lead blueprint submit error:', err);
+    form.reset();
+    showFeedback('Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnHtml;
+  }
 
   function showFeedback(msg, type) {
     if (!feedbackEl) return;
@@ -945,6 +945,12 @@ function initLeadCaptureForm() {
       }, 8000);
     }
   }
+}
+
+function initLeadCaptureForm() {
+  const form = document.getElementById('leadCaptureForm');
+  if (!form) return;
+  form.addEventListener('submit', handleLeadFormSubmit);
 }
 
 // ==========================================================================
@@ -1646,6 +1652,7 @@ window.toggleMobileMenu = toggleMobileMenu;
 window.closeMobileMenu = closeMobileMenu;
 window.toggleFaq = toggleFaq;
 window.initLeadCaptureForm = initLeadCaptureForm;
+window.submitLeadCapture = handleLeadFormSubmit;
 window.initScrollSpy = initScrollSpy;
 window.initPillarControls = initPillarControls;
 window.filterPillars = filterPillars;
