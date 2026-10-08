@@ -736,6 +736,42 @@ button, input, select, textarea {
   max-width: 580px;
 }
 
+/* Editorial & Knowledge Hub Centered Hero */
+.hero-editorial-center {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-editorial-center .hero-kicker-badge {
+  display: inline-flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+}
+
+.hero-editorial-center .hero-title,
+.hero-title.hero-title-centered,
+.hero-title-centered {
+  display: block !important;
+  text-align: center !important;
+  align-items: center !important;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-editorial-center p,
+.hero-subtitle-centered {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hero-cta-group {
   display: flex;
   align-items: center;
