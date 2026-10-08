@@ -147,7 +147,7 @@
 
     <!-- 1. STICKY BRAND HEADER -->
     <header class="navbar-sticky">
-      <div class="navbar-container">
+      <div class="nav-container">
         <a href="index.html" class="brand-logo" aria-label="FlowState Automations Home">
           <div class="brand-logo-mark">FS</div>
           <div class="brand-logo-text">
@@ -162,36 +162,40 @@
           <a href="ai-vs-va-cost-philippines.html" class="nav-link">AI vs. VA Cost</a>
           <a href="index.html#solutions" class="nav-link">Solutions Matrix</a>
           <a href="index.html#roi" class="nav-link">ROI Engine</a>
-          <a href="index.html#contact" class="btn btn-primary nav-cta-desktop" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
-            <span>Get Live Prototype</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
         </nav>
 
-        <!-- Mobile Menu Trigger -->
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
+        <div class="nav-actions">
+          <button class="nav-btn-chat" onclick="window.openFlowStateChat ? window.openFlowStateChat() : null" aria-label="Open Live Chat Desk">
+            <span class="status-dot"></span>
+            <span>Chat Live</span>
+          </button>
+          <a href="index.html#contact" class="btn btn-primary nav-cta-desktop" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
+            <span>Get Blueprint</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
       </div>
-    </header>
 
-    <!-- Mobile Drawer -->
-    <div class="mobile-drawer" id="mobileDrawer">
-      <div class="mobile-drawer-inner">
-        <div class="mobile-nav-links">
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-drawer" id="mobileDrawer">
+        <nav class="mobile-nav-links">
+          <div class="mobile-nav-group-title">[ NAVIGATION ]</div>
           <a href="index.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>01 // Main Platform</span><span>&rarr;</span></a>
           <a href="ai-vs-va-cost-philippines.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>02 // AI vs. VA Cost</span><span>&rarr;</span></a>
           <a href="index.html#solutions" class="mobile-nav-link" onclick="closeMobileMenu()"><span>03 // Solutions Matrix</span><span>&rarr;</span></a>
           <a href="index.html#contact" class="btn btn-primary" style="margin-top: 1.15rem; width: 100%;" onclick="closeMobileMenu()">
             <span>Get Live Prototype</span>
           </a>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
 
     <!-- 2. EDITORIAL HERO SECTION -->
     <section class="hero-section" style="padding-top: 5rem; padding-bottom: 3.5rem;">
@@ -206,8 +210,8 @@
           </div>
 
           <!-- Editorial H1 Title -->
-          <h1 class="hero-title" style="margin-top: 0.5rem; font-size: clamp(2.3rem, 5vw, 3.8rem); line-height: 1.15;">
-            How Philippine Businesses Actually Use AI in 2026 (Without the <span class="editorial-serif">Gimmicks</span>)<span class="red-dot">.</span>
+          <h1 class="hero-title" style="margin-top: 0.5rem; font-size: clamp(2.2rem, 4.8vw, 3.8rem); line-height: 1.15;">
+            How Philippine Businesses Actually Use AI in 2026 <span class="whitespace-nowrap">(Without the <span class="editorial-serif">Gimmicks</span>)<span class="red-dot">.</span></span>
           </h1>
 
           <p style="font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--ink-secondary); line-height: 1.6; margin-top: 1.25rem; max-width: 780px; margin-left: auto; margin-right: auto;">
@@ -265,9 +269,9 @@
       <div class="section-container">
         
         <div style="max-width: 860px; margin: 0 auto;">
-          <span class="section-tag">[ CORE OBJECTION DEBUNKED ]</span>
+          <span class="section-tag">CORE OBJECTION DEBUNKED</span>
           <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.7rem); font-weight: 800; margin-top: 0.5rem; line-height: 1.2;">
-            "Will AI Sound Robotic and Offend <span class="editorial-serif">Filipino Customers</span>?"
+            "Will AI Sound Robotic and Offend <span class="whitespace-nowrap"><span class="editorial-serif">Filipino Customers</span><span class="red-dot">?</span></span>"
           </h2>
           <p style="font-size: 1.05rem; color: var(--ink-secondary); line-height: 1.6; margin-top: 1rem;">
             The biggest hesitation Philippine entrepreneurs have with AI is simple: <em>"Filipino buyers talk in Taglish, use informal slang ('avail pa po ba?', 'magkano last price?'), and hate feeling like they're talking to an American customer service bot."</em>
@@ -337,9 +341,9 @@
       <div class="section-container">
         
         <div style="text-align: center; max-width: 800px; margin: 0 auto 3.5rem;">
-          <span class="section-tag">[ PRODUCTION BLUEPRINTS ]</span>
+          <span class="section-tag">PRODUCTION BLUEPRINTS</span>
           <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-top: 0.5rem;">
-            The 4 Applied AI Workflows That <span class="editorial-serif">Generate Cash</span><span class="red-dot">.</span>
+            The 4 Applied AI Workflows That <span class="whitespace-nowrap"><span class="editorial-serif">Generate Cash</span><span class="red-dot">.</span></span>
           </h2>
           <p style="font-size: 1.05rem; color: var(--ink-secondary); line-height: 1.6; margin-top: 1rem;">
             Every successful Philippine business AI implementation revolves around these four high-leverage software capabilities.
@@ -425,24 +429,26 @@
     <section class="section" style="background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 5rem 0;">
       <div class="section-container">
         
-        <div style="text-align: center; max-width: 840px; margin: 0 auto 3rem;">
-          <span class="section-tag">[ BUYER EDUCATION &amp; AUDIT ]</span>
+        <div style="text-align: center; max-width: 840px; margin: 0 auto 2.5rem;">
+          <span class="section-tag">BUYER EDUCATION &amp; AUDIT</span>
           <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-top: 0.5rem;">
-            AI Hype vs. Applied ROI: <span class="editorial-serif">What Actually Works</span><span class="red-dot">.</span>
+            AI Hype vs. Applied ROI: <span class="whitespace-nowrap"><span class="editorial-serif">What Actually Works</span><span class="red-dot">.</span></span>
           </h2>
           <p style="font-size: 1.05rem; color: var(--ink-secondary); line-height: 1.6; margin-top: 1rem;">
             Do not waste company capital on generic AI wrappers that cannot touch your database. Here is how to distinguish between marketing gimmicks and revenue-generating software.
           </p>
         </div>
 
+        <div class="table-scroll-hint">[ SWIPE HORIZONTALLY TO VIEW ALL COLUMNS &rarr; ]</div>
+
         <!-- Comparison Table Container -->
-        <div style="overflow-x: auto; background: #FFFFFF; border: 1px solid var(--ink-primary); box-shadow: 6px 6px 0 var(--ink-primary);">
-          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem;">
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
             <thead>
               <tr style="background: var(--ink-primary); color: #FFFFFF; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;">
-                <th style="padding: 1.2rem; border-right: 1px solid #27272a;">Evaluation Metric</th>
-                <th style="padding: 1.2rem; border-right: 1px solid #27272a; color: #f87171;">Generic AI Tools (What to Avoid)</th>
-                <th style="padding: 1.2rem; color: #4ade80;">FlowState Applied AI (What Makes Revenue)</th>
+                <th style="padding: 1.2rem; background: var(--ink-primary); color: #FFFFFF; width: 26%;">Evaluation Metric</th>
+                <th style="padding: 1.2rem; background: var(--ink-primary); color: #f87171; width: 37%;">Generic AI Tools (What to Avoid)</th>
+                <th style="padding: 1.2rem; background: var(--ink-primary); color: #4ade80; width: 37%;">FlowState Applied AI (What Makes Revenue)</th>
               </tr>
             </thead>
             <tbody>
@@ -522,9 +528,9 @@
       <div class="section-container">
         
         <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-          <span class="section-tag">[ OPERATIONAL ANSWERS ]</span>
+          <span class="section-tag">OPERATIONAL ANSWERS</span>
           <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; margin-top: 0.5rem;">
-            Frequently Asked <span class="editorial-serif">Questions</span><span class="red-dot">.</span>
+            Frequently Asked <span class="whitespace-nowrap"><span class="editorial-serif">Questions</span><span class="red-dot">.</span></span>
           </h2>
           <p style="color: var(--ink-secondary); font-size: 1rem; margin-top: 0.75rem;">
             Clear, honest answers about deploying practical AI in Philippine businesses.
@@ -536,10 +542,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(0)" aria-expanded="false">
               <span>Can the AI accurately understand Taglish and Filipino slang?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>Yes. FlowState AI Concierges are calibrated on actual Philippine buyer vernacular. They seamlessly interpret mixed Taglish queries ("Magkano po if cash?", "May available slots kayo this coming Friday?", "Hm shipping sa Davao?"), reply in natural, polite phrasing, and never produce robotic or awkward literal translations.</p>
+              <div class="faq-answer-inner">
+                <p>Yes. FlowState AI Concierges are calibrated on actual Philippine buyer vernacular. They seamlessly interpret mixed Taglish queries ("Magkano po if cash?", "May available slots kayo this coming Friday?", "Hm shipping sa Davao?"), reply in natural, polite phrasing, and never produce robotic or awkward literal translations.</p>
+              </div>
             </div>
           </div>
 
@@ -547,10 +555,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(1)" aria-expanded="false">
               <span>How does it connect to our current Facebook Messenger and WhatsApp?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>We connect the FlowState engine directly through official Meta Graph Webhooks and WhatsApp Business APIs. Your existing Facebook page and messaging inboxes remain completely under your control; the AI simply acts as an instant 24/7 responder that hands conversations over to your human staff whenever necessary.</p>
+              <div class="faq-answer-inner">
+                <p>We connect the FlowState engine directly through official Meta Graph Webhooks and WhatsApp Business APIs. Your existing Facebook page and messaging inboxes remain completely under your control; the AI simply acts as an instant 24/7 responder that hands conversations over to your human staff whenever necessary.</p>
+              </div>
             </div>
           </div>
 
@@ -558,10 +568,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(2)" aria-expanded="false">
               <span>Do I need a technical developer or IT specialist on my staff?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>No. FlowState is a full turnkey solution. Our engineering team handles system setup, knowledge base calibration, Google Sheets integration, and calendar webhook connections. You and your administrative staff simply access the live dashboard or Google Sheets to see qualified appointments.</p>
+              <div class="faq-answer-inner">
+                <p>No. FlowState is a full turnkey solution. Our engineering team handles system setup, knowledge base calibration, Google Sheets integration, and calendar webhook connections. You and your administrative staff simply access the live dashboard or Google Sheets to see qualified appointments.</p>
+              </div>
             </div>
           </div>
 
@@ -569,10 +581,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(3)" aria-expanded="false">
               <span>What happens if a customer has an emergency or asks an unusual question?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>The AI Concierge is hard-fenced against guessing. If an inquiry falls outside your verified knowledge base, the bot politely confirms the customer's phone number, acknowledges their question, and instantly pings your management team via SMS, Viber, or Telegram for priority human attention.</p>
+              <div class="faq-answer-inner">
+                <p>The AI Concierge is hard-fenced against guessing. If an inquiry falls outside your verified knowledge base, the bot politely confirms the customer's phone number, acknowledges their question, and instantly pings your management team via SMS, Viber, or Telegram for priority human attention.</p>
+              </div>
             </div>
           </div>
 
@@ -580,10 +594,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(4)" aria-expanded="false">
               <span>How does this fit into our long-term technology plans?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>FlowState provides an evolutionary roadmap: start with the low-barrier <strong>₱2,499/mo Starter AI Concierge</strong> to automate top-of-funnel inquiry chaos. As your business scales, we expand your architecture into custom internal CRMs, inventory tracking, RFID attendance, or end-to-end ERP systems on dedicated infrastructure.</p>
+              <div class="faq-answer-inner">
+                <p>FlowState provides an evolutionary roadmap: start with the low-barrier <strong>₱2,499/mo Starter AI Concierge</strong> to automate top-of-funnel inquiry chaos. As your business scales, we expand your architecture into custom internal CRMs, inventory tracking, RFID attendance, or end-to-end ERP systems on dedicated infrastructure.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -596,9 +612,9 @@
       <div class="section-container">
         
         <div style="background: #FFFFFF; border: 1px solid var(--ink-primary); padding: 3.5rem 2rem; text-align: center; max-width: 860px; margin: 0 auto; box-shadow: 6px 6px 0 var(--ink-primary);">
-          <span class="section-tag">[ ZERO-RISK EXPERIMENT ]</span>
+          <span class="section-tag">ZERO-RISK EXPERIMENT</span>
           <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.7rem); font-weight: 800; margin-top: 0.5rem;">
-            Test a Live Working Prototype in <span class="editorial-serif">24 Hours</span><span class="red-dot">.</span>
+            Test a Live Working Prototype in <span class="whitespace-nowrap"><span class="editorial-serif">24 Hours</span><span class="red-dot">.</span></span>
           </h2>
           <p style="color: var(--ink-secondary); font-size: 1.05rem; line-height: 1.6; margin-top: 1rem; max-width: 640px; margin-left: auto; margin-right: auto;">
             Send us your business Facebook page or website. Our engineering team will configure a functioning AI triage prototype trained on your actual business data in under 24 hours. Test it with your team before deciding anything.

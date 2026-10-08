@@ -244,16 +244,16 @@ function initKineticBackground() {
     targetScrollY = window.scrollY;
   }, { passive: true });
 
-  // Floating geometric crosshair particles
+  // Floating geometric crosshair particles (subtle technical watermarks)
   const crosshairs = [];
-  const count = 18;
+  const count = 12;
   for (let i = 0; i < count; i++) {
     crosshairs.push({
       x: Math.random() * width,
       y: Math.random() * height * 3,
-      size: 6 + Math.random() * 6,
-      speed: 0.15 + Math.random() * 0.35,
-      opacity: 0.25 + Math.random() * 0.45
+      size: 4 + Math.random() * 4,
+      speed: 0.12 + Math.random() * 0.25,
+      opacity: 0.06 + Math.random() * 0.08
     });
   }
 
@@ -265,8 +265,8 @@ function initKineticBackground() {
     scrollY += (targetScrollY - scrollY) * 0.1;
     ctx.clearRect(0, 0, width, height);
 
-    // 1. Draw Orthogonal Technical Grid
-    ctx.strokeStyle = '#E4E4E7';
+    // 1. Draw Orthogonal Technical Grid (subtle architectural watermark)
+    ctx.strokeStyle = 'rgba(9, 9, 11, 0.035)';
     ctx.lineWidth = 1;
 
     const offsetX = (time * 0.008) % gridSize;
@@ -294,7 +294,7 @@ function initKineticBackground() {
       const actualY = renderY < -50 ? renderY + height + 100 : renderY;
 
       ctx.strokeStyle = `rgba(9, 9, 11, ${c.opacity})`;
-      ctx.lineWidth = 1.2;
+      ctx.lineWidth = 1;
 
       ctx.beginPath();
       ctx.moveTo(c.x - c.size, actualY);

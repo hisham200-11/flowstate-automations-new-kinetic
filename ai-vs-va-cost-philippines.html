@@ -147,7 +147,7 @@
 
     <!-- 1. STICKY BRAND HEADER -->
     <header class="navbar-sticky">
-      <div class="navbar-container">
+      <div class="nav-container">
         <a href="index.html" class="brand-logo" aria-label="FlowState Automations Home">
           <div class="brand-logo-mark">FS</div>
           <div class="brand-logo-text">
@@ -162,36 +162,40 @@
           <a href="index.html#solutions" class="nav-link">Solutions Matrix</a>
           <a href="ai-for-business-philippines.html" class="nav-link">SME AI Playbook</a>
           <a href="index.html#roi" class="nav-link">ROI Engine</a>
-          <a href="index.html#contact" class="btn btn-primary nav-cta-desktop" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
-            <span>Get Live Prototype</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
         </nav>
 
-        <!-- Mobile Menu Trigger -->
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
+        <div class="nav-actions">
+          <button class="nav-btn-chat" onclick="window.openFlowStateChat ? window.openFlowStateChat() : null" aria-label="Open Live Chat Desk">
+            <span class="status-dot"></span>
+            <span>Chat Live</span>
+          </button>
+          <a href="index.html#contact" class="btn btn-primary nav-cta-desktop" style="padding: 0.55rem 1.15rem; font-size: 0.85rem;">
+            <span>Get Blueprint</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+        </div>
       </div>
-    </header>
 
-    <!-- Mobile Drawer -->
-    <div class="mobile-drawer" id="mobileDrawer">
-      <div class="mobile-drawer-inner">
-        <div class="mobile-nav-links">
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-drawer" id="mobileDrawer">
+        <nav class="mobile-nav-links">
+          <div class="mobile-nav-group-title">[ NAVIGATION ]</div>
           <a href="index.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>01 // Main Platform</span><span>&rarr;</span></a>
           <a href="index.html#solutions" class="mobile-nav-link" onclick="closeMobileMenu()"><span>02 // Solutions Matrix</span><span>&rarr;</span></a>
           <a href="ai-for-business-philippines.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>03 // SME AI Playbook</span><span>&rarr;</span></a>
           <a href="index.html#contact" class="btn btn-primary" style="margin-top: 1.15rem; width: 100%;" onclick="closeMobileMenu()">
             <span>Get Live Prototype</span>
           </a>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
 
     <!-- 2. EDITORIAL HERO SECTION -->
     <section class="hero-section" style="padding-top: 5rem; padding-bottom: 3.5rem;">
@@ -206,8 +210,8 @@
           </div>
 
           <!-- Editorial H1 Title -->
-          <h1 class="hero-title" style="margin-top: 0.5rem; font-size: clamp(2.3rem, 5vw, 3.8rem); line-height: 1.15;">
-            The Real Cost of Hiring a Night-Shift VA vs. Deploying an <span class="editorial-serif">AI Concierge</span><span class="red-dot">.</span>
+          <h1 class="hero-title" style="margin-top: 0.5rem; font-size: clamp(2.2rem, 4.8vw, 3.8rem); line-height: 1.15;">
+            The Real Cost of Hiring a Night-Shift VA vs. Deploying an <span class="whitespace-nowrap"><span class="editorial-serif">AI Concierge</span><span class="red-dot">.</span></span>
           </h1>
 
           <p style="font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--ink-secondary); line-height: 1.6; margin-top: 1.25rem; max-width: 780px; margin-left: auto; margin-right: auto;">
@@ -260,24 +264,26 @@
     <section class="section" style="background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 4.5rem 0;">
       <div class="section-container">
         
-        <div style="max-width: 800px; margin-bottom: 2.5rem;">
-          <span class="section-tag">[ RIGOROUS OPERATIONAL AUDIT ]</span>
+        <div style="max-width: 800px; margin-bottom: 2rem;">
+          <span class="section-tag">RIGOROUS OPERATIONAL AUDIT</span>
           <h2 class="section-title">
-            Direct Comparison: <span class="editorial-serif">Human VA vs. Automated AI</span><span class="red-dot">.</span>
+            Direct Comparison: <span class="whitespace-nowrap"><span class="editorial-serif">Human VA vs. Automated AI</span><span class="red-dot">.</span></span>
           </h2>
           <p class="section-subtitle">
             Evaluating capability, scalability, and financial overhead across 7 mission-critical operational dimensions.
           </p>
         </div>
 
+        <div class="table-scroll-hint">[ SWIPE HORIZONTALLY TO VIEW ALL COLUMNS &rarr; ]</div>
+
         <!-- Brutalist Comparison Table -->
-        <div style="overflow-x: auto; background: #FFFFFF; border: 1px solid var(--ink-primary); box-shadow: 4px 4px 0 var(--ink-primary);">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; text-align: left; min-width: 640px;">
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
             <thead>
               <tr style="background: var(--ink-primary); color: #FFFFFF; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase;">
-                <th style="padding: 1.1rem 1.25rem; width: 28%;">Operational Metric</th>
-                <th style="padding: 1.1rem 1.25rem; width: 36%; color: #fca5a5;">Human VA / Night Receptionist</th>
-                <th style="padding: 1.1rem 1.25rem; width: 36%; color: #86efac;">FlowState AI Concierge</th>
+                <th style="padding: 1.1rem 1.25rem; width: 28%; background: var(--ink-primary); color: #FFFFFF;">Operational Metric</th>
+                <th style="padding: 1.1rem 1.25rem; width: 36%; background: var(--ink-primary); color: #fca5a5;">Human VA / Night Receptionist</th>
+                <th style="padding: 1.1rem 1.25rem; width: 36%; background: var(--ink-primary); color: #86efac;">FlowState AI Concierge</th>
               </tr>
             </thead>
             <tbody>
@@ -391,9 +397,9 @@
       <div class="section-container">
         
         <div style="max-width: 820px; margin: 0 auto; text-align: center; margin-bottom: 3.5rem;">
-          <span class="section-tag">[ STRATEGIC ARCHITECTURE ]</span>
+          <span class="section-tag">STRATEGIC ARCHITECTURE</span>
           <h2 class="section-title">
-            The Hybrid Staffing Model: <span class="editorial-serif">AI Triage + Human Closing</span><span class="red-dot">.</span>
+            The Hybrid Staffing Model: <span class="whitespace-nowrap"><span class="editorial-serif">AI Triage + Human Closing</span><span class="red-dot">.</span></span>
           </h2>
           <p class="section-subtitle">
             Smart operators do not replace their best people with AI. They remove repetitive tier-1 copy-paste work so their human closers can focus on high-ticket revenue.
@@ -462,7 +468,7 @@
       <div class="section-container">
         
         <div style="max-width: 860px; margin: 0 auto; text-align: center;">
-          <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 800; color: #f43f5e; text-transform: uppercase;">[ FINANCIAL BOTTOM LINE ]</span>
+          <span class="section-tag" style="color: #fda4af;">FINANCIAL BOTTOM LINE</span>
           <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-top: 0.5rem; color: #FFFFFF;">
             The 12-Month Cash Equation: <span style="font-family: var(--font-serif); font-style: italic; color: #fda4af;">₱260,412 Saved</span>.
           </h2>
@@ -470,7 +476,7 @@
             Here is the realistic financial math for a typical Philippine business replacing night-shift inquiry friction with FlowState automation:
           </p>
 
-          <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; margin-top: 2.5rem; align-items: center; text-align: left;" class="math-grid-container">
+          <div class="math-grid-container">
             <!-- Cost of VA -->
             <div style="background: #18181b; border: 1px solid #27272a; padding: 1.75rem;">
               <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #ef4444; font-weight: 700;">[ 1 HUMAN VA ANNUAL EXPENSE ]</div>
@@ -519,9 +525,9 @@
       <div class="section-container">
         
         <div style="max-width: 800px; margin-bottom: 2.5rem;">
-          <span class="section-tag">[ QUESTIONS &amp; ARCHITECTURAL REALITIES ]</span>
+          <span class="section-tag">QUESTIONS &amp; ARCHITECTURAL REALITIES</span>
           <h2 class="section-title">
-            Frequently Asked <span class="editorial-serif">Questions</span><span class="red-dot">.</span>
+            Frequently Asked <span class="whitespace-nowrap"><span class="editorial-serif">Questions</span><span class="red-dot">.</span></span>
           </h2>
           <p class="section-subtitle">
             Direct answers on natural language, setup speed, and data privacy.
@@ -533,10 +539,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(0)" aria-expanded="false">
               <span>Will an AI chatbot sound robotic or make my customers angry?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>No. Most negative chatbot experiences come from rigid, outdated ManyChat rule trees that spit out generic error messages. FlowState AI Concierges are powered by modern Groq inference calibrated on authentic Filipino-English conversational patterns. They answer exact pricing questions politely and sound like an experienced, consultative customer support specialist.</p>
+              <div class="faq-answer-inner">
+                <p>No. Most negative chatbot experiences come from rigid, outdated ManyChat rule trees that spit out generic error messages. FlowState AI Concierges are powered by modern Groq inference calibrated on authentic Filipino-English conversational patterns. They answer exact pricing questions politely and sound like an experienced, consultative customer support specialist.</p>
+              </div>
             </div>
           </div>
 
@@ -544,10 +552,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(1)" aria-expanded="false">
               <span>What happens if a customer asks a complex question the AI doesn't know?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>The AI Concierge never hallucinates or makes up false claims. If a prospect asks an atypical question outside the approved knowledge base, the bot politely notes their requirement, confirms their phone number, and dispatches an instant priority alert to your human team to take over the conversation.</p>
+              <div class="faq-answer-inner">
+                <p>The AI Concierge never hallucinates or makes up false claims. If a prospect asks an atypical question outside the approved knowledge base, the bot politely notes their requirement, confirms their phone number, and dispatches an instant priority alert to your human team to take over the conversation.</p>
+              </div>
             </div>
           </div>
 
@@ -555,10 +565,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(2)" aria-expanded="false">
               <span>Can the AI bot auto-detect Taglish or Filipino?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>Yes. The engine automatically mirrors the visitor's language. If the prospect chats in English, it replies in crisp English. If they chat in natural Taglish ("Magkano po yung starter package? May slots pa kayo this Friday?"), it seamlessly responds in authentic, respectful Filipino.</p>
+              <div class="faq-answer-inner">
+                <p>Yes. The engine automatically mirrors the visitor's language. If the prospect chats in English, it replies in crisp English. If they chat in natural Taglish ("Magkano po yung starter package? May slots pa kayo this Friday?"), it seamlessly responds in authentic, respectful Filipino.</p>
+              </div>
             </div>
           </div>
 
@@ -566,10 +578,12 @@
           <div class="faq-item">
             <button type="button" class="faq-question" onclick="toggleFaq(3)" aria-expanded="false">
               <span>How fast can FlowState deploy an AI Concierge for my business?</span>
-              <span class="faq-icon">+</span>
+              <span class="faq-toggle-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>Starter systems can be connected to your Facebook Page, WhatsApp, or Website in <strong>24 to 48 business hours</strong>. We always prepare an interactive live prototype of your exact workflow so you can test and approve it before any upfront financial commitment.</p>
+              <div class="faq-answer-inner">
+                <p>Starter systems can be connected to your Facebook Page, WhatsApp, or Website in <strong>24 to 48 business hours</strong>. We always prepare an interactive live prototype of your exact workflow so you can test and approve it before any upfront financial commitment.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -582,9 +596,9 @@
       <div class="section-container">
         
         <div style="background: #FFFFFF; border: 1px solid var(--ink-primary); padding: 3rem 2rem; text-align: center; max-width: 840px; margin: 0 auto; box-shadow: 6px 6px 0 var(--ink-primary);">
-          <span class="section-tag">[ ZERO-RISK EXPERIMENT ]</span>
+          <span class="section-tag">ZERO-RISK EXPERIMENT</span>
           <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; margin-top: 0.5rem;">
-            Test a Live Prototype for Your Exact <span class="editorial-serif">Business Workflow</span><span class="red-dot">.</span>
+            Test a Live Prototype for Your Exact <span class="whitespace-nowrap"><span class="editorial-serif">Business Workflow</span><span class="red-dot">.</span></span>
           </h2>
           <p style="color: var(--ink-secondary); font-size: 1.05rem; line-height: 1.6; margin-top: 1rem; max-width: 620px; margin-left: auto; margin-right: auto;">
             Send us your business Facebook page or website. Our engineering team will configure a working AI assistant prototype in under 24 hours so you can test it live with your team.
@@ -645,6 +659,26 @@
     </footer>
 
   </div>
+
+  <!-- FAQ Accordion Helper Script -->
+  <script>
+    function toggleFaq(index) {
+      const items = document.querySelectorAll('.faq-item');
+      if (!items[index]) return;
+      const target = items[index];
+      const isOpen = target.classList.contains('active');
+      items.forEach(item => {
+        item.classList.remove('active');
+        const btn = item.querySelector('.faq-question');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        target.classList.add('active');
+        const btn = target.querySelector('.faq-question');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+  </script>
 
   <!-- Scripts -->
   <script src="js/anime.umd.js" defer></script>
