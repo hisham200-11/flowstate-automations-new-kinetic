@@ -58,7 +58,7 @@
       } else {
         chatState.messages = [...DEFAULT_MESSAGES];
       }
-    } catch (e) {
+    } catch {
       chatState.messages = [...DEFAULT_MESSAGES];
     }
   }
@@ -66,7 +66,7 @@
   function persistMessages() {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(chatState.messages));
-    } catch (e) {}
+    } catch {}
   }
 
   function renderChatElements() {
@@ -138,10 +138,16 @@
     chatState.messages.forEach(msg => {
       const el = document.createElement('div');
       el.className = `fsa-msg ${msg.sender === 'user' ? 'fsa-msg-user' : 'fsa-msg-bot'}`;
-      el.innerHTML = `
-        <div>${msg.text}</div>
-        <span class="fsa-msg-time">${msg.time}</span>
-      `;
+
+      const textEl = document.createElement('div');
+      textEl.textContent = msg.text;
+
+      const timeEl = document.createElement('span');
+      timeEl.className = 'fsa-msg-time';
+      timeEl.textContent = msg.time;
+
+      el.appendChild(textEl);
+      el.appendChild(timeEl);
       body.appendChild(el);
     });
 
@@ -190,7 +196,7 @@
 
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const text = input.value.trim();
+      const text = input.value.trim().slice(0, 1000);
       if (!text || chatState.isTyping) return;
       input.value = '';
       sendUserMessage(text);
@@ -270,7 +276,7 @@
   function setupTeaserSequence() {
     try {
       if (sessionStorage.getItem(TEASER_DISMISSED_KEY)) return;
-    } catch (e) {}
+    } catch {}
 
     setTimeout(() => {
       if (chatState.isOpen) return;
@@ -308,7 +314,7 @@
     if (!teaser) return;
     try {
       sessionStorage.setItem(TEASER_DISMISSED_KEY, 'true');
-    } catch (e) {}
+    } catch {}
 
     const anime = getAnime();
     if (anime) {
@@ -419,7 +425,7 @@
           sessionId = 'fsa-' + Math.random().toString(36).substring(2, 9) + '-' + Date.now();
           sessionStorage.setItem('fsa_chat_session_id', sessionId);
         }
-      } catch (e) {}
+      } catch {}
 
       const messagesPayload = chatState.messages.map(m => ({
         role: m.sender === 'user' ? 'user' : 'assistant',
@@ -449,6 +455,7 @@
       persistMessages();
       renderMessageHistory();
     } catch (err) {
+      console.warn('Chat transmission fallback activated:', err);
       hideTypingIndicator();
       // Graceful local preview fallback
       let fallback = "Understood. Our team deploys multi-channel custom automation workflows within 2 to 3 weeks with 99.9% uptime SLA. Would you like to schedule a free 15-minute scoping consultation?";

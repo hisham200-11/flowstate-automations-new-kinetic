@@ -26,6 +26,7 @@ const STATE = {
   currentPipelineStep: 1,
   chatTimelineTimer: null,
   scenarioCycleTimer: null,
+  activeSimulatorTimers: [],
   isSimulatorHovered: false,
   isSimulatorThreadComplete: false
 };
@@ -191,60 +192,7 @@ const CHAT_SCENARIOS = {
   }
 };
 
-// Pipeline Step Data
-const PIPELINE_STEPS = {
-  1: {
-    badge: 'STAGE 01 // INBOUND INGEST',
-    title: 'Inquiries Arrive from Any Channel Simultaneously',
-    desc: 'Customer reaches out through Facebook Messenger, WhatsApp, Viber, or your website. FlowState normalizes the webhook payload instantly with 99.99% uptime.',
-    code: `// Webhook Ingest (< 50ms)
-{
-  "source": "whatsapp_business",
-  "sender_id": "+639175550192",
-  "message": "Available consultation slots this Thursday for operations audit?",
-  "timestamp": "2026-09-15T14:14:02Z",
-  "status": "INGESTED_ACTIVE"
-}`
-  },
-  2: {
-    badge: 'STAGE 02 // AI QUALIFICATION',
-    title: 'Context-Aware Intent & Taglish Triage',
-    desc: 'The calibrated AI assistant analyzes intent, answers service inquiries using your exact business guidelines, and proposes open calendar slots in polite Taglish or English.',
-    code: `// Real-Time Extraction & LLM Triage (< 1.2s)
-{
-  "intent": "BOOKING_INQUIRY",
-  "service_category": "growth_consultation",
-  "intent_confidence": 0.994,
-  "proposed_slots": ["2026-09-17T14:00:00+08:00", "2026-09-17T16:30:00+08:00"],
-  "reply_tone": "polite_consultative"
-}`
-  },
-  3: {
-    badge: 'STAGE 03 // CALENDAR LOCK',
-    title: 'Instant Slot Reservation & Zero Double-Booking',
-    desc: 'When the customer confirms a time, FlowState instantly blocks the slot on Google Calendar or Outlook and optionally dispatches an automated GCash/Stripe deposit invoice.',
-    code: `// Calendar Lock Event
-{
-  "calendar_provider": "google_workspace",
-  "event_id": "gcal_evt_8839210",
-  "status": "SLOT_LOCKED",
-  "deposit_link_created": true,
-  "deposit_amount": 500.00
-}`
-  },
-  4: {
-    badge: 'STAGE 04 // PRIVATE CRM & SMS',
-    title: 'Automatic Record Archiving & Staff Notifications',
-    desc: 'Contact details and transcripts are pushed to your private CRM database. Scheduled SMS reminders are queued for 24 hours and 2 hours prior to the session.',
-    code: `// Database & Dispatch Pipeline
-{
-  "crm_record_created": "client_mark_delacruz_2026",
-  "lead_quality_score": 94,
-  "sms_reminder_queued": true,
-  "scheduled_dispatches": ["2026-09-16T14:00:00Z", "2026-09-17T12:00:00Z"]
-}`
-  }
-};
+
 
 // ==========================================================================
 // 2. DOM INITIALIZATION
@@ -257,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateScopeSummary();
   initSimulatorControls();
   renderSimulatorScenario('consulting');
-  renderPipelineStep(1);
+  initTransformationSwitch();
   setupNavbarScroll();
   initHeroKineticEntrance();
   initLeadCaptureForm();
@@ -309,7 +257,11 @@ function initKineticBackground() {
     });
   }
 
+  let isRunning = true;
+  let rafId = null;
+
   function render(time) {
+    if (!isRunning) return;
     scrollY += (targetScrollY - scrollY) * 0.1;
     ctx.clearRect(0, 0, width, height);
 
@@ -352,12 +304,29 @@ function initKineticBackground() {
       ctx.stroke();
     });
 
-    if (!prefersReducedMotion) {
-      requestAnimationFrame(render);
+    if (!prefersReducedMotion && isRunning) {
+      rafId = requestAnimationFrame(render);
     }
   }
 
-  requestAnimationFrame(render);
+  function handleVisibilityChange() {
+    if (document.hidden) {
+      isRunning = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    } else {
+      if (!isRunning) {
+        isRunning = true;
+        scrollY = targetScrollY = window.scrollY;
+        rafId = requestAnimationFrame(render);
+      }
+    }
+  }
+
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  rafId = requestAnimationFrame(render);
 }
 
 // ==========================================================================
@@ -368,29 +337,25 @@ function initHeroKineticEntrance() {
   const anime = getAnime();
   if (prefersReducedMotion || !anime) return;
 
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle && !heroTitle.dataset.animated) {
-    heroTitle.dataset.animated = 'true';
-    const raw = heroTitle.innerText.trim();
-    heroTitle.setAttribute('aria-label', raw);
-    const words = raw.split(/\s+/);
-    heroTitle.innerHTML = words.map((w, idx) => {
-      if (idx === words.length - 1 && w.endsWith('.')) {
-        const base = w.slice(0, -1);
-        return `<span class="split-word">${base}<span class="red-dot">.</span></span>`;
-      }
-      return `<span class="split-word">${w} </span>`;
-    }).join('');
+  const kickerBadge = document.querySelector('.hero-kicker-badge');
+  if (kickerBadge) {
+    anime.animate(kickerBadge, {
+      opacity: [0, 1],
+      translateY: [14, 0],
+      delay: 100,
+      duration: 500,
+      ease: 'outCubic'
+    });
   }
 
-  const wordEls = document.querySelectorAll('.hero-title .split-word');
-  if (wordEls.length > 0) {
-    anime.animate(wordEls, {
+  const heroTitleText = document.querySelector('.hero-title-text') || document.querySelector('.hero-title');
+  if (heroTitleText) {
+    anime.animate(heroTitleText, {
       opacity: [0, 1],
-      translateY: [24, 0],
-      delay: anime.stagger ? anime.stagger(35, { start: 150 }) : 35,
-      duration: 600,
-      ease: 'outBack(1.15)'
+      translateY: [20, 0],
+      delay: 200,
+      duration: 650,
+      ease: 'outBack(1.1)'
     });
   }
 
@@ -450,11 +415,7 @@ function initSimulatorControls() {
   });
 }
 
-function switchScenario(scenarioKey, userInitiated = true) {
-  const anime = getAnime();
-  STATE.currentScenario = scenarioKey;
-  STATE.isSimulatorThreadComplete = false;
-
+function clearSimulatorTimers() {
   if (STATE.chatTimelineTimer) {
     clearTimeout(STATE.chatTimelineTimer);
     STATE.chatTimelineTimer = null;
@@ -463,6 +424,33 @@ function switchScenario(scenarioKey, userInitiated = true) {
     clearTimeout(STATE.scenarioCycleTimer);
     STATE.scenarioCycleTimer = null;
   }
+  if (Array.isArray(STATE.activeSimulatorTimers)) {
+    STATE.activeSimulatorTimers.forEach(id => clearTimeout(id));
+    STATE.activeSimulatorTimers = [];
+  }
+  const container = document.getElementById('simMessagesContainer');
+  if (container) {
+    container.querySelectorAll('.chat-typing-bubble').forEach(el => el.remove());
+  }
+}
+
+function queueSimulatorTimer(fn, delay) {
+  if (!Array.isArray(STATE.activeSimulatorTimers)) {
+    STATE.activeSimulatorTimers = [];
+  }
+  const timerId = setTimeout(() => {
+    STATE.activeSimulatorTimers = STATE.activeSimulatorTimers.filter(id => id !== timerId);
+    fn();
+  }, delay);
+  STATE.activeSimulatorTimers.push(timerId);
+  return timerId;
+}
+
+function switchScenario(scenarioKey, userInitiated = true) {
+  const anime = getAnime();
+  clearSimulatorTimers();
+  STATE.currentScenario = scenarioKey;
+  STATE.isSimulatorThreadComplete = false;
 
   document.querySelectorAll('.scenario-tab').forEach((tab) => {
     if (tab.getAttribute('data-scenario') === scenarioKey) {
@@ -501,6 +489,8 @@ function switchScenario(scenarioKey, userInitiated = true) {
 
 function renderSimulatorScenario(scenarioKey) {
   const anime = getAnime();
+  clearSimulatorTimers();
+
   const data = CHAT_SCENARIOS[scenarioKey] || CHAT_SCENARIOS.consulting;
 
   const botNameEl = document.getElementById('simBotName');
@@ -514,15 +504,6 @@ function renderSimulatorScenario(scenarioKey) {
 
   const container = document.getElementById('simMessagesContainer');
   if (!container) return;
-
-  if (STATE.chatTimelineTimer) {
-    clearTimeout(STATE.chatTimelineTimer);
-    STATE.chatTimelineTimer = null;
-  }
-  if (STATE.scenarioCycleTimer) {
-    clearTimeout(STATE.scenarioCycleTimer);
-    STATE.scenarioCycleTimer = null;
-  }
 
   container.innerHTML = '';
   container.scrollTop = 0;
@@ -544,7 +525,7 @@ function renderSimulatorScenario(scenarioKey) {
       }
 
       if (!STATE.isSimulatorHovered) {
-        STATE.scenarioCycleTimer = setTimeout(() => {
+        STATE.scenarioCycleTimer = queueSimulatorTimer(() => {
           if (!STATE.isSimulatorHovered) {
             const nextIdx = (SCENARIO_KEYS.indexOf(STATE.currentScenario) + 1) % SCENARIO_KEYS.length;
             const nextKey = SCENARIO_KEYS[nextIdx];
@@ -582,16 +563,16 @@ function renderSimulatorScenario(scenarioKey) {
         });
       }
 
-      STATE.chatTimelineTimer = setTimeout(() => {
+      STATE.chatTimelineTimer = queueSimulatorTimer(() => {
         if (typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
         insertBubble(msg);
         currentIdx++;
-        STATE.chatTimelineTimer = setTimeout(postNextMessage, prefersReducedMotion ? 100 : 1100);
+        STATE.chatTimelineTimer = queueSimulatorTimer(postNextMessage, prefersReducedMotion ? 100 : 1100);
       }, prefersReducedMotion ? 100 : 700);
     } else {
       insertBubble(msg);
       currentIdx++;
-      STATE.chatTimelineTimer = setTimeout(postNextMessage, prefersReducedMotion ? 100 : 650);
+      STATE.chatTimelineTimer = queueSimulatorTimer(postNextMessage, prefersReducedMotion ? 100 : 650);
     }
   }
 
@@ -623,66 +604,67 @@ function renderSimulatorScenario(scenarioKey) {
     }
   }
 
-  STATE.chatTimelineTimer = setTimeout(postNextMessage, 300);
+  STATE.chatTimelineTimer = queueSimulatorTimer(postNextMessage, 300);
 }
 
 // ==========================================================================
-// 6. INTERACTIVE WORKFLOW PIPELINE
+// 6. SIGNATURE INTERACTIVE TRANSFORMATION SWITCH
 // ==========================================================================
 
-function switchPipelineStep(stepNum) {
-  const anime = getAnime();
-  STATE.currentPipelineStep = stepNum;
+function switchTransformation(mode) {
+  const btnManual = document.getElementById('btnStateManual');
+  const btnFlowState = document.getElementById('btnStateFlowState');
+  const viewManual = document.getElementById('viewManualChaos');
+  const viewFlowState = document.getElementById('viewFlowStatePrecision');
 
-  document.querySelectorAll('.pipeline-tab-item').forEach((tab) => {
-    const itemStep = Number(tab.getAttribute('data-step'));
-    if (itemStep === stepNum) {
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      tab.setAttribute('tabindex', '0');
-      if (anime && !prefersReducedMotion) {
-        anime.animate(tab, {
-          scale: [0.98, 1.02, 1],
-          duration: 220,
-          ease: 'outBack(1.4)'
-        });
-      }
-    } else {
-      tab.classList.remove('active');
-      tab.setAttribute('aria-selected', 'false');
-      tab.setAttribute('tabindex', '-1');
-    }
-  });
+  if (!btnManual || !btnFlowState || !viewManual || !viewFlowState) return;
 
-  renderPipelineStep(stepNum);
-
-  if (window.FlowStatePipeline3D && typeof window.FlowStatePipeline3D.goToStage === 'function') {
-    window.FlowStatePipeline3D.goToStage(stepNum);
-  }
-}
-
-function renderPipelineStep(stepNum) {
-  const data = PIPELINE_STEPS[stepNum] || PIPELINE_STEPS[1];
   const anime = getAnime();
 
-  const badgeEl = document.getElementById('pipelineStageBadge');
-  const titleEl = document.getElementById('pipelineStepTitle');
-  const descEl = document.getElementById('pipelineStepDesc');
-  const codeEl = document.getElementById('pipelineCodeBlock');
+  if (mode === 'manual') {
+    btnManual.classList.add('active');
+    btnManual.setAttribute('aria-selected', 'true');
+    btnFlowState.classList.remove('active');
+    btnFlowState.setAttribute('aria-selected', 'false');
 
-  if (badgeEl) badgeEl.textContent = data.badge;
-  if (titleEl) titleEl.textContent = data.title;
-  if (descEl) descEl.textContent = data.desc;
-  if (codeEl) {
-    codeEl.textContent = data.code;
+    viewFlowState.style.display = 'none';
+    viewManual.style.display = 'block';
+
     if (anime && !prefersReducedMotion) {
-      anime.animate(codeEl, {
-        opacity: [0.4, 1],
-        duration: 250,
+      anime.animate(viewManual, {
+        opacity: [0, 1],
+        translateY: [8, 0],
+        duration: 240,
+        ease: 'outQuad'
+      });
+    }
+  } else {
+    btnFlowState.classList.add('active');
+    btnFlowState.setAttribute('aria-selected', 'true');
+    btnManual.classList.remove('active');
+    btnManual.setAttribute('aria-selected', 'false');
+
+    viewManual.style.display = 'none';
+    viewFlowState.style.display = 'block';
+
+    if (anime && !prefersReducedMotion) {
+      anime.animate(viewFlowState, {
+        opacity: [0, 1],
+        translateY: [8, 0],
+        duration: 240,
         ease: 'outQuad'
       });
     }
   }
+}
+
+function initTransformationSwitch() {
+  switchTransformation('manual');
+}
+
+// Backwards-compatible no-op
+function switchPipelineStep(_stepNum) {
+  /* Deprecated: superseded by switchTransformation */
 }
 
 // ==========================================================================
@@ -831,22 +813,52 @@ function setupNavbarScroll() {
     } else {
       navbar.style.boxShadow = 'none';
     }
-  });
+  }, { passive: true });
 
   const mobileBtn = document.getElementById('mobileMenuBtn');
   mobileBtn?.addEventListener('click', toggleMobileMenu);
+
+  // Keyboard accessibility: Escape key dismisses mobile drawer and dropdowns
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      closeMobileMenu();
+      const dropdownBtn = document.querySelector('.nav-dropdown-trigger');
+      if (dropdownBtn) {
+        dropdownBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Accessible aria-expanded synchronization on solutions dropdown
+  const dropdownItem = document.querySelector('.nav-item-dropdown');
+  const dropdownBtn = document.querySelector('.nav-dropdown-trigger');
+  if (dropdownItem && dropdownBtn) {
+    dropdownItem.addEventListener('mouseenter', () => {
+      dropdownBtn.setAttribute('aria-expanded', 'true');
+    });
+    dropdownItem.addEventListener('mouseleave', () => {
+      dropdownBtn.setAttribute('aria-expanded', 'false');
+    });
+    dropdownBtn.addEventListener('focus', () => {
+      dropdownBtn.setAttribute('aria-expanded', 'true');
+    });
+  }
 }
 
 function toggleMobileMenu() {
   const drawer = document.getElementById('mobileDrawer');
+  const btn = document.getElementById('mobileMenuBtn');
   if (!drawer) return;
-  drawer.classList.toggle('open');
+  const isOpen = drawer.classList.toggle('open');
+  btn?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
 function closeMobileMenu() {
   const drawer = document.getElementById('mobileDrawer');
+  const btn = document.getElementById('mobileMenuBtn');
   if (!drawer) return;
   drawer.classList.remove('open');
+  btn?.setAttribute('aria-expanded', 'false');
 }
 
 // ==========================================================================
@@ -876,6 +888,16 @@ function toggleFaq(index) {
 // ==========================================================================
 // 11. DIRECT ARCHITECTURE BLUEPRINT FORM CONTROLLER (/api/contact)
 // ==========================================================================
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 async function handleLeadFormSubmit(e) {
   if (e) e.preventDefault();
@@ -922,21 +944,41 @@ async function handleLeadFormSubmit(e) {
       form.reset();
       showFeedback(data.message || 'Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
     } else {
-      showFeedback(data.error || 'Failed to dispatch request. Please check your information or email us at flowstateautom8t@gmail.com.', 'error');
+      const errText = escapeHtml(data.error || 'Server rejected transmission. Please verify your contact details.');
+      const fallbackHtml = `
+        <div><strong>[ DISPATCH NOTICE ]</strong> ${errText}</div>
+        <div class="form-feedback-fallback">
+          <button type="button" class="btn-fallback" onclick="document.getElementById('leadCaptureSubmitBtn').click()">&#x21bb; Retry Submission</button>
+          <a href="mailto:flowstateautom8t@gmail.com?subject=Architecture Blueprint Request - ${encodeURIComponent(name)}" class="btn-fallback">&#x2709; Direct Email Dispatch</a>
+          <a href="tel:+639059557661" class="btn-fallback">&#x260e; Call 0905 955 7661</a>
+        </div>
+      `;
+      showFeedback(fallbackHtml, 'error');
     }
   } catch (err) {
     console.error('Lead blueprint submit error:', err);
-    form.reset();
-    showFeedback('Blueprint request received! A solutions architect will review and respond within 24 hours.', 'success');
+    const fallbackHtml = `
+      <div><strong>[ CONNECTION DELAY / NETWORK TIMEOUT ]</strong> Unable to connect to the dispatch gateway. Your form inputs have been preserved.</div>
+      <div class="form-feedback-fallback">
+        <button type="button" class="btn-fallback" onclick="document.getElementById('leadCaptureSubmitBtn').click()">&#x21bb; Retry Transmission</button>
+        <a href="mailto:flowstateautom8t@gmail.com?subject=Architecture Blueprint Request - ${encodeURIComponent(name)}&body=Name: ${encodeURIComponent(name)}%0D%0AContact: ${encodeURIComponent(contact)}%0D%0ANotes: ${encodeURIComponent(notes)}" class="btn-fallback">&#x2709; Send via Direct Email</a>
+        <a href="tel:+639059557661" class="btn-fallback">&#x260e; Call Hotline: 0905 955 7661</a>
+      </div>
+    `;
+    showFeedback(fallbackHtml, 'error');
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnHtml;
   }
 
-  function showFeedback(msg, type) {
+  function showFeedback(content, type) {
     if (!feedbackEl) return;
     feedbackEl.className = `form-feedback ${type}`;
-    feedbackEl.textContent = msg;
+    if (typeof content === 'string' && content.includes('<')) {
+      feedbackEl.innerHTML = content;
+    } else {
+      feedbackEl.textContent = content;
+    }
     feedbackEl.style.display = 'block';
 
     if (type === 'success') {
@@ -1104,7 +1146,8 @@ function showCopyToast(label) {
     document.body.appendChild(toast);
   }
 
-  toast.innerHTML = `<svg class="matrix-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--brand-accent); flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg> <span>COPIED TO CLIPBOARD:</span> <span style="color: #FFFFFF; font-weight: 800;">${label}</span>`;
+  const cleanLabel = escapeHtml(label);
+  toast.innerHTML = `<svg class="matrix-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--brand-accent); flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg> <span>COPIED TO CLIPBOARD:</span> <span style="color: #FFFFFF; font-weight: 800;">${cleanLabel}</span>`;
   toast.classList.add('show');
 
   if (copyToastTimeout) clearTimeout(copyToastTimeout);
@@ -1660,6 +1703,7 @@ function initCounterTickers() {
 
 // Global scope bindings for inline HTML handlers
 window.switchScenario = switchScenario;
+window.switchTransformation = switchTransformation;
 window.switchPipelineStep = switchPipelineStep;
 window.toggleScopeModule = toggleScopeModule;
 window.toggleMobileMenu = toggleMobileMenu;

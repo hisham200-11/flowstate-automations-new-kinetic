@@ -1,0 +1,45 @@
+name: CI & Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-gate:
+    name: Quality Gate & Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run Oxlint Static Code Analysis
+        run: npx oxlint app.js chatbot.js functions/api/chat.js functions/api/contact.js
+
+      - name: Verify Cloudflare Security Headers
+        run: |
+          if [ ! -f _headers ]; then
+            echo "Error: _headers file missing!"
+            exit 1
+          fi
+          grep -q "Content-Security-Policy" _headers || (echo "Missing CSP" && exit 1)
+          grep -q "Strict-Transport-Security" _headers || (echo "Missing HSTS" && exit 1)
+          grep -q "X-Frame-Options: DENY" _headers || (echo "Missing X-Frame-Options" && exit 1)
+          grep -q "X-Content-Type-Options: nosniff" _headers || (echo "Missing X-Content-Type-Options" && exit 1)
+          echo "Security headers verified."
+
+      - name: Verify Production HTML & Metadata Assets
+        run: |
+          for page in index.html about.html real-estate-automation.html logistics-automation.html healthcare-automation.html sitemap.xml manifest.webmanifest; do
+            if [ ! -f "$page" ]; then
+              echo "Error: Required asset $page is missing!"
+              exit 1
+            fi
+          done
+          echo "All core assets and vertical landing pages present."

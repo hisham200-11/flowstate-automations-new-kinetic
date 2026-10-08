@@ -17,9 +17,29 @@ const FALLBACK_MODELS = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mix
 
 const ALLOWED_ORIGIN_PATTERNS = [
   /^https:\/\/([a-zA-Z0-9-]+\.)?pages\.dev$/,
-  /^https:\/\/([a-zA-Z0-9-]+\.)?flowstate.*$/,
+  /^https:\/\/([a-zA-Z0-9-]+\.)?flowstate\.ph$/,
   /^http:\/\/(localhost|127\.0\.0\.1)(:[0-9]+)?$/
 ];
+
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_CHAT_REQUESTS_PER_MINUTE = 12;
+const chatRateLimits = new Map();
+const dispatchedLeadSessions = new Set();
+
+function isRateLimited(ip, maxRequests = MAX_CHAT_REQUESTS_PER_MINUTE, windowMs = RATE_LIMIT_WINDOW_MS) {
+  const now = Date.now();
+  const timestamps = chatRateLimits.get(ip) || [];
+  const validTimestamps = timestamps.filter((t) => now - t < windowMs);
+
+  if (validTimestamps.length >= maxRequests) {
+    chatRateLimits.set(ip, validTimestamps);
+    return true;
+  }
+
+  validTimestamps.push(now);
+  chatRateLimits.set(ip, validTimestamps);
+  return false;
+}
 
 function getCorsHeaders(request, env) {
   const origin = request.headers.get('Origin');
@@ -30,10 +50,12 @@ function getCorsHeaders(request, env) {
     if (isAllowed || (env && env.ALLOWED_ORIGIN && origin === env.ALLOWED_ORIGIN)) {
       allowedOrigin = origin;
     }
+  } else {
+    allowedOrigin = (env && env.ALLOWED_ORIGIN) || 'https://flowstate.ph';
   }
 
   return {
-    'Access-Control-Allow-Origin': allowedOrigin || '*',
+    'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',
@@ -100,6 +122,15 @@ export async function onRequestPost(context) {
   const { request, env, waitUntil } = context;
   const corsHeaders = getCorsHeaders(request, env);
 
+  // Rate Limiting Protection (DoS / Flooding Prevention)
+  const clientIp = request.headers.get('CF-Connecting-IP') || request.headers.get('x-real-ip') || 'unknown';
+  if (clientIp !== 'unknown' && isRateLimited(clientIp)) {
+    return new Response(
+      JSON.stringify({ error: 'Rate limit exceeded. Please wait a moment before sending another message.' }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': '60' } }
+    );
+  }
+
   try {
     const body = await request.json();
     const { messages = [], sessionId = 'anon-' + Date.now(), pageUrl = '' } = body;
@@ -112,10 +143,10 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Token drain protection: Cap conversation window to latest 10 messages, max 1000 chars per message
+    // Token drain protection: Cap conversation window to latest 10 messages, max 1000 chars per message, strip null bytes
     const boundedMessages = messages.slice(-10).map((m) => ({
       role: m.role === 'assistant' ? 'assistant' : 'user',
-      content: String(m.content || '').trim().slice(0, 1000),
+      content: String(m.content || '').replace(/\0/g, '').trim().slice(0, 1000),
     }));
 
     const cleanSessionId = String(sessionId || '').trim().slice(0, 100);
@@ -205,7 +236,7 @@ export async function onRequestPost(context) {
     let parsedResult = {};
     try {
       parsedResult = JSON.parse(rawContent);
-    } catch (parseErr) {
+    } catch {
       console.warn('Could not parse JSON response from model:', rawContent);
       parsedResult = {
         reply_text: rawContent.replace(/[{}"\\]/g, '').trim() || "Thank you for reaching out! How can we assist your workflow?",
@@ -250,8 +281,14 @@ export async function onRequestPost(context) {
       }
     }
 
-    // Trigger Resend email notification if lead captured
-    if (isLeadCaptured && leadData) {
+    // Trigger Resend email notification if lead captured (deduplicated per session)
+    if (isLeadCaptured && leadData && !dispatchedLeadSessions.has(cleanSessionId)) {
+      dispatchedLeadSessions.add(cleanSessionId);
+      if (dispatchedLeadSessions.size > 1000) {
+        const oldest = dispatchedLeadSessions.values().next().value;
+        dispatchedLeadSessions.delete(oldest);
+      }
+
       const resendKey = (env && env.RESEND_API_KEY) || (typeof RESEND_API_KEY !== 'undefined' ? RESEND_API_KEY : '');
       const targetEmail = (env && env.NOTIFICATION_EMAIL) || DEFAULT_NOTIFICATION_EMAIL;
 

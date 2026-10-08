@@ -34,10 +34,15 @@
   <meta name="geo.position" content="14.5547;121.0244">
   <meta name="ICBM" content="14.5547, 121.0244">
 
+  <!-- Web App Manifest & App Icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="logo.png">
+  <meta name="theme-color" content="#09090B">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Core Design System & Chatbot Styles -->
   <link rel="stylesheet" href="styles.css">
@@ -79,6 +84,31 @@
           "Philippines",
           "Southeast Asia",
           "Global Remote"
+        ],
+        "knowsAbout": [
+          "Custom Enterprise Software Development",
+          "Business Process Automation",
+          "Bespoke CRM & Internal Portals",
+          "Taglish Conversational AI",
+          "RFID Attendance & Biometric Integration",
+          "Philippine SME Digital Transformation"
+        ],
+        "subjectOf": [
+          {
+            "@type": "CreativeWork",
+            "name": "Enterprise Business Management Platform",
+            "description": "Multi-department operational portal with 100% data ownership and 1-click executive reporting for mid-sized Philippine enterprise."
+          },
+          {
+            "@type": "CreativeWork",
+            "name": "Mamas Halal Kitchenette Automated Triage System",
+            "description": "Sub-2-second automated customer booking, menu triage, and catering order pipeline."
+          },
+          {
+            "@type": "CreativeWork",
+            "name": "Workforce RFID & Biometric Cloud Dashboard",
+            "description": "Connected hardware attendance scanning synchronizing live clock-ins with cloud payroll."
+          }
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
@@ -128,12 +158,8 @@
         "offers": {
           "@type": "Offer",
           "price": "15000",
-          "priceCurrency": "PHP"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "48"
+          "priceCurrency": "PHP",
+          "description": "Custom business operations platform starting at ₱15,000 Phase 1 turnkey build."
         }
       },
       {
@@ -242,8 +268,15 @@
                   <div class="nav-dropdown-desc">Physical RFID &amp; biometric hardware connected directly to cloud dashboards.</div>
                 </a>
               </div>
+              <div class="nav-dropdown-footer" style="padding: 0.75rem 1.25rem; border-top: 1px solid var(--border-subtle); background: var(--surface-sunken); display: flex; gap: 1.25rem; font-size: 0.75rem; font-family: var(--font-mono); align-items: center;">
+                <span style="color: var(--ink-muted); font-weight: 700;">[ SPECIALIZED VERTICALS ]</span>
+                <a href="real-estate-automation.html" style="color: var(--ink-secondary); text-decoration: none;">Real Estate &rarr;</a>
+                <a href="logistics-automation.html" style="color: var(--ink-secondary); text-decoration: none;">Logistics &rarr;</a>
+                <a href="healthcare-automation.html" style="color: var(--ink-secondary); text-decoration: none;">Healthcare &rarr;</a>
+              </div>
             </div>
           </div>
+          <a href="#transformation" class="nav-link">Transformation</a>
           <a href="#simulator" class="nav-link">Live Demo</a>
           <a href="about.html#lifecycle" class="nav-link">How We Deliver</a>
           <a href="about.html" class="nav-link">About Us</a>
@@ -272,12 +305,17 @@
           <a href="process-automation.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>02 // Process Automation</span><span>&rarr;</span></a>
           <a href="applied-ai.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>03 // Smart AI Assistants</span><span>&rarr;</span></a>
           <a href="workforce-systems.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>04 // Workplace Hardware &amp; RFID</span><span>&rarr;</span></a>
+          <div class="mobile-nav-group-title" style="margin-top: 0.85rem;">[ SPECIALIZED VERTICALS ]</div>
+          <a href="real-estate-automation.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>&bull; Real Estate &amp; Brokerages</span><span>&rarr;</span></a>
+          <a href="logistics-automation.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>&bull; Logistics &amp; Fleet Operations</span><span>&rarr;</span></a>
+          <a href="healthcare-automation.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>&bull; Healthcare &amp; Clinic Intake</span><span>&rarr;</span></a>
           <div class="mobile-nav-group-title" style="margin-top: 0.85rem;">[ PLATFORM &amp; COMPANY ]</div>
-          <a href="#simulator" class="mobile-nav-link" onclick="closeMobileMenu()"><span>05 // Live Demo Sandbox</span><span>&rarr;</span></a>
-          <a href="about.html#lifecycle" class="mobile-nav-link" onclick="closeMobileMenu()"><span>06 // How We Deliver (8 Stages)</span><span>&rarr;</span></a>
-          <a href="about.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>07 // About FlowState</span><span>&rarr;</span></a>
+          <a href="#transformation" class="mobile-nav-link" onclick="closeMobileMenu()"><span>05 // Operational Transformation</span><span>&rarr;</span></a>
+          <a href="#simulator" class="mobile-nav-link" onclick="closeMobileMenu()"><span>06 // Live Demo Sandbox</span><span>&rarr;</span></a>
+          <a href="about.html#lifecycle" class="mobile-nav-link" onclick="closeMobileMenu()"><span>07 // How We Deliver (8 Stages)</span><span>&rarr;</span></a>
+          <a href="about.html" class="mobile-nav-link" onclick="closeMobileMenu()"><span>08 // About FlowState</span><span>&rarr;</span></a>
           <a href="#contact" class="btn btn-primary" style="margin-top: 1.15rem; width: 100%;" onclick="closeMobileMenu()">
-            <span>Request Free Blueprint &rarr;</span>
+            <span>Book Operational Diagnostic &rarr;</span>
           </a>
         </nav>
       </div>
@@ -290,48 +328,49 @@
           <div class="hero-text-col">
             <div class="hero-tag-row">
               <span class="status-pill"><span class="status-dot status-dot-pulse"></span> SYSTEM: 24/7 ONLINE</span>
-              <span class="hero-code-tag">LATENCY &lt; 1.8s</span>
-              <span class="hero-code-tag">UPTIME 99.99%</span>
+              <span class="hero-code-tag">SPEED-TO-LEAD &lt; 1.8s</span>
+              <span class="hero-code-tag">PHILIPPINES &bull; REMOTE GLOBAL</span>
             </div>
 
             <h1 class="hero-title">
-              Never Lose Another Customer to After-Hours Silence<span class="red-dot">.</span>
+              <span class="hero-kicker-badge">B2B Custom Software &amp; Process Automation &bull; Philippines</span>
+              <span class="hero-title-text">Break Your Growth Ceiling. Quote &amp; Confirm Clients in <span class="editorial-serif">2 Seconds</span> While Competitors Take 4 Hours<span class="red-dot">.</span></span>
             </h1>
 
             <p class="hero-subtitle">
-              Automated customer triage in polite Taglish and English, instant calendar bookings, and custom operations software connected directly to your private database.
+              Stop losing inquiries to evening silence and spreadsheet bottlenecks. We build custom operations software, instant multi-channel triage, and automated calendar systems for growing Philippine enterprises.
             </p>
 
             <div class="hero-cta-group">
               <a href="#contact" class="btn btn-primary">
-                <span>Lock Free Blueprint</span>
+                <span>Book a 30-Minute Operational Diagnostic</span>
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
-              <a href="#simulator" class="btn btn-secondary">
-                <span>Test Live Simulator</span>
+              <a href="#transformation" class="btn btn-secondary">
+                <span>See Before &amp; After Transformation</span>
               </a>
             </div>
 
             <div class="hero-metrics-strip">
               <div class="hero-metric-item">
                 <span class="hero-metric-val">&lt; 1.8s</span>
-                <span class="hero-metric-label">Response Time</span>
+                <span class="hero-metric-label">Speed-to-Quote</span>
               </div>
               <div class="hero-metric-item">
-                <span class="hero-metric-val">72%</span>
-                <span class="hero-metric-label">Leaked Lead Recovery</span>
+                <span class="hero-metric-val">100%</span>
+                <span class="hero-metric-label">After-Hours Capture</span>
               </div>
               <div class="hero-metric-item">
-                <span class="hero-metric-val">14–21d</span>
-                <span class="hero-metric-label">Production Delivery</span>
+                <span class="hero-metric-val">₱0 / mo</span>
+                <span class="hero-metric-label">Per-User License Fees</span>
               </div>
             </div>
           </div>
 
-          <!-- Hero Mechanical Card Deck -->
+          <!-- Hero Operational Live HUD -->
           <div class="hero-visual-frame">
             <div class="hero-visual-header">
-              <span>FLOWSTATE // LIVE_DISPATCH_NODE</span>
+              <span>FLOWSTATE // OPERATIONS MONITOR</span>
               <div class="hero-terminal-dots">
                 <div class="hero-t-dot"></div>
                 <div class="hero-t-dot"></div>
@@ -341,27 +380,89 @@
             <div class="hero-visual-body">
               <div class="hero-flow-node">
                 <div>
-                  <div class="hero-flow-node-title">Multi-Channel Inbound Capture</div>
-                  <div class="hero-flow-node-meta">WhatsApp &bull; Messenger &bull; Web Forms</div>
+                  <div class="hero-flow-node-title">Instant Speed-to-Quote</div>
+                  <div class="hero-flow-node-meta">Sub-1.8s automated qualification on Viber, WhatsApp &amp; Meta</div>
                 </div>
-                <span class="hero-flow-node-badge">01. INGEST</span>
+                <span class="hero-flow-node-badge">1.8s LATENCY</span>
               </div>
               <div class="hero-flow-connector"></div>
               <div class="hero-flow-node">
                 <div>
-                  <div class="hero-flow-node-title">Instant Taglish &amp; English Lead Triage</div>
-                  <div class="hero-flow-node-meta">Sub-1.8s Intent &amp; Qualification Check</div>
+                  <div class="hero-flow-node-title">After-Hours Capture &amp; Calendar Lock</div>
+                  <div class="hero-flow-node-meta">100% of evening &amp; weekend inquiries booked with zero staff overtime</div>
                 </div>
-                <span class="hero-flow-node-badge">02. TRIAGE</span>
+                <span class="hero-flow-node-badge" style="background: var(--brand-success);">100% LOCKED</span>
               </div>
               <div class="hero-flow-connector"></div>
               <div class="hero-flow-node">
                 <div>
-                  <div class="hero-flow-node-title">Two-Way Calendar Lock &amp; CRM Sync</div>
-                  <div class="hero-flow-node-meta">Google Calendar + Private Database + SMS</div>
+                  <div class="hero-flow-node-title">Private Cloud Infrastructure</div>
+                  <div class="hero-flow-node-meta">100% data ownership on dedicated servers with ₱0 monthly per-seat fees</div>
                 </div>
-                <span class="hero-flow-node-badge">03. ARCHIVE</span>
+                <span class="hero-flow-node-badge">₱0 PER-SEAT TAX</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACT II: THE GROWTH CEILING (THE OPERATIONAL DRAG) -->
+    <section class="villain-section" id="problem">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-tag">THE GROWTH CEILING</span>
+          <h2 class="section-title">
+            Why Most Growing Businesses Stall at <span class="editorial-serif">15–50 Staff</span><span class="red-dot">.</span>
+          </h2>
+          <p class="section-subtitle">
+            Hiring more people doesn’t fix fragmented operations. When systems rely on manual coordination, growth creates compounding friction that suffocates executive bandwidth.
+          </p>
+        </div>
+
+        <div class="villain-grid">
+          <!-- Friction 01 -->
+          <div class="villain-card">
+            <div>
+              <div class="villain-card-tag">[ FRICTION 01 // INBOUND DRAG ]</div>
+              <h3 class="villain-card-title">The After-Hours Inquiry Void</h3>
+              <p class="villain-card-desc">
+                High-intent prospects message your Viber, WhatsApp, and Facebook late in the evening. Because staff are off-duty, inquiries sit cold for 12 hours until buyers move to competitors who responded in seconds.
+              </p>
+            </div>
+            <div class="villain-card-stat">
+              <span class="villain-stat-val">42%</span>
+              <span class="villain-stat-label">of qualified inquiries lost to reply delays exceeding 1 hour</span>
+            </div>
+          </div>
+
+          <!-- Friction 02 -->
+          <div class="villain-card">
+            <div>
+              <div class="villain-card-tag">[ FRICTION 02 // DATA FRAGMENTATION ]</div>
+              <h3 class="villain-card-title">The "Duct-Taped" Tool Trap</h3>
+              <p class="villain-card-desc">
+                Your team wastes 3–4 hours every day copying rows across Google Sheets, paper receipts, and chat logs. Disconnected tools cause double bookings, lost orders, and painful human sync errors.
+              </p>
+            </div>
+            <div class="villain-card-stat">
+              <span class="villain-stat-val">3.5 hrs</span>
+              <span class="villain-stat-label">daily coordinator time wasted on manual spreadsheet sync</span>
+            </div>
+          </div>
+
+          <!-- Friction 03 -->
+          <div class="villain-card">
+            <div>
+              <div class="villain-card-tag">[ FRICTION 03 // MANAGEMENT TAX ]</div>
+              <h3 class="villain-card-title">The Babysitting Tax</h3>
+              <p class="villain-card-desc">
+                Founders and Managing Directors become operational bottlenecks. Every quote exception, booking shift, or client verification requires owner sign-off, halting growth and destroying personal time.
+              </p>
+            </div>
+            <div class="villain-card-stat">
+              <span class="villain-stat-val">80%</span>
+              <span class="villain-stat-label">of founder energy consumed by low-leverage coordination</span>
             </div>
           </div>
         </div>
@@ -373,8 +474,8 @@
       <div class="section-container">
         <div class="section-header text-center">
           <span class="section-tag">LIVE DEMO SIMULATOR</span>
-          <h2 class="section-title">See Your Assistant in Real-Time Action<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">Experience how polite, fast automated conversations qualify leads and confirm consultation slots with zero delay.</p>
+          <h2 class="section-title">See Automated Triage in <span class="editorial-serif">Real-Time Action</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">Experience how polite, instantaneous conversational workflows qualify customer requirements and lock appointment slots without human delay.</p>
         </div>
 
         <div class="sim-sandbox-wrapper">
@@ -431,161 +532,215 @@
     <section class="bento-section" id="solutions">
       <div class="section-container">
         <div class="section-header text-center">
-          <span class="section-tag">WHAT WE BUILD</span>
-          <h2 class="section-title">Built to Eliminate Operational Bottlenecks<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">Custom systems designed around how your business actually runs. 100% private data ownership with zero monthly per-user fees.</p>
+          <span class="section-tag">THE 4-PILLAR ARCHITECTURE</span>
+          <h2 class="section-title">The 4-Pillar <span class="editorial-serif">Operations Engine</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">A chatbot alone cannot fix broken operations. We engineer the complete operational nervous system for your enterprise — with 100% private data ownership and ₱0 monthly per-seat fees.</p>
         </div>
 
         <div class="bento-grid">
           <!-- Pillar 01 -->
           <div class="bento-card bento-span-2">
             <div>
-              <div class="bento-card-num">[ PILLAR 01 ]</div>
-              <h3 class="bento-card-title">Custom Software &amp; Portals</h3>
-              <p class="bento-card-desc">Bespoke operations hubs, company portals, and tailored CRMs built on private cloud databases with 100% data ownership and ₱0 monthly per-user fees.</p>
-              <div style="margin-top: 0.85rem;">
+              <div class="bento-card-num">[ PILLAR 01 // CUSTOM ARCHITECTURE ]</div>
+              <h3 class="bento-card-title">Custom Software &amp; Company Portals</h3>
+              <p class="bento-card-desc">Bespoke operations dashboards, custom internal CRMs, and client portals built directly on dedicated private cloud databases. You retain 100% data ownership with <strong>₱0 monthly per-user SaaS license tax</strong>.</p>
+              <div style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
                 <a href="custom-software.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Custom Software &rarr;</a>
+                <a href="logistics-automation.html" style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.78rem; text-decoration: none;">[ Logistics Portals &rarr; ]</a>
               </div>
             </div>
             <div class="bento-card-footer">
-              <span>DATA: 100% CLIENT PRIVATE</span>
-              <span>USER FEES: ₱0 / MONTH</span>
+              <span>DATA: 100% PRIVATE INFRASTRUCTURE</span>
+              <span>USER FEES: ₱0 / MONTH FIXED</span>
             </div>
           </div>
 
           <!-- Pillar 02 -->
           <div class="bento-card">
             <div>
-              <div class="bento-card-num">[ PILLAR 02 ]</div>
+              <div class="bento-card-num">[ PILLAR 02 // WORKFLOW ENGINE ]</div>
               <h3 class="bento-card-title">Inquiry &amp; Process Automation</h3>
-              <p class="bento-card-desc">Automated lead triage across WhatsApp, Facebook Messenger, and website forms with two-way Google and Outlook calendar locking.</p>
-              <div style="margin-top: 0.85rem;">
-                <a href="process-automation.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Automation &rarr;</a>
+              <p class="bento-card-desc">Instant multi-channel routing across WhatsApp, Viber, Facebook Messenger, and web forms. Features two-way Google and Outlook calendar locking that prevents double-booking entirely.</p>
+              <div style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <a href="process-automation.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Process Automation &rarr;</a>
+                <a href="real-estate-automation.html" style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.78rem; text-decoration: none;">[ Real Estate &rarr; ]</a>
               </div>
             </div>
             <div class="bento-card-footer">
-              <span>DISPATCH: &lt; 120ms</span>
-              <span>CALENDAR: TWO-WAY LOCK</span>
+              <span>DISPATCH: &lt; 120ms REAL-TIME</span>
+              <span>CALENDAR: TWO-WAY LIVE LOCK</span>
             </div>
           </div>
 
           <!-- Pillar 03 -->
           <div class="bento-card">
             <div>
-              <div class="bento-card-num">[ PILLAR 03 ]</div>
-              <h3 class="bento-card-title">Smart AI Assistants</h3>
-              <p class="bento-card-desc">Fast Taglish and English customer triage answering inquiries under 1.8 seconds without generic, robotic canned responses.</p>
-              <div style="margin-top: 0.85rem;">
-                <a href="applied-ai.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore AI Assistants &rarr;</a>
+              <div class="bento-card-num">[ PILLAR 03 // APPLIED INTELLIGENCE ]</div>
+              <h3 class="bento-card-title">Applied AI &amp; Conversational Triage</h3>
+              <p class="bento-card-desc">Sub-2s lead qualification in natural, polite Taglish and professional English. Zero robotic canned responses; trained strictly on your specific pricing, service rules, and qualification criteria.</p>
+              <div style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <a href="applied-ai.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Applied AI &rarr;</a>
+                <a href="healthcare-automation.html" style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.78rem; text-decoration: none;">[ Clinic Triage &rarr; ]</a>
               </div>
             </div>
             <div class="bento-card-footer">
-              <span>RESPONSE: &lt; 1.8s</span>
-              <span>LANGUAGES: TAGLISH + EN</span>
+              <span>SPEED-TO-LEAD: &lt; 1.8s</span>
+              <span>CALIBRATION: TAGLISH + ENGLISH</span>
             </div>
           </div>
 
           <!-- Pillar 04 -->
           <div class="bento-card bento-span-2">
             <div>
-              <div class="bento-card-num">[ PILLAR 04 ]</div>
-              <h3 class="bento-card-title">Workplace Hardware &amp; RFID</h3>
-              <p class="bento-card-desc">Physical RFID tap cards and biometric attendance scanners connected directly to cloud dashboards for 1-click payroll calculation.</p>
-              <div style="margin-top: 0.85rem;">
-                <a href="workforce-systems.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Workplace Hardware &rarr;</a>
+              <div class="bento-card-num">[ PILLAR 04 // CONNECTED SYSTEMS ]</div>
+              <h3 class="bento-card-title">Workplace Hardware &amp; Connected Systems</h3>
+              <p class="bento-card-desc">Physical RFID cards, barcode scanners, and biometric verification units connected directly to your centralized cloud dashboard. Eliminate manual paper logs and generate accurate payroll records in one click.</p>
+              <div style="margin-top: 1rem;">
+                <a href="workforce-systems.html" class="nav-link" style="color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;">Explore Workplace Systems &rarr;</a>
               </div>
             </div>
             <div class="bento-card-footer">
               <span>HARDWARE: RFID / NFC / BIOMETRICS</span>
-              <span>SYNC: REAL-TIME CLOUD DASHBOARD</span>
+              <span>PAYROLL SYNC: 1-CLICK EXPORT</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. INTERACTIVE WORKFLOW PIPELINE -->
-    <section class="pipeline-section" id="pipeline">
+    <!-- 5. SIGNATURE INTERACTIVE TRANSFORMATION SWITCH -->
+    <section class="transformation-section" id="transformation">
       <div class="section-container">
         <div class="section-header text-center">
-          <span class="section-tag">HOW IT WORKS</span>
-          <h2 class="section-title">4 Steps from Inquiry to Confirmed Client<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">How our automation engine processes customer interactions from initial message to confirmed booking.</p>
+          <span class="section-tag">OPERATIONAL TRANSFORMATION</span>
+          <h2 class="section-title">Manual Chaos vs. <span class="editorial-serif">FlowState Precision</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">Toggle between the reality of manual, duct-taped business workflows and the calm efficiency of dedicated automated architecture.</p>
         </div>
 
-        <div class="pipeline-grid">
-          <div class="pipeline-tabs-list" role="tablist" aria-label="Execution Pipeline Stages">
-            <button type="button" class="pipeline-tab-item active" id="pipeline-tab-1" role="tab" aria-selected="true" aria-controls="pipeline-panel" tabindex="0" data-step="1" onclick="switchPipelineStep(1)">
-              <div class="pipeline-tab-meta">
-                <span class="pipeline-tab-num">01.</span>
-                <span class="pipeline-tab-title">Multi-Channel Inbound Capture</span>
-              </div>
-              <span aria-hidden="true">&rarr;</span>
+        <!-- Transformation Segmented Switcher -->
+        <div class="transform-switcher-wrapper">
+          <div class="transform-segmented-control" role="tablist" aria-label="Transformation State">
+            <button type="button" class="transform-toggle-btn active" id="btnStateManual" role="tab" aria-selected="true" aria-controls="viewManualChaos" onclick="switchTransformation('manual')">
+              <span class="status-dot status-dot-manual"></span>
+              <span>[ 01 // Current Manual Chaos ]</span>
             </button>
-            <button type="button" class="pipeline-tab-item" id="pipeline-tab-2" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="2" onclick="switchPipelineStep(2)">
-              <div class="pipeline-tab-meta">
-                <span class="pipeline-tab-num">02.</span>
-                <span class="pipeline-tab-title">Instant AI Lead Qualification</span>
-              </div>
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-            <button type="button" class="pipeline-tab-item" id="pipeline-tab-3" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="3" onclick="switchPipelineStep(3)">
-              <div class="pipeline-tab-meta">
-                <span class="pipeline-tab-num">03.</span>
-                <span class="pipeline-tab-title">Two-Way Calendar Booking</span>
-              </div>
-              <span aria-hidden="true">&rarr;</span>
-            </button>
-            <button type="button" class="pipeline-tab-item" id="pipeline-tab-4" role="tab" aria-selected="false" aria-controls="pipeline-panel" tabindex="-1" data-step="4" onclick="switchPipelineStep(4)">
-              <div class="pipeline-tab-meta">
-                <span class="pipeline-tab-num">04.</span>
-                <span class="pipeline-tab-title">Private CRM Sync &amp; Alerts</span>
-              </div>
-              <span aria-hidden="true">&rarr;</span>
+            <button type="button" class="transform-toggle-btn" id="btnStateFlowState" role="tab" aria-selected="false" aria-controls="viewFlowStatePrecision" onclick="switchTransformation('flowstate')">
+              <span class="status-dot status-dot-flowstate"></span>
+              <span>[ 02 // FlowState Automated Engine ]</span>
             </button>
           </div>
+        </div>
 
-          <div class="pipeline-visual-wrapper" id="pipeline-panel" role="tabpanel" aria-labelledby="pipeline-tab-1">
-            <!-- 3D Pipeline Scene Viewport -->
-            <div class="pipeline-3d-container" id="pipeline3dContainer">
-              <div class="pipeline-3d-hud">
-                <div class="pipeline-hud-left">
-                  <span id="pipeline3dStageBadge" class="pipeline-stage-badge">STAGE 01 // INBOUND INGEST</span>
-                  <span id="pipeline3dTicker" class="pipeline-hud-ticker">0.00s</span>
-                </div>
-                <div class="pipeline-hud-right">
-                  <span class="pipeline-status-pulse"></span>
-                  <span id="pipeline3dPlayState" class="pipeline-hud-mode">AUTO-LOOP [HOVER TO PAUSE]</span>
-                </div>
+        <!-- Transformation Display Grid -->
+        <div class="transform-display-container">
+          <!-- Manual Chaos State Panel -->
+          <div class="transform-state-panel active" id="viewManualChaos" role="tabpanel" aria-labelledby="btnStateManual">
+            <div class="transform-panel-header transform-header-manual">
+              <div class="transform-panel-status">
+                <span class="transform-badge-manual">STATUS: OPERATIONAL FRICTION DETECTED</span>
+                <span class="transform-meta-time">RESPONSE LATENCY: 3–5 HOURS</span>
               </div>
-              <div class="pipeline-canvas-holder">
-                <canvas id="pipeline3dCanvas"></canvas>
-              </div>
-              <div class="pipeline-3d-caption">
-                <span id="pipeline3dCaptionText">STAGE 01 // INBOUND INGEST: Multi-channel webhooks normalize into single unified queue (&lt;50ms)</span>
-              </div>
+              <div class="transform-panel-sub">Fragmented tools • After-hours leakage • Manual Excel bottlenecks</div>
             </div>
 
-            <!-- Fallback JSON Terminal (Gracefully shown if WebGL unavailable) -->
-            <div class="pipeline-code-terminal" id="pipelineFallbackTerminal" style="display: none;">
-              <div class="pipeline-terminal-header">
-                <span id="pipelineStageBadge" class="pipeline-stage-badge">STAGE 01 // INBOUND INGEST</span>
-                <span>JSON_FEED</span>
+            <div class="transform-cards-grid">
+              <div class="transform-card transform-card-manual">
+                <div class="transform-card-eyebrow">[ 01 // INBOUND CAPTURE ]</div>
+                <h3 class="transform-card-heading">4-Hour Inquiry Delay</h3>
+                <p class="transform-card-body">Leads message Viber and Facebook Messenger at night. Nobody replies until 10:00 AM next morning. By then, 70% have engaged another supplier.</p>
+                <div class="transform-card-footer transform-footer-manual">
+                  <span>OUTCOME: 70% LEAD DROP-OFF</span>
+                </div>
               </div>
-              <div class="pipeline-terminal-body">
-                <h3 class="pipeline-step-title" id="pipelineStepTitle">Inquiries Arrive from Any Channel Simultaneously</h3>
-                <p class="pipeline-step-desc" id="pipelineStepDesc">Customer reaches out through Facebook Messenger, WhatsApp, Viber, or your website. FlowState normalizes the webhook payload instantly.</p>
-                <pre class="pipeline-code-block"><code id="pipelineCodeBlock">// Webhook Ingest (&lt; 50ms)
-{
-  "source": "whatsapp_business",
-  "sender_id": "+639175550192",
-  "message": "Available consultation slots this Thursday for operations audit?",
-  "timestamp": "2026-09-15T14:14:02Z",
-  "status": "INGESTED_ACTIVE"
-}</code></pre>
+
+              <div class="transform-card transform-card-manual">
+                <div class="transform-card-eyebrow">[ 02 // SCHEDULING ]</div>
+                <h3 class="transform-card-heading">Double-Booking &amp; Back-and-Forth</h3>
+                <p class="transform-card-body">Staff exchange 6–8 manual chat messages just to pin down a consultation slot, often double-booking team members across competing calendars.</p>
+                <div class="transform-card-footer transform-footer-manual">
+                  <span>OUTCOME: 6+ CHATS PER BOOKING</span>
+                </div>
+              </div>
+
+              <div class="transform-card transform-card-manual">
+                <div class="transform-card-eyebrow">[ 03 // DATA PIPELINE ]</div>
+                <h3 class="transform-card-heading">Manual Excel Re-Entry</h3>
+                <p class="transform-card-body">Coordinators spend afternoon hours copying customer details from chats into messy Google Sheets, leading to missing contact data and billing errors.</p>
+                <div class="transform-card-footer transform-footer-manual">
+                  <span>OUTCOME: 3.5 HRS DAILY RE-TYPING</span>
+                </div>
+              </div>
+
+              <div class="transform-card transform-card-manual">
+                <div class="transform-card-eyebrow">[ 04 // SOFTWARE COST ]</div>
+                <h3 class="transform-card-heading">The Per-Seat SaaS Tax</h3>
+                <p class="transform-card-body">Paying $30–$80 per employee every month for rigid US software where you only use 10% of the features and don't own your underlying data.</p>
+                <div class="transform-card-footer transform-footer-manual">
+                  <span>OUTCOME: RECURRING EXPENSE DRAG</span>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- FlowState Precision State Panel -->
+          <div class="transform-state-panel" id="viewFlowStatePrecision" role="tabpanel" aria-labelledby="btnStateFlowState" style="display: none;">
+            <div class="transform-panel-header transform-header-flowstate">
+              <div class="transform-panel-status">
+                <span class="transform-badge-flowstate">STATUS: AUTOMATED ENGINE ACTIVE</span>
+                <span class="transform-meta-time">RESPONSE LATENCY: &lt; 1.8 SECONDS</span>
+              </div>
+              <div class="transform-panel-sub">Instant qualification • Two-way calendar lock • Dedicated private cloud</div>
+            </div>
+
+            <div class="transform-cards-grid">
+              <div class="transform-card transform-card-flowstate">
+                <div class="transform-card-eyebrow">[ 01 // INBOUND CAPTURE ]</div>
+                <h3 class="transform-card-heading">Sub-2s Instant Qualification</h3>
+                <p class="transform-card-body">Prospects receive polite, intelligent Taglish replies in 1.8 seconds 24/7. Inquiries are qualified, scored, and quoted before competitors even open the app.</p>
+                <div class="transform-card-footer transform-footer-flowstate">
+                  <span>OUTCOME: 100% CAPTURE &bull; ZERO LEAKAGE</span>
+                </div>
+              </div>
+
+              <div class="transform-card transform-card-flowstate">
+                <div class="transform-card-eyebrow">[ 02 // SCHEDULING ]</div>
+                <h3 class="transform-card-heading">Automated Two-Way Calendar Lock</h3>
+                <p class="transform-card-body">Clients pick available consultation slots directly inside chat. The system blocks external clashes on Google/Outlook calendars and locks deposits automatically.</p>
+                <div class="transform-card-footer transform-footer-flowstate">
+                  <span>OUTCOME: ZERO OVERLAPS &bull; INSTANT CONFIRMATION</span>
+                </div>
+              </div>
+
+              <div class="transform-card transform-card-flowstate">
+                <div class="transform-card-eyebrow">[ 03 // DATA PIPELINE ]</div>
+                <h3 class="transform-card-heading">Real-Time Private Database Sync</h3>
+                <p class="transform-card-body">Every lead detail, booking parameter, and transaction syncs automatically to your dedicated database with zero human intervention or manual copying.</p>
+                <div class="transform-card-footer transform-footer-flowstate">
+                  <span>OUTCOME: 100% ACCURACY &bull; 0 MANUAL RE-ENTRY</span>
+                </div>
+              </div>
+
+              <div class="transform-card transform-card-flowstate">
+                <div class="transform-card-eyebrow">[ 04 // SOFTWARE COST ]</div>
+                <h3 class="transform-card-heading">Dedicated Private Ownership</h3>
+                <p class="transform-card-body">You own 100% of the platform and data hosted on private cloud infrastructure. Scale from 10 to 500 team members with ₱0 monthly per-seat license taxes.</p>
+                <div class="transform-card-footer transform-footer-flowstate">
+                  <span>OUTCOME: ₱0 / MONTH PER-USER TAX</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transformation Action Banner -->
+        <div class="transform-cta-banner">
+          <div class="transform-cta-text">
+            <div class="transform-cta-title">Ready to transition your business from manual drag to automated clarity?</div>
+            <div class="transform-cta-sub">We review your current workflows and architect your custom solution roadmap in 30 minutes.</div>
+          </div>
+          <a href="#contact" class="btn btn-primary">
+            <span>Book 30-Min Diagnostic Call &rarr;</span>
+          </a>
         </div>
       </div>
     </section>
@@ -595,7 +750,7 @@
       <div class="section-container">
         <div class="section-header text-center">
           <span class="section-tag">FINANCIAL RECOVERY</span>
-          <h2 class="section-title">Calculate Your Leaked Revenue<span class="red-dot">.</span></h2>
+          <h2 class="section-title">Calculate Your <span class="editorial-serif">Leaked Revenue</span><span class="red-dot">.</span></h2>
           <p class="section-subtitle">Discover how much revenue your business loses each month to slow manual responses, and how much FlowState recovers automatically.</p>
         </div>
 
@@ -641,7 +796,7 @@
                 <div style="font-size: 1.35rem; font-weight: 800; color: var(--ink-primary);" id="roiMultiplier">50.3x</div>
               </div>
               <a href="#contact" class="btn btn-primary" style="padding: 0.65rem 1.25rem;">
-                <span>Claim Blueprint &rarr;</span>
+                <span>Recover Leaked Revenue &rarr;</span>
               </a>
             </div>
           </div>
@@ -654,8 +809,8 @@
       <div class="section-container">
         <div class="section-header text-center">
           <span class="section-tag">CUSTOM SCOPING</span>
-          <h2 class="section-title">Assemble Your Custom Scope<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">Select the modules your operations require. Get an instant, transparent price and timeline range with fixed deliverables.</p>
+          <h2 class="section-title">Assemble Your <span class="editorial-serif">Custom Scope</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">Select the modules your operations require. Get an instant, transparent investment and timeline range with fixed turnkey deliverables.</p>
         </div>
 
         <div class="scope-grid" id="scopeModulesGrid"></div>
@@ -678,8 +833,8 @@
       <div class="section-container">
         <div class="section-header text-center">
           <span class="section-tag">FREQUENTLY ASKED QUESTIONS</span>
-          <h2 class="section-title">Common Questions &amp; Clear Answers<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">Everything you need to know about our custom software, automation workflows, AI assistants, and private data ownership.</p>
+          <h2 class="section-title">Direct Answers to <span class="editorial-serif">Executive Questions</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">Everything you need to know about our custom software, automation workflows, AI assistants, and 100% private data ownership.</p>
         </div>
 
         <div class="faq-grid">
@@ -786,9 +941,9 @@
     <section class="contact-section" id="contact">
       <div class="section-container">
         <div class="section-header text-center">
-          <span class="section-tag">START YOUR PROJECT</span>
-          <h2 class="section-title">Request Your Custom Architecture Blueprint<span class="red-dot">.</span></h2>
-          <p class="section-subtitle">Tell us about your operations and where manual work slows you down. We will deliver a tailored automation plan within 24 hours.</p>
+          <span class="section-tag">DIAGNOSTIC &amp; BLUEPRINT</span>
+          <h2 class="section-title">Book a 30-Minute <span class="editorial-serif">Operational Diagnostic</span><span class="red-dot">.</span></h2>
+          <p class="section-subtitle">Walk us through your current workflows and where manual drag slows you down. We will analyze your bottlenecks and return a tailored roadmap within 24 hours.</p>
         </div>
 
         <div class="contact-card">
@@ -819,7 +974,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary" id="leadCaptureSubmitBtn" style="width: 100%; padding: 1rem;">
-              <span>Submit for Free 24-Hour Blueprint</span>
+              <span>Schedule 30-Minute Diagnostic &amp; Blueprint</span>
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
             <div id="leadCaptureFeedback" class="form-feedback" role="status" aria-live="polite"></div>
@@ -847,7 +1002,7 @@
             <ul class="footer-links">
               <li><a href="#solutions" class="footer-link">Solutions Matrix</a></li>
               <li><a href="#simulator" class="footer-link">Live Chat Simulator</a></li>
-              <li><a href="#pipeline" class="footer-link">Execution Pipeline</a></li>
+              <li><a href="#transformation" class="footer-link">Operational Transformation</a></li>
               <li><a href="#roi" class="footer-link">ROI Engine</a></li>
               <li><a href="#faq" class="footer-link">FAQ Guide</a></li>
             </ul>
@@ -860,6 +1015,9 @@
               <li><a href="process-automation.html" class="footer-link">02 Inquiry &amp; Process Automation</a></li>
               <li><a href="applied-ai.html" class="footer-link">03 Smart AI Assistants</a></li>
               <li><a href="workforce-systems.html" class="footer-link">04 Workplace Hardware &amp; RFID</a></li>
+              <li><a href="real-estate-automation.html" class="footer-link" style="color: var(--brand-accent);">&bull; Real Estate &amp; Brokerages</a></li>
+              <li><a href="logistics-automation.html" class="footer-link" style="color: var(--brand-accent);">&bull; Logistics &amp; Supply Chain</a></li>
+              <li><a href="healthcare-automation.html" class="footer-link" style="color: var(--brand-accent);">&bull; Healthcare &amp; Clinics</a></li>
             </ul>
           </div>
 
@@ -897,10 +1055,6 @@
 
   <!-- Anime.js v4 Animation Engine -->
   <script src="js/anime.umd.js" defer></script>
-  <!-- Three.js r128 3D Engine -->
-  <script src="js/three.min.js" defer></script>
-  <!-- 3D Pipeline Visualization Controller -->
-  <script src="js/pipeline3d.js" defer></script>
   <!-- Application Controller -->
   <script src="app.js" defer></script>
   <!-- Mechanical Live Chatbot Controller -->

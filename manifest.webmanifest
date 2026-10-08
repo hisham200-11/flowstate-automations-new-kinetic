@@ -1,0 +1,17 @@
+{
+  "name": "FlowState Automations",
+  "short_name": "FlowState",
+  "description": "Custom Software, Process Automation & Applied AI for Growing Philippine Enterprises",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#09090B",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

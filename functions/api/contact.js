@@ -15,9 +15,28 @@ const DEFAULT_NOTIFICATION_EMAIL = 'flowstateautom8t@gmail.com';
 
 const ALLOWED_ORIGIN_PATTERNS = [
   /^https:\/\/([a-zA-Z0-9-]+\.)?pages\.dev$/,
-  /^https:\/\/([a-zA-Z0-9-]+\.)?flowstate.*$/,
+  /^https:\/\/([a-zA-Z0-9-]+\.)?flowstate\.ph$/,
   /^http:\/\/(localhost|127\.0\.0\.1)(:[0-9]+)?$/
 ];
+
+const RATE_LIMIT_WINDOW_MS = 300000; // 5 minutes
+const MAX_CONTACT_REQUESTS_PER_WINDOW = 5;
+const contactRateLimits = new Map();
+
+function isRateLimited(ip, maxRequests = MAX_CONTACT_REQUESTS_PER_WINDOW, windowMs = RATE_LIMIT_WINDOW_MS) {
+  const now = Date.now();
+  const timestamps = contactRateLimits.get(ip) || [];
+  const validTimestamps = timestamps.filter((t) => now - t < windowMs);
+
+  if (validTimestamps.length >= maxRequests) {
+    contactRateLimits.set(ip, validTimestamps);
+    return true;
+  }
+
+  validTimestamps.push(now);
+  contactRateLimits.set(ip, validTimestamps);
+  return false;
+}
 
 function getCorsHeaders(request, env) {
   const origin = request.headers.get('Origin');
@@ -28,10 +47,12 @@ function getCorsHeaders(request, env) {
     if (isAllowed || (env && env.ALLOWED_ORIGIN && origin === env.ALLOWED_ORIGIN)) {
       allowedOrigin = origin;
     }
+  } else {
+    allowedOrigin = (env && env.ALLOWED_ORIGIN) || 'https://flowstate.ph';
   }
 
   return {
-    'Access-Control-Allow-Origin': allowedOrigin || '*',
+    'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Max-Age': '86400',
@@ -49,6 +70,15 @@ export async function onRequestOptions(context) {
 export async function onRequestPost(context) {
   const { request, env, waitUntil } = context;
   const corsHeaders = getCorsHeaders(request, env);
+
+  // Rate Limiting Protection (DoS / Flooding Prevention)
+  const clientIp = request.headers.get('CF-Connecting-IP') || request.headers.get('x-real-ip') || 'unknown';
+  if (clientIp !== 'unknown' && isRateLimited(clientIp)) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Too many submissions. Please wait 5 minutes before submitting another blueprint request.' }),
+      { status: 429, headers: { ...corsHeaders, 'Retry-After': '300' } }
+    );
+  }
 
   try {
     const body = await request.json();
@@ -136,7 +166,7 @@ export async function onRequestPost(context) {
  */
 async function sendContactNotificationEmail(apiKey, toEmail, lead) {
   try {
-    const isPhone = /^(\+?[0-9\s\-]+)$/.test(lead.contact);
+    const isPhone = /^(\+?[0-9\s-]+)$/.test(lead.contact);
     const contactLink = isPhone 
       ? `<a href="tel:${escapeHtml(lead.contact)}" style="color: #2563eb; text-decoration: none; font-weight: 700;">${escapeHtml(lead.contact)}</a>`
       : `<a href="mailto:${escapeHtml(lead.contact)}" style="color: #2563eb; text-decoration: none; font-weight: 700;">${escapeHtml(lead.contact)}</a>`;
@@ -273,12 +303,12 @@ function isValidLeadName(name) {
     'admin', 'user', 'mind your own business', 'batman', 'your mom', 'nobody', 'no one'
   ];
   if (trollList.some((t) => clean.toLowerCase().includes(t))) return false;
-  return /^[a-zA-Z\u00C0-\u024F\s\.\-']{2,50}$/.test(clean);
+  return /^[a-zA-Z\u00C0-\u024F\s.'-]{2,50}$/.test(clean);
 }
 
 function isValidLeadContact(contact) {
   if (!contact || typeof contact !== 'string') return false;
-  const clean = contact.trim().replace(/[\s\-\(\)]/g, '');
+  const clean = contact.trim().replace(/[\s-()]/g, '');
   if (clean.length < 7 || clean.length > 50) return false;
   
   if (/^(\d)\1+$/.test(clean)) return false;
