@@ -3,20 +3,4 @@ Allow: /
 Disallow: /functions/
 Disallow: /api/
 
-# AI Citation & Search Crawlers
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
 Sitemap: https://flowstate-automations.pages.dev/sitemap.xml
