@@ -14,8 +14,7 @@
 const DEFAULT_NOTIFICATION_EMAIL = 'flowstateautom8t@gmail.com';
 
 const ALLOWED_ORIGIN_PATTERNS = [
-  /^https:\/\/([a-zA-Z0-9-]+\.)?pages\.dev$/,
-  /^https:\/\/([a-zA-Z0-9-]+\.)?flowstate\.ph$/,
+  /^https:\/\/flowstate-automations\.pages\.dev$/,
   /^http:\/\/(localhost|127\.0\.0\.1)(:[0-9]+)?$/
 ];
 
@@ -38,17 +37,17 @@ function isRateLimited(ip, maxRequests = MAX_CONTACT_REQUESTS_PER_WINDOW, window
   return false;
 }
 
-function getCorsHeaders(request, env) {
+function getCorsHeaders(request) {
   const origin = request.headers.get('Origin');
   let allowedOrigin = '';
 
   if (origin) {
     const isAllowed = ALLOWED_ORIGIN_PATTERNS.some((pattern) => pattern.test(origin));
-    if (isAllowed || (env && env.ALLOWED_ORIGIN && origin === env.ALLOWED_ORIGIN)) {
+    if (isAllowed) {
       allowedOrigin = origin;
     }
   } else {
-    allowedOrigin = (env && env.ALLOWED_ORIGIN) || 'https://flowstate.ph';
+    allowedOrigin = 'https://flowstate-automations.pages.dev';
   }
 
   return {
@@ -62,14 +61,14 @@ function getCorsHeaders(request, env) {
 }
 
 export async function onRequestOptions(context) {
-  const { request, env } = context;
-  const headers = getCorsHeaders(request, env);
+  const { request } = context;
+  const headers = getCorsHeaders(request);
   return new Response(null, { status: 204, headers });
 }
 
 export async function onRequestPost(context) {
   const { request, env, waitUntil } = context;
-  const corsHeaders = getCorsHeaders(request, env);
+  const corsHeaders = getCorsHeaders(request);
 
   // Rate Limiting Protection (DoS / Flooding Prevention)
   const clientIp = request.headers.get('CF-Connecting-IP') || request.headers.get('x-real-ip') || 'unknown';

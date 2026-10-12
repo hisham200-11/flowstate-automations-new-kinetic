@@ -4,7 +4,7 @@
 **Author:** Founder / Operations Architect, FlowState Automations  
 **Recommended Publication Type:** Long-Form Article / Weekly Operations Newsletter  
 **Target Search Keywords:** AI Chatbot vs Virtual Assistant Philippines, Facebook Messenger automation cost Manila, SME operational efficiency Philippines, customer service night shift VA vs AI  
-**Canonical Reference URL:** `https://flowstate.ph/ai-vs-va-cost-philippines.html`
+**Canonical Reference URL:** `https://flowstate-automations.pages.dev/ai-vs-va-cost-philippines.html`
 
 ---
 
@@ -91,4 +91,4 @@ If any of these create friction, you don't need more headcount—you need better
 
 ---
 
-*To explore the full 7-point audit breakdown, operational formulas, and interactive ROI benchmarks, read our comprehensive industry whitepaper at [FlowState Automations](https://flowstate.ph/ai-vs-va-cost-philippines.html).*
+*To explore the full 7-point audit breakdown, operational formulas, and interactive ROI benchmarks, read our comprehensive industry whitepaper at [FlowState Automations](https://flowstate-automations.pages.dev/ai-vs-va-cost-philippines.html).*

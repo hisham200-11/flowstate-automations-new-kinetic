@@ -4,7 +4,7 @@
 
 [![CI & Quality Gate](https://github.com/hisham200-11/flowstate-automations-new-kinetic/actions/workflows/ci.yml/badge.svg)](https://github.com/hisham200-11/flowstate-automations-new-kinetic/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
-[![Design System](https://img.shields.io/badge/Design_System-Kinetic_White_0px-e11d48.svg)](https://flowstate.ph)
+[![Design System](https://img.shields.io/badge/Design_System-Kinetic_White_0px-e11d48.svg)](https://flowstate-automations.pages.dev)
 
 ---
 
@@ -69,7 +69,7 @@ The codebase has undergone full **STRIDE threat modeling** and application secur
 | Layer | Defense Mechanism | Implementation Detail |
 | :--- | :--- | :--- |
 | **Client-Side DOM** | XSS Immunity | Dynamic chat messages are rendered via native `document.createElement` and `.textContent`. Input values are bounded and HTML entities sanitized via `escapeHtml()`. |
-| **CORS Boundaries** | Strict Origin Whitelist | Endpoints match `flowstate\.ph`, `pages\.dev`, and local test origins. Wildcard fallback `'*'` is strictly eliminated. |
+| **CORS Boundaries** | Strict Origin Whitelist | Endpoints allow only `https://flowstate-automations.pages.dev` and local test origins. Wildcard fallback `'*'` is strictly eliminated. |
 | **API Denial of Service** | Sliding-Window Rate Limiting | In-memory isolate rate limiters: max 12 requests/min on `/api/chat`, max 5 requests/5 min on `/api/contact`. Returns HTTP `429 Too Many Requests`. |
 | **Prompt Injection** | Model Guardrails | Dual-layer instruction boundaries, input token truncation (max 1000 chars/message, max 10 turns), and null-byte (`\0`) stripping. |
 | **Notification Spam** | Session Deduplication | Chat session alerts are deduplicated via LRU sets to prevent founder inbox flooding during extended conversations. |
@@ -115,7 +115,6 @@ Configure these secrets in your Cloudflare Pages project settings:
 | `GROQ_MODEL` | Primary LLM model identifier | No | `openai/gpt-oss-120b` |
 | `RESEND_API_KEY` | Resend API key for instant lead email notifications | No | — |
 | `NOTIFICATION_EMAIL` | Destination mailbox for incoming lead alerts | No | `flowstateautom8t@gmail.com` |
-| `ALLOWED_ORIGIN` | Explicit production domain override | No | `https://flowstate.ph` |
 | `DB` | Cloudflare D1 Database binding for audit logging | No | — |
 
 ### Continuous Integration (CI)

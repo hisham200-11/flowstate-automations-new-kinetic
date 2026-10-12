@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEO Monitor | FlowState Automations</title>
+  <meta name="description" content="A noindex, read-only monitor for FlowState page titles, descriptions, canonicals, robots directives, headings, and sharing metadata.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .monitor-shell { max-width: 1180px; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) 1.25rem 4rem; }
+    .monitor-top { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .monitor-brand { font:700 .82rem var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-primary); }
+    .monitor-brand span { color:var(--brand-accent); }
+    .monitor-hero { border:1px solid var(--border-subtle); background:var(--canvas-surface); padding:clamp(1.4rem,3vw,2.5rem); box-shadow:var(--shadow-sharp-sm); }
+    .monitor-kicker { color:var(--brand-accent); font:700 .75rem var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
+    .monitor-hero h1 { margin:.5rem 0 .8rem; font-size:clamp(2rem,5vw,3.25rem); }
+    .monitor-hero p { max-width:760px; color:var(--ink-secondary); }
+    .monitor-actions { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-top:1.4rem; }
+    .monitor-actions .btn { cursor:pointer; }
+    .monitor-note { font-size:.83rem; color:var(--ink-muted); }
+    .monitor-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.75rem; margin:1.25rem 0 2rem; }
+    .summary-cell { border:1px solid var(--border-subtle); background:var(--canvas-card); padding:1rem; min-height:88px; }
+    .summary-label { display:block; color:var(--ink-muted); font:600 .68rem var(--font-mono); letter-spacing:.06em; text-transform:uppercase; }
+    .summary-value { display:block; margin-top:.35rem; color:var(--ink-primary); font:700 1.3rem var(--font-mono); }
+    .monitor-status { min-height:1.5rem; margin:1rem 0; color:var(--ink-secondary); font-size:.9rem; }
+    .monitor-status[data-kind="error"] { color:var(--brand-danger); }
+    .monitor-list { display:grid; gap:.8rem; }
+    .page-card { border:1px solid var(--border-subtle); background:var(--canvas-base); }
+    .page-card[data-state="issue"] { border-color:var(--brand-warning); }
+    .page-summary { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:.8rem; align-items:center; padding:1rem 1.1rem; cursor:pointer; list-style:none; }
+    .page-summary::-webkit-details-marker { display:none; }
+    .page-path { min-width:0; overflow-wrap:anywhere; color:var(--ink-primary); font:600 .88rem var(--font-mono); }
+    .page-http,.page-grade { padding:.24rem .45rem; border:1px solid var(--border-subtle); font:600 .68rem var(--font-mono); white-space:nowrap; }
+    .page-grade[data-state="ok"] { color:var(--brand-success); border-color:var(--brand-success); }
+    .page-grade[data-state="issue"] { color:var(--brand-warning); border-color:var(--brand-warning); }
+    .page-details { border-top:1px solid var(--border-subtle); padding:1rem 1.1rem 1.25rem; }
+    .page-title { display:flex; justify-content:space-between; gap:1rem; color:var(--ink-primary); font-weight:700; margin-bottom:.8rem; }
+    .page-title span:last-child { flex:none; color:var(--ink-muted); font:500 .72rem var(--font-mono); }
+    .param-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; }
+    .param { min-width:0; padding:.7rem; background:var(--canvas-surface); border:1px solid var(--border-subtle); }
+    .param-label { display:block; color:var(--ink-muted); font:600 .66rem var(--font-mono); letter-spacing:.05em; text-transform:uppercase; margin-bottom:.25rem; }
+    .param-value { display:block; color:var(--ink-secondary); font-size:.83rem; overflow-wrap:anywhere; }
+    .param-value.is-missing { color:var(--brand-danger); }
+    .page-link { display:inline-block; margin-top:.9rem; color:var(--brand-accent); font:600 .75rem var(--font-mono); text-decoration:underline; text-underline-offset:3px; }
+    .monitor-footer { margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border-subtle); color:var(--ink-muted); font-size:.76rem; }
+    .monitor-footer a { color:var(--ink-secondary); text-decoration:underline; text-underline-offset:3px; }
+    @media (max-width:760px) { .monitor-summary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:540px) { .page-summary { grid-template-columns:minmax(0,1fr) auto; } .page-grade { grid-column:1/-1; justify-self:start; } .param-grid { grid-template-columns:1fr; } .monitor-actions .btn { width:100%; } }
+  </style>
+</head>
+<body>
+  <main class="monitor-shell">
+    <header class="monitor-top">
+      <a class="monitor-brand" href="index.html" aria-label="FlowState Automations home">FLOWSTATE <span>//</span> AUTOMATIONS</a>
+      <a class="btn btn-outline" href="index.html">Back to website</a>
+    </header>
+
+    <section class="monitor-hero" aria-labelledby="monitor-title">
+      <div class="monitor-kicker">[ Site diagnostics // Read-only ]</div>
+      <h1 id="monitor-title">SEO Page Monitor<span class="red-dot">.</span></h1>
+      <p>Review the search and sharing parameters published on each page in your sitemap: title, description, canonical, robots, headings, Open Graph, Twitter Card, and structured data.</p>
+      <div class="monitor-actions">
+        <button class="btn btn-primary" id="scan-button" type="button">Scan sitemap pages</button>
+        <span class="monitor-note">Checks run in your browser against this site. No analytics account or visitor data is accessed.</span>
+      </div>
+    </section>
+
+    <section class="monitor-summary" aria-label="Scan summary">
+      <div class="summary-cell"><span class="summary-label">Pages checked</span><span class="summary-value" id="count-total">—</span></div>
+      <div class="summary-cell"><span class="summary-label">HTTP OK</span><span class="summary-value" id="count-http">—</span></div>
+      <div class="summary-cell"><span class="summary-label">SEO checks passed</span><span class="summary-value" id="count-clean">—</span></div>
+      <div class="summary-cell"><span class="summary-label">Last scan</span><span class="summary-value" id="scan-time" style="font-size:.9rem">Not run</span></div>
+    </section>
+
+    <p id="scan-status" class="monitor-status" role="status" aria-live="polite">Select “Scan sitemap pages” to inspect the current published pages.</p>
+    <section id="page-list" class="monitor-list" aria-label="Per-page SEO parameters"></section>
+
+    <footer class="monitor-footer">This diagnostic page is marked <code>noindex, nofollow</code> and intentionally omitted from the sitemap. It remains publicly accessible; noindex is not access control. It checks only public page metadata, not Google rankings, Search Console data, backlinks, or Core Web Vitals. <a href="index.html">Return to FlowState</a>.</footer>
+  </main>
+
+  <script>
+    (() => {
+      const origin = window.location.origin;
+      const button = document.getElementById('scan-button');
+      const status = document.getElementById('scan-status');
+      const list = document.getElementById('page-list');
+      const get = (doc, selector, attr = 'content') => {
+        const node = doc.querySelector(selector);
+        return node ? (attr === 'text' ? node.textContent.trim() : node.getAttribute(attr) || '') : '';
+      };
+      const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+      const field = (label, value) => `<div class="param"><span class="param-label">${esc(label)}</span><span class="param-value${value ? '' : ' is-missing'}">${value ? esc(value) : 'Missing'}</span></div>`;
+      const scorePage = (page) => [page.title, page.description, page.canonical, page.h1, page.ogTitle, page.ogImage, page.robots, page.twitterCard, page.schemaCount > 0].filter(Boolean).length;
+      const inspectPage = async (url) => {
+        try {
+          const response = await fetch(url, {cache:'no-store', credentials:'same-origin'});
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const headings = [...doc.querySelectorAll('h1')].map((node) => node.textContent.trim()).filter(Boolean);
+          const h2Count = doc.querySelectorAll('h2').length;
+          const canonical = get(doc,'link[rel="canonical"]','href');
+          let canonicalSameOrigin = false;
+          try { canonicalSameOrigin = Boolean(canonical) && new URL(canonical, url).origin === origin; } catch {}
+          const page = {
+            url, status:response.status, ok:response.ok,
+            title:doc.title.trim(), description:get(doc,'meta[name="description"]'),
+            canonical, canonicalSameOrigin, robots:get(doc,'meta[name="robots"]'),
+            h1:headings.join(' | '), h1Count:headings.length, h2Count,
+            ogTitle:get(doc,'meta[property="og:title"]'), ogImage:get(doc,'meta[property="og:image"]'),
+            twitterCard:get(doc,'meta[name="twitter:card"]'),
+            schemaCount:doc.querySelectorAll('script[type="application/ld+json"]').length
+          };
+          page.checks = scorePage(page);
+          return page;
+        } catch (error) {
+          return {url, status:'ERR', ok:false, error:error.message, title:'', description:'', canonical:'', robots:'', h1:'', h1Count:0, h2Count:0, ogTitle:'', ogImage:'', twitterCard:'', schemaCount:0, checks:0};
+        }
+      };
+      const render = (page) => {
+        const issue = !page.ok || page.checks < 9 || page.h1Count !== 1 || !page.canonicalSameOrigin;
+        const path = new URL(page.url).pathname;
+        const titleCount = page.title.length;
+        const descCount = page.description.length;
+        const fields = [
+          field('Meta description', page.description),
+          field('Canonical URL', page.canonical),
+          field('Canonical host check', page.canonicalSameOrigin ? 'Matches this deployment' : 'Missing or points elsewhere'),
+          field('Robots directive', page.robots),
+          field(`H1 (${page.h1Count}) · H2 (${page.h2Count})`, page.h1),
+          field('Open Graph title', page.ogTitle),
+          field('Open Graph image', page.ogImage),
+          field('Twitter card', page.twitterCard),
+          field('JSON-LD blocks', page.schemaCount ? String(page.schemaCount) : '')
+        ].join('');
+        return `<details class="page-card" data-state="${issue?'issue':'ok'}"><summary class="page-summary"><span class="page-path">${esc(path)}</span><span class="page-http">HTTP ${esc(page.status)}</span><span class="page-grade" data-state="${issue?'issue':'ok'}">${issue?'REVIEW':'CORE OK'} · ${page.checks}/9</span></summary><div class="page-details"><div class="page-title"><span>${page.title ? esc(page.title) : 'Missing page title'}</span><span>${titleCount} chars</span></div><div class="param-grid">${field('Meta description length', descCount ? `${descCount} chars` : '')}${fields}</div>${page.error?`<p class="monitor-status" data-kind="error">${esc(page.error)}</p>`:''}<a class="page-link" href="${esc(page.url)}" target="_blank" rel="noopener">Open page ↗</a></div></details>`;
+      };
+      const scan = async () => {
+        button.disabled = true;
+        button.textContent = 'Scanning…';
+        list.replaceChildren();
+        status.dataset.kind = '';
+        status.textContent = 'Loading the sitemap and checking public pages…';
+        try {
+          const sitemapResponse = await fetch(`${origin}/sitemap.xml`, {cache:'no-store', credentials:'same-origin'});
+          if (!sitemapResponse.ok) throw new Error(`Sitemap returned HTTP ${sitemapResponse.status}.`);
+          const sitemapText = await sitemapResponse.text();
+          const xml = new DOMParser().parseFromString(sitemapText, 'application/xml');
+          if (xml.querySelector('parsererror')) throw new Error('The sitemap could not be parsed as XML.');
+          const rawUrls = [...xml.getElementsByTagName('loc')].map((node) => node.textContent.trim()).filter(Boolean);
+          const urls = [...new Set(rawUrls)].filter((value) => { try { return new URL(value).origin === origin; } catch { return false; } });
+          if (!urls.length) throw new Error(`No sitemap URLs for ${origin} were found. Check that sitemap.xml uses this host.`);
+          if (urls.length > 60) throw new Error(`Found ${urls.length} URLs; the monitor is capped at 60 pages per run.`);
+          const results = [];
+          for (let i=0; i<urls.length; i+=5) {
+            const batch = await Promise.all(urls.slice(i,i+5).map(inspectPage));
+            results.push(...batch);
+            status.textContent = `Checked ${results.length} of ${urls.length} pages…`;
+          }
+          list.innerHTML = results.map(render).join('');
+          const httpCount = results.filter((page) => page.ok).length;
+          const cleanCount = results.filter((page) => page.ok && page.checks === 9 && page.h1Count === 1 && page.canonicalSameOrigin).length;
+          document.getElementById('count-total').textContent = String(results.length);
+          document.getElementById('count-http').textContent = `${httpCount}/${results.length}`;
+          document.getElementById('count-clean').textContent = `${cleanCount}/${results.length}`;
+          document.getElementById('scan-time').textContent = new Intl.DateTimeFormat(undefined,{hour:'numeric',minute:'2-digit'}).format(new Date());
+          status.textContent = `${results.length} sitemap page${results.length === 1 ? '' : 's'} checked. Expand any row to view its parameters.`;
+        } catch (error) {
+          status.dataset.kind = 'error';
+          status.textContent = `Scan failed: ${error.message}`;
+          document.getElementById('count-total').textContent = '0';
+          document.getElementById('count-http').textContent = '—';
+          document.getElementById('count-clean').textContent = '—';
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Scan again';
+        }
+      };
+      button.addEventListener('click', scan);
+    })();
+  </script>
+</body>
+</html>

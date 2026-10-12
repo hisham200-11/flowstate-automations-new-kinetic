@@ -16,3 +16,7 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Local Scratch & Diagnostics
+.manus/
+.work/

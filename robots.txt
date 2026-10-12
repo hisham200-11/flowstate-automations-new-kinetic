@@ -19,4 +19,4 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
-Sitemap: https://flowstate.ph/sitemap.xml
+Sitemap: https://flowstate-automations.pages.dev/sitemap.xml
